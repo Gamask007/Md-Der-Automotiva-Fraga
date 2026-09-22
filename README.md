@@ -185,7 +185,7 @@ Representa cada pagamento recebido referente a uma OS, permitindo controlar paga
 ## 7. Diagrama Entidade-Relacionamento (DER)
 *(vale 20% — é o item de maior peso da entrega)*
 
-![DER — Centro Automotivo Fraga](./der-centro-automotivo-fraga.jpeg)
+![DER — Centro Automotivo Fraga] <img width="1536" height="1024" alt="Imagem" src="https://github.com/user-attachments/assets/30899d94-2385-4c07-ab2e-5459d9dc965b" />
 
 - O diagrama deve representar corretamente:
   - Entidades
