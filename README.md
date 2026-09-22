@@ -8,6 +8,7 @@
 - **Evidências da organização:**
   - Google Maps: https://share.google/ZSJaoqi0CiMngDXDz (Centro Automotivo Fraga)
   - Endereço: Av. Osvaldo Pucci, 665 - Jardim Nossa Sra. do Carmo, São Paulo - SP, 08270-700
+  - Foto Da Visita <img width="900" height="1600" alt="Imagem" src="https://github.com/user-attachments/assets/61b5e699-b0f4-4de8-b465-553e03a7b20f" />
 - **Contato:**
   - Telefone: (11) 2521-3689
   - WhatsApp/Celular: (11) 94711-4629
