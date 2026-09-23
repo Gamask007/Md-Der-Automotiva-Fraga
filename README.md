@@ -1,3 +1,5 @@
+
+
 ## 1. Caracterização da Organização
 *(vale 7,5% — Dimensão Conceitual)*
 
@@ -284,3 +286,12 @@ O grupo utilizou o Claude (Anthropic) como apoio na organização, redação e r
 | Atitudinal (participação, comprometimento, colaboração, autonomia) | 20% |
 
 **Entrega final:** README.md completo + DER anexado no repositório GitHub do grupo.
+
+Mayra Anísio Da Gama 48814857
+João Pedro F. Antunes 
+04971661-1
+Diego Pignatari 47515741
+Guilherme Da Costa Silva 
+04900988-5
+
+
