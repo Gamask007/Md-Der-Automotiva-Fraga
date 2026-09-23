@@ -111,7 +111,7 @@ Representa cada tipo de serviço que a oficina oferece (ex.: troca de óleo, rev
 
 **Ordem de Serviço (OS)**
 
-Representa o atendimento completo de um veículo, desde a entrada até a liberação. É gerada a partir de um veículo (relacionamento **gera**, 1 veículo — N ordens de serviço) e pode se relacionar com serviços, peças, orçamento e pagamentos.
+Representa o atendimento completo de um veículo, desde a entrada até a liberação. É gerada a partir de um veículo (relacionamento **gera,** 1 veículo — N ordens de serviço) e pode se relacionar com serviços, peças, orçamento e pagamentos.
 
 | Atributo | Descrição | Regra de negócio associada |
 |----------|-----------|------------------------------|
