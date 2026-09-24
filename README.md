@@ -28,6 +28,7 @@
   - **Registro de vendas/serviços:** lançados no sistema/banco de dados; hoje o lançamento do serviço ainda é feito manualmente.
 - **Fluxogramas:** *represente visualmente pelo menos os processos-chave (imagens anexadas). Deve ficar claro o fluxo de cada processo e como eles se integram entre si.*
 
+<img width="1536" height="1024" alt="Image" src="https://github.com/user-attachments/assets/f44cf3cf-6cab-4bcc-a54f-d76155e23abd" />
 ---
 
 ## 3. Requisitos do Sistema
