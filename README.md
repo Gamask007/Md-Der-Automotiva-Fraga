@@ -1,3 +1,7 @@
+Mayra Anísio Da Gama 48814857
+João Pedro F. Antunes 04971661-1
+Diego Pignatari 47515741
+Guilherme Da Costa Silva 04900988-5
 
 
 ## 1. Caracterização da Organização
@@ -189,7 +193,7 @@ Representa cada pagamento recebido referente a uma OS, permitindo controlar paga
 ## 7. Diagrama Entidade-Relacionamento (DER)
 *(vale 20% — é o item de maior peso da entrega)*
 
-![DER — Centro Automotivo Fraga] <img width="1536" height="1024" alt="Imagem" src="https://github.com/user-attachments/assets/30899d94-2385-4c07-ab2e-5459d9dc965b" />
+![DER — Centro Automotivo Fraga] <img width="1536" height="1024" alt="Image" src="https://github.com/user-attachments/assets/dbf31382-e8d9-4ba5-bd5a-d4a52644d1e8" />
 
 - O diagrama deve representar corretamente:
   - Entidades
@@ -288,11 +292,5 @@ O grupo utilizou o Claude (Anthropic) como apoio na organização, redação e r
 
 **Entrega final:** README.md completo + DER anexado no repositório GitHub do grupo.
 
-Mayra Anísio Da Gama 48814857
-João Pedro F. Antunes 
-04971661-1
-Diego Pignatari 47515741
-Guilherme Da Costa Silva 
-04900988-5
 
 
