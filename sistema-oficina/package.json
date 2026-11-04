@@ -1,0 +1,14 @@
+{
+  "name": "sistema-oficina-fraga",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telas simples para usar o banco fraga_oficina sem saber SQL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "mysql2": "^3.11.0"
+  }
+}
