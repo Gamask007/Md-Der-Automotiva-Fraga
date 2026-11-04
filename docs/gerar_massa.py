@@ -10,6 +10,14 @@ telefones são inventados.
 """
 import random
 from datetime import date, datetime, timedelta
+
+
+def mais_3_meses(d):
+    """Mesmo dia, 3 meses depois (último dia do mês quando não existe), como INTERVAL 3 MONTH no MySQL."""
+    m = d.month + 3
+    a, m = d.year + (m - 1) // 12, (m - 1) % 12 + 1
+    import calendar
+    return date(a, m, min(d.day, calendar.monthrange(a, m)[1]))
 from pathlib import Path
 
 random.seed(2026)
@@ -248,14 +256,14 @@ os_rows, orc_rows, itens_serv, itens_peca, pagamentos = [], [], [], [], []
 
 inv = datetime(2026, 8, 31, 17, 0)
 for id_p in saldo:
-    eventos.append((inv, 0, [id_p, "entrada", saldo[id_p], inv, None, None, 2, "Inventário inicial (contagem física)"]))
+    eventos.append((inv, 0, [id_p, "entrada", saldo[id_p], inv, None, None, RECEPCAO, "Inventário inicial (contagem física)"]))
 
 
 def nova_compra(dia, itens, recebe_dias=1, conferida=1, recebida=True):
     """Registra compra; se recebida e conferida, gera as entradas no estoque."""
     id_forn = random.randint(1, len(FORNECEDORES))
     receb = dia + timedelta(days=recebe_dias) if recebida else None
-    compras.append([id_forn, 2, dia, f"NF{random.randint(100000, 999999)}" if recebida else None, receb, conferida])
+    compras.append([id_forn, RECEPCAO, dia, f"NF{random.randint(100000, 999999)}" if recebida else None, receb, conferida])
     id_c = len(compras)
     for id_p, qtd in itens:
         itens_compra.append((id_c, id_p, qtd, PECAS[id_p - 1][4]))
@@ -351,18 +359,19 @@ for dia in uteis:
                              else None])
 
         executa = status in ("em_execucao", "pronta", "entregue")
-        saida = garantia = nf = None
+        pronta = saida = garantia = nf = None
         avisado = 0
         if status in ("pronta", "entregue"):
             fim = entrada + timedelta(days=random.choice([0, 1, 1, 2, 3]), hours=random.randint(1, 5))
             fim = min(fim, HOJE - timedelta(hours=1))
+            pronta = fim                                   # liberação: serviço terminado
             avisado = 1 if status == "entregue" or random.random() < 0.6 else 0
             if status == "entregue":
-                saida = fim
-                garantia = (saida + timedelta(days=90)).date()
+                saida = min(pronta + timedelta(hours=2), HOJE - timedelta(minutes=30))   # retirada pelo cliente
+                garantia = mais_3_meses(saida.date())
                 nf = f"NFSe-{numero}"
-        os_rows.append([numero, id_v, atendente, mecanico, km_entrada, problema, entrada, previsao, saida,
-                        status, avisado, garantia, nf, None])
+        os_rows.append([numero, id_v, v[0], atendente, mecanico, km_entrada, problema, entrada, previsao, pronta,
+                        saida, status, avisado, garantia, nf, None])
 
         if executa:
             for id_s, valor in serv_itens:
@@ -398,18 +407,18 @@ for dia in uteis:
             pagamentos.append([id_os, entrada + timedelta(hours=6), "pix", 1, round(total * 0.5, 2)])
 
 # RN05 — retrabalho de garantia: o cliente volta, a MESMA OS recebe o serviço sem custo
-entregues = [i for i, o in enumerate(os_rows) if o[9] == "entregue" and o[8] < datetime(2026, 9, 20)]
+entregues = [i for i, o in enumerate(os_rows) if o[11] == "entregue" and o[10] < datetime(2026, 9, 20)]
 for idx in random.sample(entregues, 6):
     id_os = idx + 1
     id_s = next(it[1] for it in itens_serv if it[0] == id_os)
-    volta = os_rows[idx][8] + timedelta(days=random.randint(3, 9))
+    volta = os_rows[idx][10] + timedelta(days=random.randint(3, 9))
     itens_serv.append([id_os, id_s, 1, 0.0, 1])
-    os_rows[idx][13] = (f"Retorno em garantia em {volta:%d/%m/%Y}: refeito o serviço "
+    os_rows[idx][15] = (f"Retorno em garantia em {volta:%d/%m/%Y}: refeito o serviço "
                         f"'{SERVICOS[id_s - 1][0]}' sem custo; data de entrada mantida (RN05).")
 
 # Situações que as auditorias devem encontrar (registros reais de dia a dia)
 # A02: uma OS foi para execução antes do cliente aprovar o orçamento
-alvo = next(i for i, o in enumerate(os_rows) if o[9] == "em_execucao")
+alvo = next(i for i, o in enumerate(os_rows) if o[11] == "em_execucao")
 for orc in orc_rows:
     if orc[0] == alvo + 1:
         orc[4], orc[5] = "pendente", None
@@ -433,8 +442,8 @@ blocos = [
     insert("servico", ["nome_servico", "descricao", "valor_base", "ativo"], servicos),
     insert("peca", ["nome_peca", "codigo_fabricante", "unidade", "valor_venda", "estoque_minimo", "ativo"], pecas),
     insert("fornecedor", ["razao_social", "cnpj", "telefone", "email", "ativo"], fornecedores),
-    insert("ordem_servico", ["numero_os", "id_veiculo", "id_atendente", "id_mecanico", "km_entrada",
-                             "problema_relatado", "data_entrada", "data_previsao", "data_saida", "status",
+    insert("ordem_servico", ["numero_os", "id_veiculo", "id_cliente", "id_atendente", "id_mecanico", "km_entrada",
+                             "problema_relatado", "data_entrada", "data_previsao", "data_pronta", "data_saida", "status",
                              "cliente_avisado", "garantia_ate", "numero_nota_fiscal", "observacoes"], os_rows),
     insert("orcamento", ["id_os", "id_funcionario", "data_orcamento", "valor_total", "status", "data_decisao",
                          "observacoes"], orc_rows),

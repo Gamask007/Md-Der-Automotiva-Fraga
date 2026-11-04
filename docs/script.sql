@@ -116,17 +116,19 @@ CREATE TABLE veiculo (
   CONSTRAINT ck_veiculo_ano CHECK (ano BETWEEN 1950 AND 2100)
 );
 
--- Ordem de serviço: entidade central do atendimento — RN01, RN04, RN05, RN13
+-- Ordem de serviço: entidade central do atendimento — RN01, RN04, RN05, RN07, RN13
 CREATE TABLE ordem_servico (
   id_os               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
   numero_os           INT UNSIGNED  NOT NULL,
   id_veiculo          INT UNSIGNED  NOT NULL,
+  id_cliente          INT UNSIGNED  NOT NULL,
   id_atendente        INT UNSIGNED  NOT NULL,
   id_mecanico         INT UNSIGNED  NULL,
   km_entrada          INT UNSIGNED  NOT NULL,
   problema_relatado   VARCHAR(255)  NOT NULL,
   data_entrada        DATETIME      NOT NULL,
   data_previsao       DATE          NULL,
+  data_pronta         DATETIME      NULL,
   data_saida          DATETIME      NULL,
   status              ENUM('aberta','aguardando_aprovacao','em_execucao','pronta','entregue','cancelada')
                                     NOT NULL DEFAULT 'aberta',
@@ -138,12 +140,19 @@ CREATE TABLE ordem_servico (
   CONSTRAINT uq_os_numero UNIQUE (numero_os),
   CONSTRAINT fk_os_veiculo FOREIGN KEY (id_veiculo) REFERENCES veiculo (id_veiculo)
     ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_os_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_os_atendente FOREIGN KEY (id_atendente) REFERENCES funcionario (id_funcionario)
     ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_os_mecanico FOREIGN KEY (id_mecanico) REFERENCES funcionario (id_funcionario)
     ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT ck_os_datas CHECK (data_saida IS NULL OR data_saida >= data_entrada),
-  CONSTRAINT ck_os_entregue CHECK (status <> 'entregue' OR data_saida IS NOT NULL),
+  CONSTRAINT ck_os_pronta_datas CHECK (data_pronta IS NULL OR
+    (data_pronta >= data_entrada AND (data_saida IS NULL OR data_saida >= data_pronta))),
+  CONSTRAINT ck_os_pronta CHECK (status NOT IN ('pronta','entregue') OR data_pronta IS NOT NULL),
+  CONSTRAINT ck_os_entregue CHECK (status <> 'entregue' OR
+    (data_saida IS NOT NULL AND garantia_ate IS NOT NULL AND numero_nota_fiscal IS NOT NULL)),
+  CONSTRAINT ck_os_garantia CHECK (garantia_ate IS NULL OR garantia_ate = DATE(data_saida) + INTERVAL 3 MONTH),
   CONSTRAINT ck_os_avisado CHECK (cliente_avisado IN (0,1))
 );
 CREATE INDEX ix_os_data_entrada ON ordem_servico (data_entrada);
@@ -666,155 +675,155 @@ INSERT INTO fornecedor (razao_social, cnpj, telefone, email, ativo) VALUES
   ('Freios & Cia Comércio de Peças Ltda.', '56.789.012/0001-34', '(11) 2721-5500', 'vendas5@fornecedor.exemplo', 1),
   ('Baterias Penha Comércio Ltda.', '67.890.123/0001-45', '(11) 2958-6600', 'vendas6@fornecedor.exemplo', 1);
 
-INSERT INTO ordem_servico (numero_os, id_veiculo, id_atendente, id_mecanico, km_entrada, problema_relatado, data_entrada, data_previsao, data_saida, status, cliente_avisado, garantia_ate, numero_nota_fiscal, observacoes) VALUES
-  (25101, 50, 4, 9, 17084, 'Carro puxando para o lado', '2026-09-01 14:20:00', '2026-09-03', '2026-09-03 17:20:00', 'entregue', 1, '2026-12-02', 'NFSe-25101', NULL),
-  (25102, 107, 4, 5, 228901, 'Troca de óleo vencida pela km', '2026-09-01 12:40:00', '2026-09-02', '2026-09-04 13:40:00', 'entregue', 1, '2026-12-03', 'NFSe-25102', NULL),
-  (25103, 44, 4, 9, 133087, 'Barulho ao frear', '2026-09-01 13:50:00', '2026-09-02', '2026-09-01 14:50:00', 'entregue', 1, '2026-11-30', 'NFSe-25103', NULL),
-  (25104, 90, 4, 7, 150847, 'Barulho ao frear', '2026-09-01 15:30:00', '2026-09-04', '2026-09-04 19:30:00', 'entregue', 1, '2026-12-03', 'NFSe-25104', NULL),
-  (25105, 9, 4, 9, 217050, 'Revisão dos 40 mil km', '2026-09-01 14:10:00', '2026-09-03', '2026-09-02 19:10:00', 'entregue', 1, '2026-12-01', 'NFSe-25105', NULL),
-  (25106, 117, 2, 6, 231758, 'Revisão dos 40 mil km', '2026-09-01 13:00:00', '2026-09-03', '2026-09-02 14:00:00', 'entregue', 1, '2026-12-01', 'NFSe-25106', NULL),
-  (25107, 131, 4, 9, 162834, 'Motor esquentando', '2026-09-02 14:20:00', '2026-09-05', '2026-09-02 19:20:00', 'entregue', 1, '2026-12-01', 'NFSe-25107', NULL),
-  (25108, 84, 4, 6, 83159, 'Revisão dos 40 mil km', '2026-09-02 08:00:00', '2026-09-05', '2026-09-03 12:00:00', 'entregue', 1, '2026-12-02', 'NFSe-25108', 'Retorno em garantia em 08/09/2026: refeito o serviço ''Revisão completa'' sem custo; data de entrada mantida (RN05).'),
-  (25109, 5, 4, 6, 30995, 'Barulho na suspensão em lombadas', '2026-09-02 16:30:00', '2026-09-03', '2026-09-03 19:30:00', 'entregue', 1, '2026-12-02', 'NFSe-25109', NULL),
-  (25110, 73, 4, 5, 14812, 'Revisão dos 40 mil km', '2026-09-02 09:30:00', '2026-09-04', '2026-09-03 12:30:00', 'entregue', 1, '2026-12-02', 'NFSe-25110', 'Retorno em garantia em 11/09/2026: refeito o serviço ''Revisão completa'' sem custo; data de entrada mantida (RN05).'),
-  (25111, 119, 4, 8, 165365, 'Carro não dá partida', '2026-09-02 16:40:00', '2026-09-03', '2026-09-02 20:40:00', 'entregue', 1, '2026-12-01', 'NFSe-25111', 'Retorno em garantia em 11/09/2026: refeito o serviço ''Troca de bateria'' sem custo; data de entrada mantida (RN05).'),
-  (25112, 7, 4, 9, 70391, 'Carro puxando para o lado', '2026-09-02 14:40:00', '2026-09-04', '2026-09-02 17:40:00', 'entregue', 1, '2026-12-01', 'NFSe-25112', NULL),
-  (25113, 79, 4, 5, 34394, 'Barulho ao frear', '2026-09-02 14:20:00', '2026-09-03', '2026-09-03 19:20:00', 'entregue', 1, '2026-12-02', 'NFSe-25113', NULL),
-  (25114, 6, 4, 7, 146055, 'Luz de injeção acesa no painel', '2026-09-03 16:30:00', '2026-09-06', '2026-09-04 17:30:00', 'entregue', 1, '2026-12-03', 'NFSe-25114', NULL),
-  (25115, 9, 4, 6, 218220, 'Vazamento de água no motor', '2026-09-03 11:40:00', '2026-09-05', '2026-09-06 13:40:00', 'entregue', 1, '2026-12-05', 'NFSe-25115', NULL),
-  (25116, 44, 4, 5, 135514, 'Barulho ao frear', '2026-09-03 11:50:00', '2026-09-04', '2026-09-04 12:50:00', 'entregue', 1, '2026-12-03', 'NFSe-25116', NULL),
-  (25117, 127, 4, 5, 138249, 'Troca de óleo vencida pela km', '2026-09-03 13:00:00', '2026-09-04', '2026-09-05 14:00:00', 'entregue', 1, '2026-12-04', 'NFSe-25117', NULL),
-  (25118, 89, 4, 7, 17727, 'Motor esquentando', '2026-09-03 09:20:00', '2026-09-04', '2026-09-03 11:20:00', 'entregue', 1, '2026-12-02', 'NFSe-25118', 'Retorno em garantia em 10/09/2026: refeito o serviço ''Troca de líquido de arrefecimento'' sem custo; data de entrada mantida (RN05).'),
-  (25119, 46, 4, 7, 120149, 'Troca de óleo vencida pela km', '2026-09-03 15:40:00', '2026-09-05', '2026-09-04 19:40:00', 'entregue', 1, '2026-12-03', 'NFSe-25119', NULL),
-  (25120, 129, 2, 7, 244029, 'Estalo na suspensão', '2026-09-04 10:00:00', '2026-09-06', '2026-09-05 12:00:00', 'entregue', 1, '2026-12-04', 'NFSe-25120', NULL),
-  (25121, 84, 4, 6, 83471, 'Revisão dos 40 mil km', '2026-09-04 13:30:00', '2026-09-05', '2026-09-05 15:30:00', 'entregue', 1, '2026-12-04', 'NFSe-25121', NULL),
-  (25122, 88, 2, 6, 68095, 'Troca de óleo vencida pela km', '2026-09-04 13:30:00', '2026-09-07', '2026-09-05 15:30:00', 'entregue', 1, '2026-12-04', 'NFSe-25122', NULL),
-  (25123, 14, 4, 9, 216727, 'Revisão dos 40 mil km', '2026-09-04 16:20:00', '2026-09-05', '2026-09-05 18:20:00', 'entregue', 1, '2026-12-04', 'NFSe-25123', NULL),
-  (25124, 80, 4, 6, 158143, 'Correia dentada no prazo de troca', '2026-09-04 08:40:00', '2026-09-05', '2026-09-07 11:40:00', 'entregue', 1, '2026-12-06', 'NFSe-25124', NULL),
-  (25125, 73, 4, 5, 16667, 'Barulho ao frear', '2026-09-04 09:40:00', '2026-09-07', '2026-09-04 13:40:00', 'entregue', 1, '2026-12-03', 'NFSe-25125', NULL),
-  (25126, 111, 4, NULL, 130168, 'Vazamento de água no motor', '2026-09-05 13:00:00', '2026-09-07', NULL, 'cancelada', 0, NULL, NULL, NULL),
-  (25127, 115, 4, 6, 248343, 'Cheiro ruim no ar-condicionado', '2026-09-05 14:20:00', '2026-09-06', '2026-09-07 17:20:00', 'entregue', 1, '2026-12-06', 'NFSe-25127', NULL),
-  (25128, 3, 2, 5, 194734, 'Farol queimado e pane elétrica', '2026-09-05 13:00:00', '2026-09-07', '2026-09-05 14:00:00', 'entregue', 1, '2026-12-04', 'NFSe-25128', NULL),
-  (25129, 64, 4, 7, 90349, 'Farol queimado e pane elétrica', '2026-09-07 14:50:00', '2026-09-10', '2026-09-07 18:50:00', 'entregue', 1, '2026-12-06', 'NFSe-25129', NULL),
-  (25130, 97, 4, 8, 62391, 'Troca de óleo vencida pela km', '2026-09-07 12:00:00', '2026-09-10', '2026-09-10 17:00:00', 'entregue', 1, '2026-12-09', 'NFSe-25130', NULL),
-  (25131, 20, 4, 7, 56061, 'Barulho ao frear', '2026-09-07 11:20:00', '2026-09-08', '2026-09-07 13:20:00', 'entregue', 1, '2026-12-06', 'NFSe-25131', NULL),
-  (25132, 127, 4, 5, 139542, 'Barulho ao frear', '2026-09-07 12:00:00', '2026-09-08', '2026-09-08 13:00:00', 'entregue', 1, '2026-12-07', 'NFSe-25132', NULL),
-  (25133, 109, 4, 6, 255681, 'Troca de óleo vencida pela km', '2026-09-07 09:50:00', '2026-09-10', '2026-09-07 14:50:00', 'entregue', 1, '2026-12-06', 'NFSe-25133', NULL),
-  (25134, 81, 4, 8, 173667, 'Carro puxando para o lado', '2026-09-07 09:50:00', '2026-09-10', '2026-09-07 10:50:00', 'entregue', 1, '2026-12-06', 'NFSe-25134', NULL),
-  (25135, 90, 4, 7, 151503, 'Carro puxando para o lado', '2026-09-08 13:40:00', '2026-09-11', '2026-09-09 18:40:00', 'entregue', 1, '2026-12-08', 'NFSe-25135', NULL),
-  (25136, 130, 4, 9, 146486, 'Cheiro ruim no ar-condicionado', '2026-09-08 10:20:00', '2026-09-11', '2026-09-09 13:20:00', 'entregue', 1, '2026-12-08', 'NFSe-25136', NULL),
-  (25137, 21, 2, 5, 93554, 'Farol queimado e pane elétrica', '2026-09-08 16:50:00', '2026-09-10', '2026-09-09 19:50:00', 'entregue', 1, '2026-12-08', 'NFSe-25137', NULL),
-  (25138, 2, 4, 8, 175072, 'Motor esquentando', '2026-09-08 14:10:00', '2026-09-09', '2026-09-09 17:10:00', 'entregue', 1, '2026-12-08', 'NFSe-25138', NULL),
-  (25139, 98, 4, 9, 89359, 'Troca de óleo vencida pela km', '2026-09-08 12:50:00', '2026-09-11', '2026-09-09 14:50:00', 'entregue', 1, '2026-12-08', 'NFSe-25139', NULL),
-  (25140, 40, 4, 5, 214789, 'Troca de óleo vencida pela km', '2026-09-08 08:50:00', '2026-09-11', '2026-09-11 11:50:00', 'entregue', 1, '2026-12-10', 'NFSe-25140', NULL),
-  (25141, 119, 4, 7, 165930, 'Cheiro ruim no ar-condicionado', '2026-09-08 10:50:00', '2026-09-11', '2026-09-10 11:50:00', 'entregue', 1, '2026-12-09', 'NFSe-25141', NULL),
-  (25142, 108, 4, 9, 103347, 'Revisão dos 40 mil km', '2026-09-09 14:50:00', '2026-09-10', '2026-09-10 17:50:00', 'entregue', 1, '2026-12-09', 'NFSe-25142', NULL),
-  (25143, 100, 4, 8, 79844, 'Carro puxando para o lado', '2026-09-09 15:40:00', '2026-09-11', '2026-09-10 19:40:00', 'entregue', 1, '2026-12-09', 'NFSe-25143', NULL),
-  (25144, 81, 4, 9, 174577, 'Troca de óleo vencida pela km', '2026-09-09 10:40:00', '2026-09-10', '2026-09-10 11:40:00', 'entregue', 1, '2026-12-09', 'NFSe-25144', NULL),
-  (25145, 130, 4, 8, 147518, 'Correia dentada no prazo de troca', '2026-09-09 10:30:00', '2026-09-11', '2026-09-12 13:30:00', 'entregue', 1, '2026-12-11', 'NFSe-25145', NULL),
-  (25146, 25, 4, 5, 95752, 'Carro puxando para o lado', '2026-09-09 15:20:00', '2026-09-12', '2026-09-09 18:20:00', 'entregue', 1, '2026-12-08', 'NFSe-25146', NULL),
-  (25147, 67, 4, 8, 27422, 'Troca de óleo vencida pela km', '2026-09-10 08:00:00', '2026-09-13', '2026-09-10 13:00:00', 'entregue', 1, '2026-12-09', 'NFSe-25147', NULL),
-  (25148, 83, 4, 8, 151662, 'Luz de injeção acesa no painel', '2026-09-10 16:10:00', '2026-09-13', '2026-09-11 19:10:00', 'entregue', 1, '2026-12-10', 'NFSe-25148', NULL),
-  (25149, 72, 4, 8, 75815, 'Estalo na suspensão', '2026-09-10 14:00:00', '2026-09-13', '2026-09-11 18:00:00', 'entregue', 1, '2026-12-10', 'NFSe-25149', NULL),
-  (25150, 39, 4, 6, 257119, 'Barulho ao frear', '2026-09-10 11:10:00', '2026-09-12', '2026-09-13 15:10:00', 'entregue', 1, '2026-12-12', 'NFSe-25150', NULL);
-INSERT INTO ordem_servico (numero_os, id_veiculo, id_atendente, id_mecanico, km_entrada, problema_relatado, data_entrada, data_previsao, data_saida, status, cliente_avisado, garantia_ate, numero_nota_fiscal, observacoes) VALUES
-  (25151, 59, 4, 9, 82454, 'Troca de óleo vencida pela km', '2026-09-10 13:20:00', '2026-09-11', '2026-09-13 17:20:00', 'entregue', 1, '2026-12-12', 'NFSe-25151', NULL),
-  (25152, 95, 4, 8, 100096, 'Troca de óleo vencida pela km', '2026-09-10 13:50:00', '2026-09-11', '2026-09-11 16:50:00', 'entregue', 1, '2026-12-10', 'NFSe-25152', NULL),
-  (25153, 51, 4, 8, 38556, 'Carro puxando para o lado', '2026-09-10 11:50:00', '2026-09-12', '2026-09-11 16:50:00', 'entregue', 1, '2026-12-10', 'NFSe-25153', NULL),
-  (25154, 17, 4, 5, 64905, 'Barulho na suspensão em lombadas', '2026-09-11 09:50:00', '2026-09-12', '2026-09-14 13:50:00', 'entregue', 1, '2026-12-13', 'NFSe-25154', NULL),
-  (25155, 48, 4, 8, 15478, 'Revisão dos 40 mil km', '2026-09-11 14:30:00', '2026-09-12', '2026-09-12 15:30:00', 'entregue', 1, '2026-12-11', 'NFSe-25155', NULL),
-  (25156, 132, 4, 6, 213773, 'Cheiro ruim no ar-condicionado', '2026-09-11 15:10:00', '2026-09-12', '2026-09-12 16:10:00', 'entregue', 1, '2026-12-11', 'NFSe-25156', NULL),
-  (25157, 111, 4, NULL, 132584, 'Barulho ao frear', '2026-09-11 14:20:00', '2026-09-13', NULL, 'cancelada', 0, NULL, NULL, NULL),
-  (25158, 65, 4, 9, 34097, 'Chiado no motor ao ligar', '2026-09-11 15:30:00', '2026-09-13', '2026-09-13 20:30:00', 'entregue', 1, '2026-12-12', 'NFSe-25158', NULL),
-  (25159, 120, 4, 6, 73988, 'Troca de óleo vencida pela km', '2026-09-12 08:50:00', '2026-09-15', '2026-09-14 09:50:00', 'entregue', 1, '2026-12-13', 'NFSe-25159', NULL),
-  (25160, 80, 4, 6, 160430, 'Troca de óleo vencida pela km', '2026-09-12 10:00:00', '2026-09-15', '2026-09-13 14:00:00', 'entregue', 1, '2026-12-12', 'NFSe-25160', NULL),
-  (25161, 81, 4, 9, 175760, 'Farol queimado e pane elétrica', '2026-09-12 16:50:00', '2026-09-15', '2026-09-12 17:50:00', 'entregue', 1, '2026-12-11', 'NFSe-25161', NULL),
-  (25162, 100, 4, 5, 82199, 'Carro não dá partida', '2026-09-14 13:20:00', '2026-09-17', '2026-09-14 17:20:00', 'entregue', 1, '2026-12-13', 'NFSe-25162', NULL),
-  (25163, 2, 4, 6, 177475, 'Correia dentada no prazo de troca', '2026-09-14 10:40:00', '2026-09-16', '2026-09-14 15:40:00', 'entregue', 1, '2026-12-13', 'NFSe-25163', NULL),
-  (25164, 60, 4, 8, 72744, 'Troca de óleo vencida pela km', '2026-09-14 08:30:00', '2026-09-17', '2026-09-16 09:30:00', 'entregue', 1, '2026-12-15', 'NFSe-25164', NULL),
-  (25165, 84, 4, 5, 85715, 'Barulho ao frear', '2026-09-14 09:00:00', '2026-09-16', '2026-09-15 14:00:00', 'entregue', 1, '2026-12-14', 'NFSe-25165', NULL),
-  (25166, 89, 2, 8, 18564, 'Pedal de freio baixo', '2026-09-14 15:40:00', '2026-09-17', '2026-09-16 17:40:00', 'entregue', 1, '2026-12-15', 'NFSe-25166', NULL),
-  (25167, 28, 4, 8, 87955, 'Troca de óleo vencida pela km', '2026-09-14 12:30:00', '2026-09-15', '2026-09-14 14:30:00', 'entregue', 1, '2026-12-13', 'NFSe-25167', NULL),
-  (25168, 17, 2, 5, 66756, 'Troca de óleo vencida pela km', '2026-09-15 10:10:00', '2026-09-16', '2026-09-18 13:10:00', 'entregue', 1, '2026-12-17', 'NFSe-25168', NULL),
-  (25169, 59, 4, 8, 84839, 'Farol queimado e pane elétrica', '2026-09-15 10:50:00', '2026-09-16', '2026-09-18 11:50:00', 'entregue', 1, '2026-12-17', 'NFSe-25169', NULL),
-  (25170, 116, 4, 5, 179460, 'Troca de óleo vencida pela km', '2026-09-15 14:20:00', '2026-09-18', '2026-09-17 15:20:00', 'entregue', 1, '2026-12-16', 'NFSe-25170', NULL),
-  (25171, 7, 2, 7, 72730, 'Troca de óleo vencida pela km', '2026-09-15 11:10:00', '2026-09-17', '2026-09-15 15:10:00', 'entregue', 1, '2026-12-14', 'NFSe-25171', NULL),
-  (25172, 59, 4, 9, 85682, 'Carro não dá partida', '2026-09-15 09:50:00', '2026-09-16', '2026-09-16 12:50:00', 'entregue', 1, '2026-12-15', 'NFSe-25172', 'Retorno em garantia em 25/09/2026: refeito o serviço ''Troca de bateria'' sem custo; data de entrada mantida (RN05).'),
-  (25173, 55, 4, NULL, 83046, 'Luz de injeção acesa no painel', '2026-09-15 13:40:00', '2026-09-17', NULL, 'cancelada', 0, NULL, NULL, NULL),
-  (25174, 85, 4, 7, 256573, 'Barulho ao frear', '2026-09-16 09:00:00', '2026-09-17', '2026-09-18 12:00:00', 'entregue', 1, '2026-12-17', 'NFSe-25174', NULL),
-  (25175, 91, 4, 6, 40259, 'Revisão dos 40 mil km', '2026-09-16 09:20:00', '2026-09-19', '2026-09-18 14:20:00', 'entregue', 1, '2026-12-17', 'NFSe-25175', NULL),
-  (25176, 32, 4, 8, 77592, 'Estalo na suspensão', '2026-09-16 13:10:00', '2026-09-19', '2026-09-17 18:10:00', 'entregue', 1, '2026-12-16', 'NFSe-25176', 'Retorno em garantia em 22/09/2026: refeito o serviço ''Troca de bieletas'' sem custo; data de entrada mantida (RN05).'),
-  (25177, 87, 4, 8, 129042, 'Troca de óleo vencida pela km', '2026-09-16 11:30:00', '2026-09-18', '2026-09-16 16:30:00', 'entregue', 1, '2026-12-15', 'NFSe-25177', NULL),
-  (25178, 35, 2, 7, 160221, 'Luz de injeção acesa no painel', '2026-09-16 08:20:00', '2026-09-18', '2026-09-18 11:20:00', 'entregue', 1, '2026-12-17', 'NFSe-25178', NULL),
-  (25179, 16, 4, 5, 194760, 'Carro não dá partida', '2026-09-16 14:50:00', '2026-09-19', '2026-09-16 19:50:00', 'entregue', 1, '2026-12-15', 'NFSe-25179', NULL),
-  (25180, 94, 4, 5, 185607, 'Pedal de freio baixo', '2026-09-16 14:50:00', '2026-09-19', '2026-09-17 19:50:00', 'entregue', 1, '2026-12-16', 'NFSe-25180', NULL),
-  (25181, 63, 4, NULL, 122735, 'Barulho ao frear', '2026-09-17 10:20:00', '2026-09-19', NULL, 'cancelada', 0, NULL, NULL, NULL),
-  (25182, 128, 4, 7, 183394, 'Volante treme ao frear', '2026-09-17 09:00:00', '2026-09-19', '2026-09-18 14:00:00', 'entregue', 1, '2026-12-17', 'NFSe-25182', NULL),
-  (25183, 60, 2, 7, 73717, 'Motor esquentando', '2026-09-17 13:30:00', '2026-09-18', '2026-09-17 14:30:00', 'entregue', 1, '2026-12-16', 'NFSe-25183', NULL),
-  (25184, 94, 4, 5, 187632, 'Barulho na suspensão em lombadas', '2026-09-17 14:00:00', '2026-09-18', '2026-09-17 18:00:00', 'entregue', 1, '2026-12-16', 'NFSe-25184', NULL),
-  (25185, 108, 4, NULL, 105066, 'Carro puxando para o lado', '2026-09-17 09:00:00', '2026-09-20', NULL, 'cancelada', 0, NULL, NULL, NULL),
-  (25186, 101, 4, 8, 133900, 'Troca de óleo vencida pela km', '2026-09-18 10:20:00', '2026-09-19', '2026-09-18 13:20:00', 'entregue', 1, '2026-12-17', 'NFSe-25186', NULL),
-  (25187, 55, 4, 6, 83879, 'Carro puxando para o lado', '2026-09-18 11:50:00', '2026-09-19', '2026-09-20 12:50:00', 'entregue', 1, '2026-12-19', 'NFSe-25187', NULL),
-  (25188, 67, 4, 8, 29880, 'Carro falhando na partida', '2026-09-18 11:40:00', '2026-09-20', '2026-09-19 12:40:00', 'entregue', 1, '2026-12-18', 'NFSe-25188', NULL),
-  (25189, 36, 4, 7, 249604, 'Correia dentada no prazo de troca', '2026-09-18 08:20:00', '2026-09-21', '2026-09-19 09:20:00', 'entregue', 1, '2026-12-18', 'NFSe-25189', NULL),
-  (25190, 55, 2, 9, 85323, 'Luz de injeção acesa no painel', '2026-09-18 10:40:00', '2026-09-21', '2026-09-19 11:40:00', 'entregue', 1, '2026-12-18', 'NFSe-25190', NULL),
-  (25191, 8, 2, 5, 145534, 'Barulho ao frear', '2026-09-18 15:50:00', '2026-09-19', '2026-09-18 19:50:00', 'entregue', 1, '2026-12-17', 'NFSe-25191', NULL),
-  (25192, 5, 4, 9, 33002, 'Luz de injeção acesa no painel', '2026-09-19 09:00:00', '2026-09-21', '2026-09-21 12:00:00', 'entregue', 1, '2026-12-20', 'NFSe-25192', NULL),
-  (25193, 19, 4, 5, 85177, 'Troca de óleo vencida pela km', '2026-09-19 09:30:00', '2026-09-21', '2026-09-19 10:30:00', 'entregue', 1, '2026-12-18', 'NFSe-25193', NULL),
-  (25194, 126, 4, 5, 226051, 'Troca de óleo vencida pela km', '2026-09-19 09:40:00', '2026-09-22', '2026-09-22 12:40:00', 'entregue', 1, '2026-12-21', 'NFSe-25194', NULL),
-  (25195, 99, 4, 8, 181995, 'Farol queimado e pane elétrica', '2026-09-21 11:20:00', '2026-09-22', '2026-09-24 15:20:00', 'entregue', 1, '2026-12-23', 'NFSe-25195', NULL),
-  (25196, 107, 4, 5, 229420, 'Troca de óleo vencida pela km', '2026-09-21 13:50:00', '2026-09-24', '2026-09-22 14:50:00', 'entregue', 1, '2026-12-21', 'NFSe-25196', NULL),
-  (25197, 91, 4, 7, 41250, 'Embreagem patinando', '2026-09-21 08:40:00', '2026-09-24', '2026-09-22 13:40:00', 'entregue', 1, '2026-12-21', 'NFSe-25197', NULL),
-  (25198, 55, 4, 9, 87530, 'Motor falhando em marcha lenta', '2026-09-21 12:10:00', '2026-09-22', '2026-09-21 14:10:00', 'entregue', 1, '2026-12-20', 'NFSe-25198', NULL),
-  (25199, 57, 2, 8, 163216, 'Estalo na suspensão', '2026-09-21 08:30:00', '2026-09-22', '2026-09-24 09:30:00', 'entregue', 1, '2026-12-23', 'NFSe-25199', NULL),
-  (25200, 96, 4, 8, 44887, 'Troca de óleo vencida pela km', '2026-09-21 10:00:00', '2026-09-23', '2026-09-22 11:00:00', 'entregue', 1, '2026-12-21', 'NFSe-25200', NULL);
-INSERT INTO ordem_servico (numero_os, id_veiculo, id_atendente, id_mecanico, km_entrada, problema_relatado, data_entrada, data_previsao, data_saida, status, cliente_avisado, garantia_ate, numero_nota_fiscal, observacoes) VALUES
-  (25201, 75, 4, 6, 171084, 'Troca de óleo vencida pela km', '2026-09-22 12:20:00', '2026-09-23', '2026-09-22 13:20:00', 'entregue', 1, '2026-12-21', 'NFSe-25201', NULL),
-  (25202, 129, 2, 8, 245646, 'Troca de óleo vencida pela km', '2026-09-22 13:40:00', '2026-09-24', '2026-09-22 14:40:00', 'entregue', 1, '2026-12-21', 'NFSe-25202', NULL),
-  (25203, 8, 4, 6, 147752, 'Revisão dos 40 mil km', '2026-09-22 08:20:00', '2026-09-25', '2026-09-23 13:20:00', 'entregue', 1, '2026-12-22', 'NFSe-25203', NULL),
-  (25204, 117, 4, 6, 233573, 'Luz de injeção acesa no painel', '2026-09-22 15:30:00', '2026-09-24', '2026-09-24 18:30:00', 'entregue', 1, '2026-12-23', 'NFSe-25204', NULL),
-  (25205, 36, 4, 8, 250409, 'Luz de injeção acesa no painel', '2026-09-22 13:40:00', '2026-09-25', '2026-09-22 15:40:00', 'entregue', 1, '2026-12-21', 'NFSe-25205', NULL),
-  (25206, 36, 4, 8, 252077, 'Motor esquentando', '2026-09-22 11:10:00', '2026-09-23', '2026-09-25 16:10:00', 'entregue', 1, '2026-12-24', 'NFSe-25206', NULL),
-  (25207, 12, 4, 5, 131628, 'Pedal de freio baixo', '2026-09-23 13:10:00', '2026-09-24', '2026-09-26 16:10:00', 'entregue', 1, '2026-12-25', 'NFSe-25207', NULL),
-  (25208, 132, 2, 5, 215907, 'Troca de óleo vencida pela km', '2026-09-23 13:40:00', '2026-09-26', '2026-09-24 18:40:00', 'entregue', 1, '2026-12-23', 'NFSe-25208', NULL),
-  (25209, 5, 2, 5, 35445, 'Estalo na suspensão', '2026-09-23 08:10:00', '2026-09-26', '2026-09-24 10:10:00', 'entregue', 1, '2026-12-23', 'NFSe-25209', NULL),
-  (25210, 69, 4, 9, 161581, 'Troca de óleo vencida pela km', '2026-09-23 08:30:00', '2026-09-25', '2026-09-25 09:30:00', 'entregue', 1, '2026-12-24', 'NFSe-25210', NULL),
-  (25211, 67, 4, 8, 32320, 'Barulho ao frear', '2026-09-23 11:00:00', '2026-09-26', '2026-09-24 12:00:00', 'entregue', 1, '2026-12-23', 'NFSe-25211', NULL),
-  (25212, 72, 4, 7, 77403, 'Barulho ao frear', '2026-09-23 09:00:00', '2026-09-25', '2026-09-25 12:00:00', 'entregue', 1, '2026-12-24', 'NFSe-25212', NULL),
-  (25213, 102, 4, 9, 142525, 'Luz de injeção acesa no painel', '2026-09-24 09:30:00', '2026-09-25', '2026-09-25 12:30:00', 'entregue', 1, '2026-12-24', 'NFSe-25213', NULL),
-  (25214, 60, 2, 5, 74816, 'Carro falhando na partida', '2026-09-24 14:50:00', '2026-09-25', '2026-09-26 16:50:00', 'entregue', 1, '2026-12-25', 'NFSe-25214', NULL),
-  (25215, 56, 4, 5, 104344, 'Barulho ao frear', '2026-09-24 14:10:00', '2026-09-27', '2026-09-24 17:10:00', 'entregue', 1, '2026-12-23', 'NFSe-25215', NULL),
-  (25216, 100, 4, 8, 84207, 'Cheiro ruim no ar-condicionado', '2026-09-24 14:40:00', '2026-09-27', '2026-09-25 15:40:00', 'entregue', 1, '2026-12-24', 'NFSe-25216', NULL),
-  (25217, 13, 4, 6, 237624, 'Luz de injeção acesa no painel', '2026-09-24 15:50:00', '2026-09-26', '2026-09-27 18:50:00', 'entregue', 1, '2026-12-26', 'NFSe-25217', NULL),
-  (25218, 4, 4, 9, 248619, 'Farol queimado e pane elétrica', '2026-09-24 12:20:00', '2026-09-26', '2026-09-25 13:20:00', 'entregue', 1, '2026-12-24', 'NFSe-25218', NULL),
-  (25219, 47, 4, 8, 185949, 'Correia dentada no prazo de troca', '2026-09-25 13:10:00', '2026-09-26', '2026-09-26 17:10:00', 'entregue', 1, '2026-12-25', 'NFSe-25219', NULL),
-  (25220, 115, 4, 6, 250575, 'Estalo na suspensão', '2026-09-25 11:20:00', '2026-09-27', '2026-09-25 16:20:00', 'entregue', 1, '2026-12-24', 'NFSe-25220', NULL),
-  (25221, 118, 4, 7, 195807, 'Barulho na suspensão em lombadas', '2026-09-25 08:00:00', '2026-09-26', '2026-09-25 12:00:00', 'entregue', 1, '2026-12-24', 'NFSe-25221', NULL),
-  (25222, 35, 2, 9, 162685, 'Cheiro ruim no ar-condicionado', '2026-09-25 11:20:00', '2026-09-26', '2026-09-27 13:20:00', 'entregue', 1, '2026-12-26', 'NFSe-25222', NULL),
-  (25223, 40, 4, 6, 216606, 'Folga na direção', '2026-09-25 11:50:00', '2026-09-28', '2026-09-26 13:50:00', 'entregue', 1, '2026-12-25', 'NFSe-25223', NULL),
-  (25224, 88, 4, 5, 69763, 'Correia dentada no prazo de troca', '2026-09-25 13:40:00', '2026-09-26', '2026-09-26 16:40:00', 'entregue', 1, '2026-12-25', 'NFSe-25224', NULL),
-  (25225, 58, 4, 9, 165369, 'Embreagem patinando', '2026-09-26 16:20:00', '2026-09-29', '2026-09-27 21:20:00', 'entregue', 1, '2026-12-26', 'NFSe-25225', NULL),
-  (25226, 108, 4, 7, 106256, 'Embreagem patinando', '2026-09-26 12:50:00', '2026-09-27', '2026-09-27 15:50:00', 'entregue', 1, '2026-12-26', 'NFSe-25226', NULL),
-  (25227, 72, 4, 7, 77706, 'Vazamento de água no motor', '2026-09-26 16:30:00', '2026-09-28', '2026-09-26 19:30:00', 'entregue', 1, '2026-12-25', 'NFSe-25227', NULL),
-  (25228, 97, 4, 5, 62904, 'Revisão dos 40 mil km', '2026-09-28 14:20:00', '2026-09-29', NULL, 'pronta', 1, NULL, NULL, NULL),
-  (25229, 129, 4, 9, 247826, 'Luz de injeção acesa no painel', '2026-09-28 09:50:00', '2026-09-30', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25230, 93, 4, 6, 98390, 'Volante treme ao frear', '2026-09-28 11:20:00', '2026-09-29', '2026-09-29 16:20:00', 'entregue', 1, '2026-12-28', 'NFSe-25230', NULL),
-  (25231, 8, 4, 6, 149831, 'Vazamento de água no motor', '2026-09-28 08:10:00', '2026-09-30', '2026-09-28 13:10:00', 'entregue', 1, '2026-12-27', 'NFSe-25231', NULL),
-  (25232, 48, 4, 5, 16724, 'Barulho na suspensão em lombadas', '2026-09-28 12:10:00', '2026-10-01', NULL, 'pronta', 1, NULL, NULL, NULL),
-  (25233, 3, 4, 8, 196388, 'Volante treme ao frear', '2026-09-28 08:20:00', '2026-09-29', '2026-10-01 07:00:00', 'entregue', 1, '2026-12-30', 'NFSe-25233', NULL),
-  (25234, 73, 4, 5, 18922, 'Correia dentada no prazo de troca', '2026-09-28 16:30:00', '2026-09-30', NULL, 'pronta', 1, NULL, NULL, NULL),
-  (25235, 89, 4, 7, 19157, 'Luz de injeção acesa no painel', '2026-09-29 16:50:00', '2026-10-02', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25236, 54, 4, 5, 195753, 'Correia dentada no prazo de troca', '2026-09-29 15:50:00', '2026-10-02', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25237, 107, 4, 7, 230268, 'Cheiro ruim no ar-condicionado', '2026-09-29 08:20:00', '2026-10-01', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25238, 91, 4, 6, 42049, 'Barulho ao frear', '2026-09-29 15:40:00', '2026-10-01', NULL, 'pronta', 1, NULL, NULL, NULL),
-  (25239, 5, 2, 9, 36589, 'Carro puxando para o lado', '2026-09-29 16:20:00', '2026-09-30', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25240, 106, 4, 5, 190046, 'Revisão dos 40 mil km', '2026-09-29 10:50:00', '2026-09-30', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25241, 15, 4, NULL, 161002, 'Cheiro ruim no ar-condicionado', '2026-09-30 12:30:00', '2026-10-03', NULL, 'aberta', 0, NULL, NULL, NULL),
-  (25242, 18, 2, NULL, 77479, 'Carro puxando para o lado', '2026-09-30 16:10:00', '2026-10-03', NULL, 'aguardando_aprovacao', 0, NULL, NULL, NULL),
-  (25243, 50, 4, 9, 18033, 'Correia dentada no prazo de troca', '2026-09-30 09:20:00', '2026-10-02', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25244, 31, 2, 5, 118648, 'Farol queimado e pane elétrica', '2026-09-30 14:00:00', '2026-10-01', NULL, 'em_execucao', 0, NULL, NULL, NULL),
-  (25245, 124, 4, NULL, 127723, 'Troca de óleo vencida pela km', '2026-09-30 16:40:00', '2026-10-03', NULL, 'aguardando_aprovacao', 0, NULL, NULL, NULL),
-  (25246, 89, 2, NULL, 19949, 'Motor esquentando', '2026-09-30 13:50:00', '2026-10-01', NULL, 'aberta', 0, NULL, NULL, NULL);
+INSERT INTO ordem_servico (numero_os, id_veiculo, id_cliente, id_atendente, id_mecanico, km_entrada, problema_relatado, data_entrada, data_previsao, data_pronta, data_saida, status, cliente_avisado, garantia_ate, numero_nota_fiscal, observacoes) VALUES
+  (25101, 50, 42, 4, 9, 17084, 'Carro puxando para o lado', '2026-09-01 14:20:00', '2026-09-03', '2026-09-03 17:20:00', '2026-09-03 19:20:00', 'entregue', 1, '2026-12-03', 'NFSe-25101', NULL),
+  (25102, 107, 90, 4, 5, 228901, 'Troca de óleo vencida pela km', '2026-09-01 12:40:00', '2026-09-02', '2026-09-04 13:40:00', '2026-09-04 15:40:00', 'entregue', 1, '2026-12-04', 'NFSe-25102', NULL),
+  (25103, 44, 37, 4, 9, 133087, 'Barulho ao frear', '2026-09-01 13:50:00', '2026-09-02', '2026-09-01 14:50:00', '2026-09-01 16:50:00', 'entregue', 1, '2026-12-01', 'NFSe-25103', NULL),
+  (25104, 90, 75, 4, 7, 150847, 'Barulho ao frear', '2026-09-01 15:30:00', '2026-09-04', '2026-09-04 19:30:00', '2026-09-04 21:30:00', 'entregue', 1, '2026-12-04', 'NFSe-25104', NULL),
+  (25105, 9, 8, 4, 9, 217050, 'Revisão dos 40 mil km', '2026-09-01 14:10:00', '2026-09-03', '2026-09-02 19:10:00', '2026-09-02 21:10:00', 'entregue', 1, '2026-12-02', 'NFSe-25105', NULL),
+  (25106, 117, 98, 2, 6, 231758, 'Revisão dos 40 mil km', '2026-09-01 13:00:00', '2026-09-03', '2026-09-02 14:00:00', '2026-09-02 16:00:00', 'entregue', 1, '2026-12-02', 'NFSe-25106', NULL),
+  (25107, 131, 109, 4, 9, 162834, 'Motor esquentando', '2026-09-02 14:20:00', '2026-09-05', '2026-09-02 19:20:00', '2026-09-02 21:20:00', 'entregue', 1, '2026-12-02', 'NFSe-25107', NULL),
+  (25108, 84, 71, 4, 6, 83159, 'Revisão dos 40 mil km', '2026-09-02 08:00:00', '2026-09-05', '2026-09-03 12:00:00', '2026-09-03 14:00:00', 'entregue', 1, '2026-12-03', 'NFSe-25108', 'Retorno em garantia em 08/09/2026: refeito o serviço ''Revisão completa'' sem custo; data de entrada mantida (RN05).'),
+  (25109, 5, 5, 4, 6, 30995, 'Barulho na suspensão em lombadas', '2026-09-02 16:30:00', '2026-09-03', '2026-09-03 19:30:00', '2026-09-03 21:30:00', 'entregue', 1, '2026-12-03', 'NFSe-25109', NULL),
+  (25110, 73, 61, 4, 5, 14812, 'Revisão dos 40 mil km', '2026-09-02 09:30:00', '2026-09-04', '2026-09-03 12:30:00', '2026-09-03 14:30:00', 'entregue', 1, '2026-12-03', 'NFSe-25110', 'Retorno em garantia em 11/09/2026: refeito o serviço ''Revisão completa'' sem custo; data de entrada mantida (RN05).'),
+  (25111, 119, 100, 4, 8, 165365, 'Carro não dá partida', '2026-09-02 16:40:00', '2026-09-03', '2026-09-02 20:40:00', '2026-09-02 22:40:00', 'entregue', 1, '2026-12-02', 'NFSe-25111', 'Retorno em garantia em 11/09/2026: refeito o serviço ''Troca de bateria'' sem custo; data de entrada mantida (RN05).'),
+  (25112, 7, 6, 4, 9, 70391, 'Carro puxando para o lado', '2026-09-02 14:40:00', '2026-09-04', '2026-09-02 17:40:00', '2026-09-02 19:40:00', 'entregue', 1, '2026-12-02', 'NFSe-25112', NULL),
+  (25113, 79, 66, 4, 5, 34394, 'Barulho ao frear', '2026-09-02 14:20:00', '2026-09-03', '2026-09-03 19:20:00', '2026-09-03 21:20:00', 'entregue', 1, '2026-12-03', 'NFSe-25113', NULL),
+  (25114, 6, 6, 4, 7, 146055, 'Luz de injeção acesa no painel', '2026-09-03 16:30:00', '2026-09-06', '2026-09-04 17:30:00', '2026-09-04 19:30:00', 'entregue', 1, '2026-12-04', 'NFSe-25114', NULL),
+  (25115, 9, 8, 4, 6, 218220, 'Vazamento de água no motor', '2026-09-03 11:40:00', '2026-09-05', '2026-09-06 13:40:00', '2026-09-06 15:40:00', 'entregue', 1, '2026-12-06', 'NFSe-25115', NULL),
+  (25116, 44, 37, 4, 5, 135514, 'Barulho ao frear', '2026-09-03 11:50:00', '2026-09-04', '2026-09-04 12:50:00', '2026-09-04 14:50:00', 'entregue', 1, '2026-12-04', 'NFSe-25116', NULL),
+  (25117, 127, 106, 4, 5, 138249, 'Troca de óleo vencida pela km', '2026-09-03 13:00:00', '2026-09-04', '2026-09-05 14:00:00', '2026-09-05 16:00:00', 'entregue', 1, '2026-12-05', 'NFSe-25117', NULL),
+  (25118, 89, 75, 4, 7, 17727, 'Motor esquentando', '2026-09-03 09:20:00', '2026-09-04', '2026-09-03 11:20:00', '2026-09-03 13:20:00', 'entregue', 1, '2026-12-03', 'NFSe-25118', 'Retorno em garantia em 10/09/2026: refeito o serviço ''Troca de líquido de arrefecimento'' sem custo; data de entrada mantida (RN05).'),
+  (25119, 46, 39, 4, 7, 120149, 'Troca de óleo vencida pela km', '2026-09-03 15:40:00', '2026-09-05', '2026-09-04 19:40:00', '2026-09-04 21:40:00', 'entregue', 1, '2026-12-04', 'NFSe-25119', NULL),
+  (25120, 129, 108, 2, 7, 244029, 'Estalo na suspensão', '2026-09-04 10:00:00', '2026-09-06', '2026-09-05 12:00:00', '2026-09-05 14:00:00', 'entregue', 1, '2026-12-05', 'NFSe-25120', NULL),
+  (25121, 84, 71, 4, 6, 83471, 'Revisão dos 40 mil km', '2026-09-04 13:30:00', '2026-09-05', '2026-09-05 15:30:00', '2026-09-05 17:30:00', 'entregue', 1, '2026-12-05', 'NFSe-25121', NULL),
+  (25122, 88, 74, 2, 6, 68095, 'Troca de óleo vencida pela km', '2026-09-04 13:30:00', '2026-09-07', '2026-09-05 15:30:00', '2026-09-05 17:30:00', 'entregue', 1, '2026-12-05', 'NFSe-25122', NULL),
+  (25123, 14, 12, 4, 9, 216727, 'Revisão dos 40 mil km', '2026-09-04 16:20:00', '2026-09-05', '2026-09-05 18:20:00', '2026-09-05 20:20:00', 'entregue', 1, '2026-12-05', 'NFSe-25123', NULL),
+  (25124, 80, 67, 4, 6, 158143, 'Correia dentada no prazo de troca', '2026-09-04 08:40:00', '2026-09-05', '2026-09-07 11:40:00', '2026-09-07 13:40:00', 'entregue', 1, '2026-12-07', 'NFSe-25124', NULL),
+  (25125, 73, 61, 4, 5, 16667, 'Barulho ao frear', '2026-09-04 09:40:00', '2026-09-07', '2026-09-04 13:40:00', '2026-09-04 15:40:00', 'entregue', 1, '2026-12-04', 'NFSe-25125', NULL),
+  (25126, 111, 93, 4, NULL, 130168, 'Vazamento de água no motor', '2026-09-05 13:00:00', '2026-09-07', NULL, NULL, 'cancelada', 0, NULL, NULL, NULL),
+  (25127, 115, 96, 4, 6, 248343, 'Cheiro ruim no ar-condicionado', '2026-09-05 14:20:00', '2026-09-06', '2026-09-07 17:20:00', '2026-09-07 19:20:00', 'entregue', 1, '2026-12-07', 'NFSe-25127', NULL),
+  (25128, 3, 3, 2, 5, 194734, 'Farol queimado e pane elétrica', '2026-09-05 13:00:00', '2026-09-07', '2026-09-05 14:00:00', '2026-09-05 16:00:00', 'entregue', 1, '2026-12-05', 'NFSe-25128', NULL),
+  (25129, 64, 54, 4, 7, 90349, 'Farol queimado e pane elétrica', '2026-09-07 14:50:00', '2026-09-10', '2026-09-07 18:50:00', '2026-09-07 20:50:00', 'entregue', 1, '2026-12-07', 'NFSe-25129', NULL),
+  (25130, 97, 81, 4, 8, 62391, 'Troca de óleo vencida pela km', '2026-09-07 12:00:00', '2026-09-10', '2026-09-10 17:00:00', '2026-09-10 19:00:00', 'entregue', 1, '2026-12-10', 'NFSe-25130', NULL),
+  (25131, 20, 17, 4, 7, 56061, 'Barulho ao frear', '2026-09-07 11:20:00', '2026-09-08', '2026-09-07 13:20:00', '2026-09-07 15:20:00', 'entregue', 1, '2026-12-07', 'NFSe-25131', NULL),
+  (25132, 127, 106, 4, 5, 139542, 'Barulho ao frear', '2026-09-07 12:00:00', '2026-09-08', '2026-09-08 13:00:00', '2026-09-08 15:00:00', 'entregue', 1, '2026-12-08', 'NFSe-25132', NULL),
+  (25133, 109, 91, 4, 6, 255681, 'Troca de óleo vencida pela km', '2026-09-07 09:50:00', '2026-09-10', '2026-09-07 14:50:00', '2026-09-07 16:50:00', 'entregue', 1, '2026-12-07', 'NFSe-25133', NULL),
+  (25134, 81, 68, 4, 8, 173667, 'Carro puxando para o lado', '2026-09-07 09:50:00', '2026-09-10', '2026-09-07 10:50:00', '2026-09-07 12:50:00', 'entregue', 1, '2026-12-07', 'NFSe-25134', NULL),
+  (25135, 90, 75, 4, 7, 151503, 'Carro puxando para o lado', '2026-09-08 13:40:00', '2026-09-11', '2026-09-09 18:40:00', '2026-09-09 20:40:00', 'entregue', 1, '2026-12-09', 'NFSe-25135', NULL),
+  (25136, 130, 108, 4, 9, 146486, 'Cheiro ruim no ar-condicionado', '2026-09-08 10:20:00', '2026-09-11', '2026-09-09 13:20:00', '2026-09-09 15:20:00', 'entregue', 1, '2026-12-09', 'NFSe-25136', NULL),
+  (25137, 21, 18, 2, 5, 93554, 'Farol queimado e pane elétrica', '2026-09-08 16:50:00', '2026-09-10', '2026-09-09 19:50:00', '2026-09-09 21:50:00', 'entregue', 1, '2026-12-09', 'NFSe-25137', NULL),
+  (25138, 2, 2, 4, 8, 175072, 'Motor esquentando', '2026-09-08 14:10:00', '2026-09-09', '2026-09-09 17:10:00', '2026-09-09 19:10:00', 'entregue', 1, '2026-12-09', 'NFSe-25138', NULL),
+  (25139, 98, 82, 4, 9, 89359, 'Troca de óleo vencida pela km', '2026-09-08 12:50:00', '2026-09-11', '2026-09-09 14:50:00', '2026-09-09 16:50:00', 'entregue', 1, '2026-12-09', 'NFSe-25139', NULL),
+  (25140, 40, 34, 4, 5, 214789, 'Troca de óleo vencida pela km', '2026-09-08 08:50:00', '2026-09-11', '2026-09-11 11:50:00', '2026-09-11 13:50:00', 'entregue', 1, '2026-12-11', 'NFSe-25140', NULL),
+  (25141, 119, 100, 4, 7, 165930, 'Cheiro ruim no ar-condicionado', '2026-09-08 10:50:00', '2026-09-11', '2026-09-10 11:50:00', '2026-09-10 13:50:00', 'entregue', 1, '2026-12-10', 'NFSe-25141', NULL),
+  (25142, 108, 90, 4, 9, 103347, 'Revisão dos 40 mil km', '2026-09-09 14:50:00', '2026-09-10', '2026-09-10 17:50:00', '2026-09-10 19:50:00', 'entregue', 1, '2026-12-10', 'NFSe-25142', NULL),
+  (25143, 100, 84, 4, 8, 79844, 'Carro puxando para o lado', '2026-09-09 15:40:00', '2026-09-11', '2026-09-10 19:40:00', '2026-09-10 21:40:00', 'entregue', 1, '2026-12-10', 'NFSe-25143', NULL),
+  (25144, 81, 68, 4, 9, 174577, 'Troca de óleo vencida pela km', '2026-09-09 10:40:00', '2026-09-10', '2026-09-10 11:40:00', '2026-09-10 13:40:00', 'entregue', 1, '2026-12-10', 'NFSe-25144', NULL),
+  (25145, 130, 108, 4, 8, 147518, 'Correia dentada no prazo de troca', '2026-09-09 10:30:00', '2026-09-11', '2026-09-12 13:30:00', '2026-09-12 15:30:00', 'entregue', 1, '2026-12-12', 'NFSe-25145', NULL),
+  (25146, 25, 21, 4, 5, 95752, 'Carro puxando para o lado', '2026-09-09 15:20:00', '2026-09-12', '2026-09-09 18:20:00', '2026-09-09 20:20:00', 'entregue', 1, '2026-12-09', 'NFSe-25146', NULL),
+  (25147, 67, 56, 4, 8, 27422, 'Troca de óleo vencida pela km', '2026-09-10 08:00:00', '2026-09-13', '2026-09-10 13:00:00', '2026-09-10 15:00:00', 'entregue', 1, '2026-12-10', 'NFSe-25147', NULL),
+  (25148, 83, 70, 4, 8, 151662, 'Luz de injeção acesa no painel', '2026-09-10 16:10:00', '2026-09-13', '2026-09-11 19:10:00', '2026-09-11 21:10:00', 'entregue', 1, '2026-12-11', 'NFSe-25148', NULL),
+  (25149, 72, 60, 4, 8, 75815, 'Estalo na suspensão', '2026-09-10 14:00:00', '2026-09-13', '2026-09-11 18:00:00', '2026-09-11 20:00:00', 'entregue', 1, '2026-12-11', 'NFSe-25149', NULL),
+  (25150, 39, 33, 4, 6, 257119, 'Barulho ao frear', '2026-09-10 11:10:00', '2026-09-12', '2026-09-13 15:10:00', '2026-09-13 17:10:00', 'entregue', 1, '2026-12-13', 'NFSe-25150', NULL);
+INSERT INTO ordem_servico (numero_os, id_veiculo, id_cliente, id_atendente, id_mecanico, km_entrada, problema_relatado, data_entrada, data_previsao, data_pronta, data_saida, status, cliente_avisado, garantia_ate, numero_nota_fiscal, observacoes) VALUES
+  (25151, 59, 49, 4, 9, 82454, 'Troca de óleo vencida pela km', '2026-09-10 13:20:00', '2026-09-11', '2026-09-13 17:20:00', '2026-09-13 19:20:00', 'entregue', 1, '2026-12-13', 'NFSe-25151', NULL),
+  (25152, 95, 79, 4, 8, 100096, 'Troca de óleo vencida pela km', '2026-09-10 13:50:00', '2026-09-11', '2026-09-11 16:50:00', '2026-09-11 18:50:00', 'entregue', 1, '2026-12-11', 'NFSe-25152', NULL),
+  (25153, 51, 43, 4, 8, 38556, 'Carro puxando para o lado', '2026-09-10 11:50:00', '2026-09-12', '2026-09-11 16:50:00', '2026-09-11 18:50:00', 'entregue', 1, '2026-12-11', 'NFSe-25153', NULL),
+  (25154, 17, 15, 4, 5, 64905, 'Barulho na suspensão em lombadas', '2026-09-11 09:50:00', '2026-09-12', '2026-09-14 13:50:00', '2026-09-14 15:50:00', 'entregue', 1, '2026-12-14', 'NFSe-25154', NULL),
+  (25155, 48, 41, 4, 8, 15478, 'Revisão dos 40 mil km', '2026-09-11 14:30:00', '2026-09-12', '2026-09-12 15:30:00', '2026-09-12 17:30:00', 'entregue', 1, '2026-12-12', 'NFSe-25155', NULL),
+  (25156, 132, 110, 4, 6, 213773, 'Cheiro ruim no ar-condicionado', '2026-09-11 15:10:00', '2026-09-12', '2026-09-12 16:10:00', '2026-09-12 18:10:00', 'entregue', 1, '2026-12-12', 'NFSe-25156', NULL),
+  (25157, 111, 93, 4, NULL, 132584, 'Barulho ao frear', '2026-09-11 14:20:00', '2026-09-13', NULL, NULL, 'cancelada', 0, NULL, NULL, NULL),
+  (25158, 65, 54, 4, 9, 34097, 'Chiado no motor ao ligar', '2026-09-11 15:30:00', '2026-09-13', '2026-09-13 20:30:00', '2026-09-13 22:30:00', 'entregue', 1, '2026-12-13', 'NFSe-25158', NULL),
+  (25159, 120, 101, 4, 6, 73988, 'Troca de óleo vencida pela km', '2026-09-12 08:50:00', '2026-09-15', '2026-09-14 09:50:00', '2026-09-14 11:50:00', 'entregue', 1, '2026-12-14', 'NFSe-25159', NULL),
+  (25160, 80, 67, 4, 6, 160430, 'Troca de óleo vencida pela km', '2026-09-12 10:00:00', '2026-09-15', '2026-09-13 14:00:00', '2026-09-13 16:00:00', 'entregue', 1, '2026-12-13', 'NFSe-25160', NULL),
+  (25161, 81, 68, 4, 9, 175760, 'Farol queimado e pane elétrica', '2026-09-12 16:50:00', '2026-09-15', '2026-09-12 17:50:00', '2026-09-12 19:50:00', 'entregue', 1, '2026-12-12', 'NFSe-25161', NULL),
+  (25162, 100, 84, 4, 5, 82199, 'Carro não dá partida', '2026-09-14 13:20:00', '2026-09-17', '2026-09-14 17:20:00', '2026-09-14 19:20:00', 'entregue', 1, '2026-12-14', 'NFSe-25162', NULL),
+  (25163, 2, 2, 4, 6, 177475, 'Correia dentada no prazo de troca', '2026-09-14 10:40:00', '2026-09-16', '2026-09-14 15:40:00', '2026-09-14 17:40:00', 'entregue', 1, '2026-12-14', 'NFSe-25163', NULL),
+  (25164, 60, 50, 4, 8, 72744, 'Troca de óleo vencida pela km', '2026-09-14 08:30:00', '2026-09-17', '2026-09-16 09:30:00', '2026-09-16 11:30:00', 'entregue', 1, '2026-12-16', 'NFSe-25164', NULL),
+  (25165, 84, 71, 4, 5, 85715, 'Barulho ao frear', '2026-09-14 09:00:00', '2026-09-16', '2026-09-15 14:00:00', '2026-09-15 16:00:00', 'entregue', 1, '2026-12-15', 'NFSe-25165', NULL),
+  (25166, 89, 75, 2, 8, 18564, 'Pedal de freio baixo', '2026-09-14 15:40:00', '2026-09-17', '2026-09-16 17:40:00', '2026-09-16 19:40:00', 'entregue', 1, '2026-12-16', 'NFSe-25166', NULL),
+  (25167, 28, 24, 4, 8, 87955, 'Troca de óleo vencida pela km', '2026-09-14 12:30:00', '2026-09-15', '2026-09-14 14:30:00', '2026-09-14 16:30:00', 'entregue', 1, '2026-12-14', 'NFSe-25167', NULL),
+  (25168, 17, 15, 2, 5, 66756, 'Troca de óleo vencida pela km', '2026-09-15 10:10:00', '2026-09-16', '2026-09-18 13:10:00', '2026-09-18 15:10:00', 'entregue', 1, '2026-12-18', 'NFSe-25168', NULL),
+  (25169, 59, 49, 4, 8, 84839, 'Farol queimado e pane elétrica', '2026-09-15 10:50:00', '2026-09-16', '2026-09-18 11:50:00', '2026-09-18 13:50:00', 'entregue', 1, '2026-12-18', 'NFSe-25169', NULL),
+  (25170, 116, 97, 4, 5, 179460, 'Troca de óleo vencida pela km', '2026-09-15 14:20:00', '2026-09-18', '2026-09-17 15:20:00', '2026-09-17 17:20:00', 'entregue', 1, '2026-12-17', 'NFSe-25170', NULL),
+  (25171, 7, 6, 2, 7, 72730, 'Troca de óleo vencida pela km', '2026-09-15 11:10:00', '2026-09-17', '2026-09-15 15:10:00', '2026-09-15 17:10:00', 'entregue', 1, '2026-12-15', 'NFSe-25171', NULL),
+  (25172, 59, 49, 4, 9, 85682, 'Carro não dá partida', '2026-09-15 09:50:00', '2026-09-16', '2026-09-16 12:50:00', '2026-09-16 14:50:00', 'entregue', 1, '2026-12-16', 'NFSe-25172', 'Retorno em garantia em 25/09/2026: refeito o serviço ''Troca de bateria'' sem custo; data de entrada mantida (RN05).'),
+  (25173, 55, 46, 4, NULL, 83046, 'Luz de injeção acesa no painel', '2026-09-15 13:40:00', '2026-09-17', NULL, NULL, 'cancelada', 0, NULL, NULL, NULL),
+  (25174, 85, 72, 4, 7, 256573, 'Barulho ao frear', '2026-09-16 09:00:00', '2026-09-17', '2026-09-18 12:00:00', '2026-09-18 14:00:00', 'entregue', 1, '2026-12-18', 'NFSe-25174', NULL),
+  (25175, 91, 76, 4, 6, 40259, 'Revisão dos 40 mil km', '2026-09-16 09:20:00', '2026-09-19', '2026-09-18 14:20:00', '2026-09-18 16:20:00', 'entregue', 1, '2026-12-18', 'NFSe-25175', NULL),
+  (25176, 32, 27, 4, 8, 77592, 'Estalo na suspensão', '2026-09-16 13:10:00', '2026-09-19', '2026-09-17 18:10:00', '2026-09-17 20:10:00', 'entregue', 1, '2026-12-17', 'NFSe-25176', 'Retorno em garantia em 22/09/2026: refeito o serviço ''Troca de bieletas'' sem custo; data de entrada mantida (RN05).'),
+  (25177, 87, 73, 4, 8, 129042, 'Troca de óleo vencida pela km', '2026-09-16 11:30:00', '2026-09-18', '2026-09-16 16:30:00', '2026-09-16 18:30:00', 'entregue', 1, '2026-12-16', 'NFSe-25177', NULL),
+  (25178, 35, 30, 2, 7, 160221, 'Luz de injeção acesa no painel', '2026-09-16 08:20:00', '2026-09-18', '2026-09-18 11:20:00', '2026-09-18 13:20:00', 'entregue', 1, '2026-12-18', 'NFSe-25178', NULL),
+  (25179, 16, 14, 4, 5, 194760, 'Carro não dá partida', '2026-09-16 14:50:00', '2026-09-19', '2026-09-16 19:50:00', '2026-09-16 21:50:00', 'entregue', 1, '2026-12-16', 'NFSe-25179', NULL),
+  (25180, 94, 78, 4, 5, 185607, 'Pedal de freio baixo', '2026-09-16 14:50:00', '2026-09-19', '2026-09-17 19:50:00', '2026-09-17 21:50:00', 'entregue', 1, '2026-12-17', 'NFSe-25180', NULL),
+  (25181, 63, 53, 4, NULL, 122735, 'Barulho ao frear', '2026-09-17 10:20:00', '2026-09-19', NULL, NULL, 'cancelada', 0, NULL, NULL, NULL),
+  (25182, 128, 107, 4, 7, 183394, 'Volante treme ao frear', '2026-09-17 09:00:00', '2026-09-19', '2026-09-18 14:00:00', '2026-09-18 16:00:00', 'entregue', 1, '2026-12-18', 'NFSe-25182', NULL),
+  (25183, 60, 50, 2, 7, 73717, 'Motor esquentando', '2026-09-17 13:30:00', '2026-09-18', '2026-09-17 14:30:00', '2026-09-17 16:30:00', 'entregue', 1, '2026-12-17', 'NFSe-25183', NULL),
+  (25184, 94, 78, 4, 5, 187632, 'Barulho na suspensão em lombadas', '2026-09-17 14:00:00', '2026-09-18', '2026-09-17 18:00:00', '2026-09-17 20:00:00', 'entregue', 1, '2026-12-17', 'NFSe-25184', NULL),
+  (25185, 108, 90, 4, NULL, 105066, 'Carro puxando para o lado', '2026-09-17 09:00:00', '2026-09-20', NULL, NULL, 'cancelada', 0, NULL, NULL, NULL),
+  (25186, 101, 84, 4, 8, 133900, 'Troca de óleo vencida pela km', '2026-09-18 10:20:00', '2026-09-19', '2026-09-18 13:20:00', '2026-09-18 15:20:00', 'entregue', 1, '2026-12-18', 'NFSe-25186', NULL),
+  (25187, 55, 46, 4, 6, 83879, 'Carro puxando para o lado', '2026-09-18 11:50:00', '2026-09-19', '2026-09-20 12:50:00', '2026-09-20 14:50:00', 'entregue', 1, '2026-12-20', 'NFSe-25187', NULL),
+  (25188, 67, 56, 4, 8, 29880, 'Carro falhando na partida', '2026-09-18 11:40:00', '2026-09-20', '2026-09-19 12:40:00', '2026-09-19 14:40:00', 'entregue', 1, '2026-12-19', 'NFSe-25188', NULL),
+  (25189, 36, 30, 4, 7, 249604, 'Correia dentada no prazo de troca', '2026-09-18 08:20:00', '2026-09-21', '2026-09-19 09:20:00', '2026-09-19 11:20:00', 'entregue', 1, '2026-12-19', 'NFSe-25189', NULL),
+  (25190, 55, 46, 2, 9, 85323, 'Luz de injeção acesa no painel', '2026-09-18 10:40:00', '2026-09-21', '2026-09-19 11:40:00', '2026-09-19 13:40:00', 'entregue', 1, '2026-12-19', 'NFSe-25190', NULL),
+  (25191, 8, 7, 2, 5, 145534, 'Barulho ao frear', '2026-09-18 15:50:00', '2026-09-19', '2026-09-18 19:50:00', '2026-09-18 21:50:00', 'entregue', 1, '2026-12-18', 'NFSe-25191', NULL),
+  (25192, 5, 5, 4, 9, 33002, 'Luz de injeção acesa no painel', '2026-09-19 09:00:00', '2026-09-21', '2026-09-21 12:00:00', '2026-09-21 14:00:00', 'entregue', 1, '2026-12-21', 'NFSe-25192', NULL),
+  (25193, 19, 16, 4, 5, 85177, 'Troca de óleo vencida pela km', '2026-09-19 09:30:00', '2026-09-21', '2026-09-19 10:30:00', '2026-09-19 12:30:00', 'entregue', 1, '2026-12-19', 'NFSe-25193', NULL),
+  (25194, 126, 105, 4, 5, 226051, 'Troca de óleo vencida pela km', '2026-09-19 09:40:00', '2026-09-22', '2026-09-22 12:40:00', '2026-09-22 14:40:00', 'entregue', 1, '2026-12-22', 'NFSe-25194', NULL),
+  (25195, 99, 83, 4, 8, 181995, 'Farol queimado e pane elétrica', '2026-09-21 11:20:00', '2026-09-22', '2026-09-24 15:20:00', '2026-09-24 17:20:00', 'entregue', 1, '2026-12-24', 'NFSe-25195', NULL),
+  (25196, 107, 90, 4, 5, 229420, 'Troca de óleo vencida pela km', '2026-09-21 13:50:00', '2026-09-24', '2026-09-22 14:50:00', '2026-09-22 16:50:00', 'entregue', 1, '2026-12-22', 'NFSe-25196', NULL),
+  (25197, 91, 76, 4, 7, 41250, 'Embreagem patinando', '2026-09-21 08:40:00', '2026-09-24', '2026-09-22 13:40:00', '2026-09-22 15:40:00', 'entregue', 1, '2026-12-22', 'NFSe-25197', NULL),
+  (25198, 55, 46, 4, 9, 87530, 'Motor falhando em marcha lenta', '2026-09-21 12:10:00', '2026-09-22', '2026-09-21 14:10:00', '2026-09-21 16:10:00', 'entregue', 1, '2026-12-21', 'NFSe-25198', NULL),
+  (25199, 57, 48, 2, 8, 163216, 'Estalo na suspensão', '2026-09-21 08:30:00', '2026-09-22', '2026-09-24 09:30:00', '2026-09-24 11:30:00', 'entregue', 1, '2026-12-24', 'NFSe-25199', NULL),
+  (25200, 96, 80, 4, 8, 44887, 'Troca de óleo vencida pela km', '2026-09-21 10:00:00', '2026-09-23', '2026-09-22 11:00:00', '2026-09-22 13:00:00', 'entregue', 1, '2026-12-22', 'NFSe-25200', NULL);
+INSERT INTO ordem_servico (numero_os, id_veiculo, id_cliente, id_atendente, id_mecanico, km_entrada, problema_relatado, data_entrada, data_previsao, data_pronta, data_saida, status, cliente_avisado, garantia_ate, numero_nota_fiscal, observacoes) VALUES
+  (25201, 75, 63, 4, 6, 171084, 'Troca de óleo vencida pela km', '2026-09-22 12:20:00', '2026-09-23', '2026-09-22 13:20:00', '2026-09-22 15:20:00', 'entregue', 1, '2026-12-22', 'NFSe-25201', NULL),
+  (25202, 129, 108, 2, 8, 245646, 'Troca de óleo vencida pela km', '2026-09-22 13:40:00', '2026-09-24', '2026-09-22 14:40:00', '2026-09-22 16:40:00', 'entregue', 1, '2026-12-22', 'NFSe-25202', NULL),
+  (25203, 8, 7, 4, 6, 147752, 'Revisão dos 40 mil km', '2026-09-22 08:20:00', '2026-09-25', '2026-09-23 13:20:00', '2026-09-23 15:20:00', 'entregue', 1, '2026-12-23', 'NFSe-25203', NULL),
+  (25204, 117, 98, 4, 6, 233573, 'Luz de injeção acesa no painel', '2026-09-22 15:30:00', '2026-09-24', '2026-09-24 18:30:00', '2026-09-24 20:30:00', 'entregue', 1, '2026-12-24', 'NFSe-25204', NULL),
+  (25205, 36, 30, 4, 8, 250409, 'Luz de injeção acesa no painel', '2026-09-22 13:40:00', '2026-09-25', '2026-09-22 15:40:00', '2026-09-22 17:40:00', 'entregue', 1, '2026-12-22', 'NFSe-25205', NULL),
+  (25206, 36, 30, 4, 8, 252077, 'Motor esquentando', '2026-09-22 11:10:00', '2026-09-23', '2026-09-25 16:10:00', '2026-09-25 18:10:00', 'entregue', 1, '2026-12-25', 'NFSe-25206', NULL),
+  (25207, 12, 11, 4, 5, 131628, 'Pedal de freio baixo', '2026-09-23 13:10:00', '2026-09-24', '2026-09-26 16:10:00', '2026-09-26 18:10:00', 'entregue', 1, '2026-12-26', 'NFSe-25207', NULL),
+  (25208, 132, 110, 2, 5, 215907, 'Troca de óleo vencida pela km', '2026-09-23 13:40:00', '2026-09-26', '2026-09-24 18:40:00', '2026-09-24 20:40:00', 'entregue', 1, '2026-12-24', 'NFSe-25208', NULL),
+  (25209, 5, 5, 2, 5, 35445, 'Estalo na suspensão', '2026-09-23 08:10:00', '2026-09-26', '2026-09-24 10:10:00', '2026-09-24 12:10:00', 'entregue', 1, '2026-12-24', 'NFSe-25209', NULL),
+  (25210, 69, 58, 4, 9, 161581, 'Troca de óleo vencida pela km', '2026-09-23 08:30:00', '2026-09-25', '2026-09-25 09:30:00', '2026-09-25 11:30:00', 'entregue', 1, '2026-12-25', 'NFSe-25210', NULL),
+  (25211, 67, 56, 4, 8, 32320, 'Barulho ao frear', '2026-09-23 11:00:00', '2026-09-26', '2026-09-24 12:00:00', '2026-09-24 14:00:00', 'entregue', 1, '2026-12-24', 'NFSe-25211', NULL),
+  (25212, 72, 60, 4, 7, 77403, 'Barulho ao frear', '2026-09-23 09:00:00', '2026-09-25', '2026-09-25 12:00:00', '2026-09-25 14:00:00', 'entregue', 1, '2026-12-25', 'NFSe-25212', NULL),
+  (25213, 102, 85, 4, 9, 142525, 'Luz de injeção acesa no painel', '2026-09-24 09:30:00', '2026-09-25', '2026-09-25 12:30:00', '2026-09-25 14:30:00', 'entregue', 1, '2026-12-25', 'NFSe-25213', NULL),
+  (25214, 60, 50, 2, 5, 74816, 'Carro falhando na partida', '2026-09-24 14:50:00', '2026-09-25', '2026-09-26 16:50:00', '2026-09-26 18:50:00', 'entregue', 1, '2026-12-26', 'NFSe-25214', NULL),
+  (25215, 56, 47, 4, 5, 104344, 'Barulho ao frear', '2026-09-24 14:10:00', '2026-09-27', '2026-09-24 17:10:00', '2026-09-24 19:10:00', 'entregue', 1, '2026-12-24', 'NFSe-25215', NULL),
+  (25216, 100, 84, 4, 8, 84207, 'Cheiro ruim no ar-condicionado', '2026-09-24 14:40:00', '2026-09-27', '2026-09-25 15:40:00', '2026-09-25 17:40:00', 'entregue', 1, '2026-12-25', 'NFSe-25216', NULL),
+  (25217, 13, 12, 4, 6, 237624, 'Luz de injeção acesa no painel', '2026-09-24 15:50:00', '2026-09-26', '2026-09-27 18:50:00', '2026-09-27 20:50:00', 'entregue', 1, '2026-12-27', 'NFSe-25217', NULL),
+  (25218, 4, 4, 4, 9, 248619, 'Farol queimado e pane elétrica', '2026-09-24 12:20:00', '2026-09-26', '2026-09-25 13:20:00', '2026-09-25 15:20:00', 'entregue', 1, '2026-12-25', 'NFSe-25218', NULL),
+  (25219, 47, 40, 4, 8, 185949, 'Correia dentada no prazo de troca', '2026-09-25 13:10:00', '2026-09-26', '2026-09-26 17:10:00', '2026-09-26 19:10:00', 'entregue', 1, '2026-12-26', 'NFSe-25219', NULL),
+  (25220, 115, 96, 4, 6, 250575, 'Estalo na suspensão', '2026-09-25 11:20:00', '2026-09-27', '2026-09-25 16:20:00', '2026-09-25 18:20:00', 'entregue', 1, '2026-12-25', 'NFSe-25220', NULL),
+  (25221, 118, 99, 4, 7, 195807, 'Barulho na suspensão em lombadas', '2026-09-25 08:00:00', '2026-09-26', '2026-09-25 12:00:00', '2026-09-25 14:00:00', 'entregue', 1, '2026-12-25', 'NFSe-25221', NULL),
+  (25222, 35, 30, 2, 9, 162685, 'Cheiro ruim no ar-condicionado', '2026-09-25 11:20:00', '2026-09-26', '2026-09-27 13:20:00', '2026-09-27 15:20:00', 'entregue', 1, '2026-12-27', 'NFSe-25222', NULL),
+  (25223, 40, 34, 4, 6, 216606, 'Folga na direção', '2026-09-25 11:50:00', '2026-09-28', '2026-09-26 13:50:00', '2026-09-26 15:50:00', 'entregue', 1, '2026-12-26', 'NFSe-25223', NULL),
+  (25224, 88, 74, 4, 5, 69763, 'Correia dentada no prazo de troca', '2026-09-25 13:40:00', '2026-09-26', '2026-09-26 16:40:00', '2026-09-26 18:40:00', 'entregue', 1, '2026-12-26', 'NFSe-25224', NULL),
+  (25225, 58, 48, 4, 9, 165369, 'Embreagem patinando', '2026-09-26 16:20:00', '2026-09-29', '2026-09-27 21:20:00', '2026-09-27 23:20:00', 'entregue', 1, '2026-12-27', 'NFSe-25225', NULL),
+  (25226, 108, 90, 4, 7, 106256, 'Embreagem patinando', '2026-09-26 12:50:00', '2026-09-27', '2026-09-27 15:50:00', '2026-09-27 17:50:00', 'entregue', 1, '2026-12-27', 'NFSe-25226', NULL),
+  (25227, 72, 60, 4, 7, 77706, 'Vazamento de água no motor', '2026-09-26 16:30:00', '2026-09-28', '2026-09-26 19:30:00', '2026-09-26 21:30:00', 'entregue', 1, '2026-12-26', 'NFSe-25227', NULL),
+  (25228, 97, 81, 4, 5, 62904, 'Revisão dos 40 mil km', '2026-09-28 14:20:00', '2026-09-29', '2026-10-01 07:00:00', NULL, 'pronta', 1, NULL, NULL, NULL),
+  (25229, 129, 108, 4, 9, 247826, 'Luz de injeção acesa no painel', '2026-09-28 09:50:00', '2026-09-30', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25230, 93, 78, 4, 6, 98390, 'Volante treme ao frear', '2026-09-28 11:20:00', '2026-09-29', '2026-09-29 16:20:00', '2026-09-29 18:20:00', 'entregue', 1, '2026-12-29', 'NFSe-25230', NULL),
+  (25231, 8, 7, 4, 6, 149831, 'Vazamento de água no motor', '2026-09-28 08:10:00', '2026-09-30', '2026-09-28 13:10:00', '2026-09-28 15:10:00', 'entregue', 1, '2026-12-28', 'NFSe-25231', NULL),
+  (25232, 48, 41, 4, 5, 16724, 'Barulho na suspensão em lombadas', '2026-09-28 12:10:00', '2026-10-01', '2026-10-01 07:00:00', NULL, 'pronta', 1, NULL, NULL, NULL),
+  (25233, 3, 3, 4, 8, 196388, 'Volante treme ao frear', '2026-09-28 08:20:00', '2026-09-29', '2026-10-01 07:00:00', '2026-10-01 07:30:00', 'entregue', 1, '2027-01-01', 'NFSe-25233', NULL),
+  (25234, 73, 61, 4, 5, 18922, 'Correia dentada no prazo de troca', '2026-09-28 16:30:00', '2026-09-30', '2026-09-29 17:30:00', NULL, 'pronta', 1, NULL, NULL, NULL),
+  (25235, 89, 75, 4, 7, 19157, 'Luz de injeção acesa no painel', '2026-09-29 16:50:00', '2026-10-02', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25236, 54, 45, 4, 5, 195753, 'Correia dentada no prazo de troca', '2026-09-29 15:50:00', '2026-10-02', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25237, 107, 90, 4, 7, 230268, 'Cheiro ruim no ar-condicionado', '2026-09-29 08:20:00', '2026-10-01', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25238, 91, 76, 4, 6, 42049, 'Barulho ao frear', '2026-09-29 15:40:00', '2026-10-01', '2026-09-30 18:40:00', NULL, 'pronta', 1, NULL, NULL, NULL),
+  (25239, 5, 5, 2, 9, 36589, 'Carro puxando para o lado', '2026-09-29 16:20:00', '2026-09-30', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25240, 106, 89, 4, 5, 190046, 'Revisão dos 40 mil km', '2026-09-29 10:50:00', '2026-09-30', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25241, 15, 13, 4, NULL, 161002, 'Cheiro ruim no ar-condicionado', '2026-09-30 12:30:00', '2026-10-03', NULL, NULL, 'aberta', 0, NULL, NULL, NULL),
+  (25242, 18, 15, 2, NULL, 77479, 'Carro puxando para o lado', '2026-09-30 16:10:00', '2026-10-03', NULL, NULL, 'aguardando_aprovacao', 0, NULL, NULL, NULL),
+  (25243, 50, 42, 4, 9, 18033, 'Correia dentada no prazo de troca', '2026-09-30 09:20:00', '2026-10-02', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25244, 31, 26, 2, 5, 118648, 'Farol queimado e pane elétrica', '2026-09-30 14:00:00', '2026-10-01', NULL, NULL, 'em_execucao', 0, NULL, NULL, NULL),
+  (25245, 124, 104, 4, NULL, 127723, 'Troca de óleo vencida pela km', '2026-09-30 16:40:00', '2026-10-03', NULL, NULL, 'aguardando_aprovacao', 0, NULL, NULL, NULL),
+  (25246, 89, 75, 2, NULL, 19949, 'Motor esquentando', '2026-09-30 13:50:00', '2026-10-01', NULL, NULL, 'aberta', 0, NULL, NULL, NULL);
 
 INSERT INTO orcamento (id_os, id_funcionario, data_orcamento, valor_total, status, data_decisao, observacoes) VALUES
   (1, 2, '2026-09-01 16:20:00', 135.00, 'aprovado', '2026-09-01 19:20:00', NULL),
@@ -1438,14 +1447,14 @@ INSERT INTO item_peca (id_os, id_peca, origem, descricao_peca_cliente, quantidad
   (144, 18, 'oficina', NULL, 1, 28.00);
 
 INSERT INTO compra (id_fornecedor, id_funcionario, data_compra, numero_nota_fiscal, data_recebimento, conferida) VALUES
-  (5, 2, '2026-09-05', 'NF349489', '2026-09-07', 1),
-  (1, 2, '2026-09-12', 'NF422104', '2026-09-14', 1),
-  (1, 2, '2026-09-16', 'NF563106', '2026-09-16', 1),
-  (6, 2, '2026-09-19', 'NF229866', '2026-09-21', 1),
-  (2, 2, '2026-09-26', 'NF955486', '2026-09-26', 1),
-  (6, 2, '2026-09-26', 'NF479957', '2026-09-28', 1),
-  (1, 2, '2026-09-29', 'NF334615', '2026-09-30', 0),
-  (6, 2, '2026-09-30', NULL, NULL, 0);
+  (5, 4, '2026-09-05', 'NF349489', '2026-09-07', 1),
+  (1, 4, '2026-09-12', 'NF422104', '2026-09-14', 1),
+  (1, 4, '2026-09-16', 'NF563106', '2026-09-16', 1),
+  (6, 4, '2026-09-19', 'NF229866', '2026-09-21', 1),
+  (2, 4, '2026-09-26', 'NF955486', '2026-09-26', 1),
+  (6, 4, '2026-09-26', 'NF479957', '2026-09-28', 1),
+  (1, 4, '2026-09-29', 'NF334615', '2026-09-30', 0),
+  (6, 4, '2026-09-30', NULL, NULL, 0);
 
 INSERT INTO item_compra (id_compra, id_peca, quantidade, custo_unitario) VALUES
   (1, 1, 72, 29.00),
@@ -1484,26 +1493,26 @@ INSERT INTO item_compra (id_compra, id_peca, quantidade, custo_unitario) VALUES
 -- movimentações em ordem cronológica (o trigger confere o saldo a cada saída)
 
 INSERT INTO movimentacao_estoque (id_peca, tipo, quantidade, data_movimentacao, id_compra, id_os, id_funcionario, motivo) VALUES
-  (1, 'entrada', 60, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (2, 'entrada', 25, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (3, 'entrada', 10, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (4, 'entrada', 8, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (5, 'entrada', 8, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (6, 'entrada', 4, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (7, 'entrada', 7, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (8, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (9, 'entrada', 4, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (10, 'entrada', 2, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (11, 'entrada', 24, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (12, 'entrada', 3, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (13, 'entrada', 10, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (14, 'entrada', 12, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (15, 'entrada', 2, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (16, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (17, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (18, 'entrada', 12, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (19, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
-  (20, 'entrada', 4, '2026-08-31 17:00:00', NULL, NULL, 2, 'Inventário inicial (contagem física)'),
+  (1, 'entrada', 60, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (2, 'entrada', 25, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (3, 'entrada', 10, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (4, 'entrada', 8, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (5, 'entrada', 8, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (6, 'entrada', 4, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (7, 'entrada', 7, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (8, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (9, 'entrada', 4, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (10, 'entrada', 2, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (11, 'entrada', 24, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (12, 'entrada', 3, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (13, 'entrada', 10, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (14, 'entrada', 12, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (15, 'entrada', 2, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (16, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (17, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (18, 'entrada', 12, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (19, 'entrada', 6, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
+  (20, 'entrada', 4, '2026-08-31 17:00:00', NULL, NULL, 4, 'Inventário inicial (contagem física)'),
   (1, 'saida', 4, '2026-09-01 16:21:00', NULL, 2, 5, NULL),
   (2, 'saida', 1, '2026-09-01 16:21:00', NULL, 2, 5, NULL),
   (18, 'saida', 1, '2026-09-01 16:21:00', NULL, 2, 5, NULL),
@@ -1773,161 +1782,161 @@ INSERT INTO movimentacao_estoque (id_peca, tipo, quantidade, data_movimentacao, 
   (18, 'saida', 1, '2026-09-30 16:00:00', NULL, 144, 5, NULL);
 
 INSERT INTO pagamento (id_os, data_pagamento, forma_pagamento, parcelas, valor_pago) VALUES
-  (1, '2026-09-03 17:20:00', 'credito', 2, 135.00),
-  (2, '2026-09-04 13:40:00', 'credito', 4, 670.50),
-  (3, '2026-09-01 14:50:00', 'credito', 1, 684.00),
-  (4, '2026-09-04 19:30:00', 'dinheiro', 1, 171.00),
-  (5, '2026-09-02 19:10:00', 'credito', 4, 697.00),
-  (6, '2026-09-02 14:00:00', 'pix', 1, 662.00),
-  (7, '2026-09-02 19:20:00', 'pix', 1, 235.00),
-  (8, '2026-09-03 12:00:00', 'pix', 1, 770.00),
+  (1, '2026-09-03 19:20:00', 'credito', 2, 135.00),
+  (2, '2026-09-04 15:40:00', 'credito', 4, 670.50),
+  (3, '2026-09-01 16:50:00', 'credito', 1, 684.00),
+  (4, '2026-09-04 21:30:00', 'dinheiro', 1, 171.00),
+  (5, '2026-09-02 21:10:00', 'credito', 4, 697.00),
+  (6, '2026-09-02 16:00:00', 'pix', 1, 662.00),
+  (7, '2026-09-02 21:20:00', 'pix', 1, 235.00),
+  (8, '2026-09-03 14:00:00', 'pix', 1, 770.00),
   (9, '2026-09-02 22:30:00', 'pix', 1, 863.50),
-  (9, '2026-09-03 19:30:00', 'pix', 1, 863.50),
-  (10, '2026-09-03 12:30:00', 'debito', 1, 697.00),
-  (11, '2026-09-02 20:40:00', 'dinheiro', 1, 574.00),
-  (12, '2026-09-02 17:40:00', 'credito', 6, 135.00),
+  (9, '2026-09-03 21:30:00', 'pix', 1, 863.50),
+  (10, '2026-09-03 14:30:00', 'debito', 1, 697.00),
+  (11, '2026-09-02 22:40:00', 'dinheiro', 1, 574.00),
+  (12, '2026-09-02 19:40:00', 'credito', 6, 135.00),
   (13, '2026-09-02 20:20:00', 'pix', 1, 170.00),
-  (13, '2026-09-03 19:20:00', 'dinheiro', 1, 170.00),
-  (14, '2026-09-04 17:30:00', 'debito', 1, 114.00),
-  (15, '2026-09-06 13:40:00', 'pix', 1, 660.00),
-  (16, '2026-09-04 12:50:00', 'pix', 1, 473.50),
-  (17, '2026-09-05 14:00:00', 'credito', 4, 420.00),
-  (18, '2026-09-03 11:20:00', 'debito', 1, 897.00),
-  (19, '2026-09-04 19:40:00', 'pix', 1, 91.80),
-  (20, '2026-09-05 12:00:00', 'pix', 1, 440.50),
+  (13, '2026-09-03 21:20:00', 'dinheiro', 1, 170.00),
+  (14, '2026-09-04 19:30:00', 'debito', 1, 114.00),
+  (15, '2026-09-06 15:40:00', 'pix', 1, 660.00),
+  (16, '2026-09-04 14:50:00', 'pix', 1, 473.50),
+  (17, '2026-09-05 16:00:00', 'credito', 4, 420.00),
+  (18, '2026-09-03 13:20:00', 'debito', 1, 897.00),
+  (19, '2026-09-04 21:40:00', 'pix', 1, 91.80),
+  (20, '2026-09-05 14:00:00', 'pix', 1, 440.50),
   (21, '2026-09-04 19:30:00', 'pix', 1, 348.50),
-  (21, '2026-09-05 15:30:00', 'pix', 1, 348.50),
+  (21, '2026-09-05 17:30:00', 'pix', 1, 348.50),
   (22, '2026-09-04 19:30:00', 'pix', 1, 256.00),
-  (22, '2026-09-05 15:30:00', 'pix', 1, 256.00),
-  (23, '2026-09-05 18:20:00', 'credito', 6, 1259.00),
+  (22, '2026-09-05 17:30:00', 'pix', 1, 256.00),
+  (23, '2026-09-05 20:20:00', 'credito', 6, 1259.00),
   (24, '2026-09-04 14:40:00', 'pix', 1, 584.75),
-  (24, '2026-09-07 11:40:00', 'debito', 1, 584.75),
-  (25, '2026-09-04 13:40:00', 'credito', 1, 331.00),
-  (27, '2026-09-07 17:20:00', 'dinheiro', 1, 193.00),
-  (28, '2026-09-05 14:00:00', 'dinheiro', 1, 178.00),
-  (29, '2026-09-07 18:50:00', 'dinheiro', 1, 551.00),
-  (30, '2026-09-10 17:00:00', 'pix', 1, 344.00),
-  (31, '2026-09-07 13:20:00', 'pix', 1, 340.00),
-  (32, '2026-09-08 13:00:00', 'dinheiro', 1, 604.00),
+  (24, '2026-09-07 13:40:00', 'debito', 1, 584.75),
+  (25, '2026-09-04 15:40:00', 'credito', 1, 331.00),
+  (27, '2026-09-07 19:20:00', 'dinheiro', 1, 193.00),
+  (28, '2026-09-05 16:00:00', 'dinheiro', 1, 178.00),
+  (29, '2026-09-07 20:50:00', 'dinheiro', 1, 551.00),
+  (30, '2026-09-10 19:00:00', 'pix', 1, 344.00),
+  (31, '2026-09-07 15:20:00', 'pix', 1, 340.00),
+  (32, '2026-09-08 15:00:00', 'dinheiro', 1, 604.00),
   (33, '2026-09-07 15:50:00', 'pix', 1, 342.00),
-  (33, '2026-09-07 14:50:00', 'dinheiro', 1, 342.00),
-  (34, '2026-09-07 10:50:00', 'dinheiro', 1, 150.00),
-  (35, '2026-09-09 18:40:00', 'pix', 1, 150.00),
-  (36, '2026-09-09 13:20:00', 'pix', 1, 208.00),
-  (37, '2026-09-09 19:50:00', 'pix', 1, 689.00),
-  (38, '2026-09-09 17:10:00', 'debito', 1, 1170.00),
-  (39, '2026-09-09 14:50:00', 'pix', 1, 572.00),
+  (33, '2026-09-07 16:50:00', 'dinheiro', 1, 342.00),
+  (34, '2026-09-07 12:50:00', 'dinheiro', 1, 150.00),
+  (35, '2026-09-09 20:40:00', 'pix', 1, 150.00),
+  (36, '2026-09-09 15:20:00', 'pix', 1, 208.00),
+  (37, '2026-09-09 21:50:00', 'pix', 1, 689.00),
+  (38, '2026-09-09 19:10:00', 'debito', 1, 1170.00),
+  (39, '2026-09-09 16:50:00', 'pix', 1, 572.00),
   (40, '2026-09-08 14:50:00', 'pix', 1, 175.00),
-  (40, '2026-09-11 11:50:00', 'dinheiro', 1, 175.00),
+  (40, '2026-09-11 13:50:00', 'dinheiro', 1, 175.00),
   (41, '2026-09-08 16:50:00', 'pix', 1, 364.25),
-  (41, '2026-09-10 11:50:00', 'credito', 3, 364.25),
+  (41, '2026-09-10 13:50:00', 'credito', 3, 364.25),
   (42, '2026-09-09 20:50:00', 'pix', 1, 534.75),
-  (42, '2026-09-10 17:50:00', 'debito', 1, 534.75);
+  (42, '2026-09-10 19:50:00', 'debito', 1, 534.75);
 INSERT INTO pagamento (id_os, data_pagamento, forma_pagamento, parcelas, valor_pago) VALUES
-  (43, '2026-09-10 19:40:00', 'dinheiro', 1, 150.00),
-  (44, '2026-09-10 11:40:00', 'debito', 1, 350.00),
-  (45, '2026-09-12 13:30:00', 'pix', 1, 522.00),
-  (46, '2026-09-09 18:20:00', 'debito', 1, 150.00),
-  (47, '2026-09-10 13:00:00', 'credito', 4, 350.00),
-  (48, '2026-09-11 19:10:00', 'pix', 1, 1484.00),
-  (49, '2026-09-11 18:00:00', 'credito', 6, 310.00),
-  (50, '2026-09-13 15:10:00', 'debito', 1, 340.00),
-  (51, '2026-09-13 17:20:00', 'pix', 1, 350.00),
-  (52, '2026-09-11 16:50:00', 'dinheiro', 1, 350.00),
-  (53, '2026-09-11 16:50:00', 'credito', 6, 150.00),
-  (54, '2026-09-14 13:50:00', 'credito', 4, 90.00),
-  (55, '2026-09-12 15:30:00', 'pix', 1, 697.00),
-  (56, '2026-09-12 16:10:00', 'dinheiro', 1, 430.00),
-  (58, '2026-09-13 20:30:00', 'dinheiro', 1, 85.25),
+  (43, '2026-09-10 21:40:00', 'dinheiro', 1, 150.00),
+  (44, '2026-09-10 13:40:00', 'debito', 1, 350.00),
+  (45, '2026-09-12 15:30:00', 'pix', 1, 522.00),
+  (46, '2026-09-09 20:20:00', 'debito', 1, 150.00),
+  (47, '2026-09-10 15:00:00', 'credito', 4, 350.00),
+  (48, '2026-09-11 21:10:00', 'pix', 1, 1484.00),
+  (49, '2026-09-11 20:00:00', 'credito', 6, 310.00),
+  (50, '2026-09-13 17:10:00', 'debito', 1, 340.00),
+  (51, '2026-09-13 19:20:00', 'pix', 1, 350.00),
+  (52, '2026-09-11 18:50:00', 'dinheiro', 1, 350.00),
+  (53, '2026-09-11 18:50:00', 'credito', 6, 150.00),
+  (54, '2026-09-14 15:50:00', 'credito', 4, 90.00),
+  (55, '2026-09-12 17:30:00', 'pix', 1, 697.00),
+  (56, '2026-09-12 18:10:00', 'dinheiro', 1, 430.00),
+  (58, '2026-09-13 22:30:00', 'dinheiro', 1, 85.25),
   (59, '2026-09-12 14:50:00', 'pix', 1, 172.00),
-  (59, '2026-09-14 09:50:00', 'credito', 4, 172.00),
+  (59, '2026-09-14 11:50:00', 'credito', 4, 172.00),
   (60, '2026-09-12 16:00:00', 'pix', 1, 169.00),
-  (60, '2026-09-13 14:00:00', 'dinheiro', 1, 169.00),
-  (61, '2026-09-12 17:50:00', 'debito', 1, 106.80),
-  (62, '2026-09-14 17:20:00', 'credito', 1, 580.00),
+  (60, '2026-09-13 16:00:00', 'dinheiro', 1, 169.00),
+  (61, '2026-09-12 19:50:00', 'debito', 1, 106.80),
+  (62, '2026-09-14 19:20:00', 'credito', 1, 580.00),
   (63, '2026-09-14 16:40:00', 'pix', 1, 435.00),
-  (63, '2026-09-14 15:40:00', 'credito', 6, 435.00),
+  (63, '2026-09-14 17:40:00', 'credito', 6, 435.00),
   (64, '2026-09-14 14:30:00', 'pix', 1, 175.00),
-  (64, '2026-09-16 09:30:00', 'debito', 1, 175.00),
+  (64, '2026-09-16 11:30:00', 'debito', 1, 175.00),
   (65, '2026-09-14 15:00:00', 'pix', 1, 170.00),
-  (65, '2026-09-15 14:00:00', 'credito', 2, 170.00),
+  (65, '2026-09-15 16:00:00', 'credito', 2, 170.00),
   (66, '2026-09-14 21:40:00', 'pix', 1, 102.00),
-  (66, '2026-09-16 17:40:00', 'pix', 1, 102.00),
+  (66, '2026-09-16 19:40:00', 'pix', 1, 102.00),
   (67, '2026-09-14 18:30:00', 'pix', 1, 172.00),
-  (67, '2026-09-14 14:30:00', 'credito', 6, 172.00),
-  (68, '2026-09-18 13:10:00', 'pix', 1, 446.00),
-  (69, '2026-09-18 11:50:00', 'credito', 2, 916.00),
-  (70, '2026-09-17 15:20:00', 'pix', 1, 350.00),
+  (67, '2026-09-14 16:30:00', 'credito', 6, 172.00),
+  (68, '2026-09-18 15:10:00', 'pix', 1, 446.00),
+  (69, '2026-09-18 13:50:00', 'credito', 2, 916.00),
+  (70, '2026-09-17 17:20:00', 'pix', 1, 350.00),
   (71, '2026-09-15 17:10:00', 'pix', 1, 156.00),
-  (71, '2026-09-15 15:10:00', 'credito', 1, 156.00),
-  (72, '2026-09-16 12:50:00', 'credito', 4, 580.00),
-  (74, '2026-09-18 12:00:00', 'credito', 3, 331.00),
+  (71, '2026-09-15 17:10:00', 'credito', 1, 156.00),
+  (72, '2026-09-16 14:50:00', 'credito', 4, 580.00),
+  (74, '2026-09-18 14:00:00', 'credito', 3, 331.00),
   (75, '2026-09-16 15:20:00', 'pix', 1, 878.50),
-  (75, '2026-09-18 14:20:00', 'pix', 1, 878.50),
-  (76, '2026-09-17 18:10:00', 'credito', 3, 310.00),
-  (77, '2026-09-16 16:30:00', 'debito', 1, 210.00),
-  (78, '2026-09-18 11:20:00', 'pix', 1, 464.00),
+  (75, '2026-09-18 16:20:00', 'pix', 1, 878.50),
+  (76, '2026-09-17 20:10:00', 'credito', 3, 310.00),
+  (77, '2026-09-16 18:30:00', 'debito', 1, 210.00),
+  (78, '2026-09-18 13:20:00', 'pix', 1, 464.00),
   (79, '2026-09-16 20:50:00', 'pix', 1, 290.00),
-  (79, '2026-09-16 19:50:00', 'pix', 1, 290.00),
-  (80, '2026-09-17 19:50:00', 'dinheiro', 1, 63.00),
+  (79, '2026-09-16 21:50:00', 'pix', 1, 290.00),
+  (80, '2026-09-17 21:50:00', 'dinheiro', 1, 63.00),
   (82, '2026-09-17 15:00:00', 'pix', 1, 697.50),
-  (82, '2026-09-18 14:00:00', 'credito', 3, 697.50),
-  (83, '2026-09-17 14:30:00', 'credito', 1, 235.00),
-  (84, '2026-09-17 18:00:00', 'dinheiro', 1, 362.40);
+  (82, '2026-09-18 16:00:00', 'credito', 3, 697.50),
+  (83, '2026-09-17 16:30:00', 'credito', 1, 235.00),
+  (84, '2026-09-17 20:00:00', 'dinheiro', 1, 362.40);
 INSERT INTO pagamento (id_os, data_pagamento, forma_pagamento, parcelas, valor_pago) VALUES
   (86, '2026-09-18 16:20:00', 'pix', 1, 175.00),
-  (86, '2026-09-18 13:20:00', 'pix', 1, 175.00),
+  (86, '2026-09-18 15:20:00', 'pix', 1, 175.00),
   (87, '2026-09-18 17:50:00', 'pix', 1, 67.50),
-  (87, '2026-09-20 12:50:00', 'debito', 1, 67.50),
-  (88, '2026-09-19 12:40:00', 'credito', 4, 228.00),
+  (87, '2026-09-20 14:50:00', 'debito', 1, 67.50),
+  (88, '2026-09-19 14:40:00', 'credito', 4, 228.00),
   (89, '2026-09-18 14:20:00', 'pix', 1, 225.00),
-  (89, '2026-09-19 09:20:00', 'debito', 1, 225.00),
-  (90, '2026-09-19 11:40:00', 'pix', 1, 120.00),
-  (91, '2026-09-18 19:50:00', 'credito', 1, 204.00),
-  (92, '2026-09-21 12:00:00', 'dinheiro', 1, 120.00),
-  (93, '2026-09-19 10:30:00', 'pix', 1, 998.00),
-  (94, '2026-09-22 12:40:00', 'credito', 6, 690.00),
-  (95, '2026-09-24 15:20:00', 'credito', 6, 394.00),
-  (96, '2026-09-22 14:50:00', 'debito', 1, 1443.00),
-  (97, '2026-09-22 13:40:00', 'credito', 1, 1540.00),
-  (98, '2026-09-21 14:10:00', 'pix', 1, 180.00),
-  (99, '2026-09-24 09:30:00', 'debito', 1, 338.00),
-  (100, '2026-09-22 11:00:00', 'credito', 3, 105.00),
-  (101, '2026-09-22 13:20:00', 'pix', 1, 500.00),
+  (89, '2026-09-19 11:20:00', 'debito', 1, 225.00),
+  (90, '2026-09-19 13:40:00', 'pix', 1, 120.00),
+  (91, '2026-09-18 21:50:00', 'credito', 1, 204.00),
+  (92, '2026-09-21 14:00:00', 'dinheiro', 1, 120.00),
+  (93, '2026-09-19 12:30:00', 'pix', 1, 998.00),
+  (94, '2026-09-22 14:40:00', 'credito', 6, 690.00),
+  (95, '2026-09-24 17:20:00', 'credito', 6, 394.00),
+  (96, '2026-09-22 16:50:00', 'debito', 1, 1443.00),
+  (97, '2026-09-22 15:40:00', 'credito', 1, 1540.00),
+  (98, '2026-09-21 16:10:00', 'pix', 1, 180.00),
+  (99, '2026-09-24 11:30:00', 'debito', 1, 338.00),
+  (100, '2026-09-22 13:00:00', 'credito', 3, 105.00),
+  (101, '2026-09-22 15:20:00', 'pix', 1, 500.00),
   (102, '2026-09-22 19:40:00', 'pix', 1, 245.00),
-  (102, '2026-09-22 14:40:00', 'debito', 1, 245.00),
-  (103, '2026-09-23 13:20:00', 'credito', 4, 860.00),
-  (104, '2026-09-24 18:30:00', 'dinheiro', 1, 817.00),
-  (105, '2026-09-22 15:40:00', 'debito', 1, 120.00),
-  (106, '2026-09-25 16:10:00', 'credito', 3, 228.50),
-  (107, '2026-09-26 16:10:00', 'pix', 1, 345.00),
-  (108, '2026-09-24 18:40:00', 'pix', 1, 675.00),
-  (109, '2026-09-24 10:10:00', 'dinheiro', 1, 766.00),
-  (110, '2026-09-25 09:30:00', 'pix', 1, 1410.00),
-  (111, '2026-09-24 12:00:00', 'dinheiro', 1, 340.00),
-  (112, '2026-09-25 12:00:00', 'credito', 3, 340.00),
-  (113, '2026-09-25 12:30:00', 'credito', 4, 260.00),
-  (114, '2026-09-26 16:50:00', 'credito', 1, 100.00),
-  (115, '2026-09-24 17:10:00', 'credito', 2, 322.00),
-  (116, '2026-09-25 15:40:00', 'pix', 1, 62.40),
-  (117, '2026-09-27 18:50:00', 'dinheiro', 1, 60.00),
-  (118, '2026-09-25 13:20:00', 'debito', 1, 528.00),
-  (119, '2026-09-26 17:10:00', 'pix', 1, 870.00),
-  (120, '2026-09-25 16:20:00', 'debito', 1, 878.00),
-  (121, '2026-09-25 12:00:00', 'dinheiro', 1, 313.50),
-  (122, '2026-09-27 13:20:00', 'debito', 1, 200.50),
-  (123, '2026-09-26 13:50:00', 'pix', 1, 140.00),
-  (124, '2026-09-26 16:40:00', 'pix', 1, 825.00),
-  (125, '2026-09-27 21:20:00', 'pix', 1, 2387.50),
-  (126, '2026-09-27 15:50:00', 'dinheiro', 1, 1690.00),
-  (127, '2026-09-26 19:30:00', 'dinheiro', 1, 1219.00),
+  (102, '2026-09-22 16:40:00', 'debito', 1, 245.00),
+  (103, '2026-09-23 15:20:00', 'credito', 4, 860.00),
+  (104, '2026-09-24 20:30:00', 'dinheiro', 1, 817.00),
+  (105, '2026-09-22 17:40:00', 'debito', 1, 120.00),
+  (106, '2026-09-25 18:10:00', 'credito', 3, 228.50),
+  (107, '2026-09-26 18:10:00', 'pix', 1, 345.00),
+  (108, '2026-09-24 20:40:00', 'pix', 1, 675.00),
+  (109, '2026-09-24 12:10:00', 'dinheiro', 1, 766.00),
+  (110, '2026-09-25 11:30:00', 'pix', 1, 1410.00),
+  (111, '2026-09-24 14:00:00', 'dinheiro', 1, 340.00),
+  (112, '2026-09-25 14:00:00', 'credito', 3, 340.00),
+  (113, '2026-09-25 14:30:00', 'credito', 4, 260.00),
+  (114, '2026-09-26 18:50:00', 'credito', 1, 100.00),
+  (115, '2026-09-24 19:10:00', 'credito', 2, 322.00),
+  (116, '2026-09-25 17:40:00', 'pix', 1, 62.40),
+  (117, '2026-09-27 20:50:00', 'dinheiro', 1, 60.00),
+  (118, '2026-09-25 15:20:00', 'debito', 1, 528.00),
+  (119, '2026-09-26 19:10:00', 'pix', 1, 870.00),
+  (120, '2026-09-25 18:20:00', 'debito', 1, 878.00),
+  (121, '2026-09-25 14:00:00', 'dinheiro', 1, 313.50),
+  (122, '2026-09-27 15:20:00', 'debito', 1, 200.50),
+  (123, '2026-09-26 15:50:00', 'pix', 1, 140.00),
+  (124, '2026-09-26 18:40:00', 'pix', 1, 825.00),
+  (125, '2026-09-27 23:20:00', 'pix', 1, 2387.50),
+  (126, '2026-09-27 17:50:00', 'dinheiro', 1, 1690.00),
+  (127, '2026-09-26 21:30:00', 'dinheiro', 1, 1219.00),
   (128, '2026-09-28 20:20:00', 'pix', 1, 412.50),
   (129, '2026-09-28 15:50:00', 'pix', 1, 57.00),
-  (130, '2026-09-29 16:20:00', 'pix', 1, 760.00),
+  (130, '2026-09-29 18:20:00', 'pix', 1, 760.00),
   (131, '2026-09-28 14:10:00', 'pix', 1, 330.00);
 INSERT INTO pagamento (id_os, data_pagamento, forma_pagamento, parcelas, valor_pago) VALUES
-  (131, '2026-09-28 13:10:00', 'dinheiro', 1, 330.00),
-  (133, '2026-10-01 07:00:00', 'dinheiro', 1, 214.80),
+  (131, '2026-09-28 15:10:00', 'dinheiro', 1, 330.00),
+  (133, '2026-10-01 07:30:00', 'dinheiro', 1, 214.80),
   (134, '2026-09-28 22:30:00', 'pix', 1, 435.00),
   (136, '2026-09-29 21:50:00', 'pix', 1, 435.00),
   (139, '2026-09-29 22:20:00', 'pix', 1, 75.00),
@@ -1944,7 +1953,7 @@ SELECT os.numero_os, os.status, os.data_entrada, os.data_previsao,
        a.nome AS atendente, m.nome AS mecanico
 FROM ordem_servico os
 JOIN veiculo v          ON v.id_veiculo = os.id_veiculo
-JOIN cliente c          ON c.id_cliente = v.id_cliente
+JOIN cliente c          ON c.id_cliente = os.id_cliente
 JOIN funcionario a      ON a.id_funcionario = os.id_atendente
 LEFT JOIN funcionario m ON m.id_funcionario = os.id_mecanico
 WHERE os.status NOT IN ('entregue','cancelada')
@@ -1975,15 +1984,18 @@ WHERE os.numero_os = @os;
 
 -- Mecânico terminou o serviço: OS fica pronta e a recepção avisa o cliente
 UPDATE ordem_servico
-   SET status = 'pronta', cliente_avisado = 1
+   SET status = 'pronta', data_pronta = GREATEST(NOW(), data_entrada), cliente_avisado = 1
  WHERE id_os = (SELECT id_os FROM (SELECT MIN(id_os) AS id_os FROM ordem_servico
                                    WHERE status = 'em_execucao') t);
 
--- RN07: veículo trocou de dono — o vínculo passa para o novo cliente (histórico de OS mantido)
+-- RN07: veículo trocou de dono — o veículo passa para o novo cliente; as OS antigas
+-- continuam no nome de quem era o cliente na época (ordem_servico.id_cliente)
 UPDATE veiculo
    SET id_cliente = (SELECT id_cliente FROM (SELECT id_cliente FROM cliente WHERE cpf_cnpj = (
                        SELECT MIN(cpf_cnpj) FROM cliente WHERE tipo_pessoa = 'F')) t)
- WHERE placa = (SELECT placa FROM (SELECT MIN(placa) AS placa FROM veiculo) t2);
+ WHERE placa = (SELECT placa FROM (SELECT v2.placa FROM ordem_servico o2 JOIN veiculo v2 USING (id_veiculo)
+                                    GROUP BY v2.placa ORDER BY COUNT(*) DESC, v2.placa LIMIT 1) t2);
+-- (é o mesmo veículo da G05: lá aparecem o dono atual e, em cada OS, o cliente da época)
 
 -- Reajuste de 5% no preço de referência da troca de óleo
 UPDATE servico SET valor_base = ROUND(valor_base * 1.05, 2) WHERE nome_servico = 'Troca de óleo e filtro';
@@ -2008,7 +2020,8 @@ VALUES ('Cadastro Duplicado Teste', 'F', '000.000.001-91', '(11) 90000-0000', 'A
 
 DELETE FROM cliente
  WHERE cpf_cnpj = '000.000.001-91'
-   AND NOT EXISTS (SELECT 1 FROM veiculo v WHERE v.id_cliente = cliente.id_cliente);
+   AND NOT EXISTS (SELECT 1 FROM veiculo v WHERE v.id_cliente = cliente.id_cliente)
+   AND NOT EXISTS (SELECT 1 FROM ordem_servico os WHERE os.id_cliente = cliente.id_cliente);
 
 -- =====================================================================
 -- 8) CONSULTAS GERENCIAIS (G01–G12) — problemas P1–P4 e KPIs da seção 1.6 do README
@@ -2041,21 +2054,26 @@ FROM item_peca ip
 JOIN ordem_servico os ON os.id_os = ip.id_os
 JOIN veiculo v        ON v.id_veiculo = os.id_veiculo
 WHERE ip.origem = 'cliente'
+  AND os.data_entrada >= '2026-09-01' AND os.data_entrada < '2026-10-01'
 ORDER BY os.data_entrada;
 
 -- G04 — Participação das peças do cliente × peças da oficina no mês
 -- Atende: P2 · KPI "% de itens de peça trazidos pelo cliente"
-SELECT origem, COUNT(*) AS itens, ROUND(100 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS percentual
-FROM item_peca
-GROUP BY origem;
+SELECT ip.origem, COUNT(*) AS itens, ROUND(100 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS percentual
+FROM item_peca ip
+JOIN ordem_servico os ON os.id_os = ip.id_os
+WHERE os.data_entrada >= '2026-09-01' AND os.data_entrada < '2026-10-01'
+GROUP BY ip.origem;
 
 -- G05 — Histórico completo de um veículo pela placa (busca mais usada no balcão)
 -- Atende: P3 (perda de informações e cadastros errados) · RF03
 SELECT v.placa, CONCAT(v.marca, ' ', v.modelo, ' ', v.motor, ' ', v.ano) AS veiculo, c.nome AS dono_atual,
-       os.numero_os, os.data_entrada, os.km_entrada, os.status, os.problema_relatado, os.observacoes
+       os.numero_os, co.nome AS cliente_da_os, os.data_entrada, os.km_entrada, os.status,
+       os.problema_relatado, os.observacoes
 FROM veiculo v
 JOIN cliente c             ON c.id_cliente = v.id_cliente
 LEFT JOIN ordem_servico os ON os.id_veiculo = v.id_veiculo
+LEFT JOIN cliente co       ON co.id_cliente = os.id_cliente
 WHERE v.placa = (SELECT placa FROM ordem_servico o2 JOIN veiculo v2 USING (id_veiculo)
                  GROUP BY placa ORDER BY COUNT(*) DESC, placa LIMIT 1)
 ORDER BY os.data_entrada;
@@ -2074,8 +2092,7 @@ SELECT os.numero_os, os.status, c.nome AS cliente, c.telefone,
        t.total_os, t.total_pago, t.saldo_devedor
 FROM vw_total_os t
 JOIN ordem_servico os ON os.id_os = t.id_os
-JOIN veiculo v        ON v.id_veiculo = os.id_veiculo
-JOIN cliente c        ON c.id_cliente = v.id_cliente
+JOIN cliente c        ON c.id_cliente = os.id_cliente
 WHERE t.saldo_devedor > 0 AND os.status IN ('entregue','pronta')
 ORDER BY t.saldo_devedor DESC;
 
@@ -2096,26 +2113,30 @@ FROM vw_total_os t
 JOIN ordem_servico os ON os.id_os = t.id_os
 WHERE os.status = 'entregue' AND os.data_saida >= '2026-09-01' AND os.data_saida < '2026-10-01';
 
--- G10 — Tempo médio de permanência do carro na oficina, por mecânico
+-- G10 — Tempo médio de serviço (da entrada até a liberação do carro), por mecânico, no mês
 -- Atende: KPI "tempo médio entre entrada e liberação (horas)" · alocação de mecânicos
-SELECT f.nome AS mecanico, COUNT(*) AS os_entregues,
-       ROUND(AVG(TIMESTAMPDIFF(HOUR, os.data_entrada, os.data_saida)), 1) AS horas_medias
+SELECT COALESCE(f.nome, 'TODOS') AS mecanico, COUNT(*) AS os_liberadas,
+       ROUND(AVG(TIMESTAMPDIFF(MINUTE, os.data_entrada, os.data_pronta)) / 60, 1) AS horas_medias
 FROM ordem_servico os
 JOIN funcionario f ON f.id_funcionario = os.id_mecanico
-WHERE os.status = 'entregue'
-GROUP BY f.nome
-ORDER BY horas_medias;
+WHERE os.data_pronta >= '2026-09-01' AND os.data_pronta < '2026-10-01'
+GROUP BY f.nome WITH ROLLUP
+ORDER BY GROUPING(f.nome), horas_medias;
 
 -- G11 — Taxa de retrabalho em garantia e taxa de aprovação de orçamentos no mês
 -- Atende: KPIs "% de OS com retrabalho de garantia" e "% de orçamentos aprovados"
 SELECT
-  (SELECT ROUND(100 * COUNT(DISTINCT id_os) / (SELECT COUNT(*) FROM ordem_servico WHERE status = 'entregue'), 1)
-     FROM item_servico WHERE retrabalho_garantia = 1) AS pct_os_com_retrabalho,
+  (SELECT ROUND(100 * COUNT(DISTINCT i.id_os) / (SELECT COUNT(*) FROM ordem_servico
+                 WHERE status = 'entregue' AND data_saida >= '2026-09-01' AND data_saida < '2026-10-01'), 1)
+     FROM item_servico i JOIN ordem_servico os ON os.id_os = i.id_os
+    WHERE i.retrabalho_garantia = 1 AND os.data_saida >= '2026-09-01' AND os.data_saida < '2026-10-01')
+    AS pct_os_com_retrabalho,
   (SELECT ROUND(100 * SUM(status = 'aprovado') / SUM(status <> 'pendente'), 1)
-     FROM orcamento) AS pct_orcamentos_aprovados;
+     FROM orcamento WHERE data_orcamento >= '2026-09-01' AND data_orcamento < '2026-10-01')
+    AS pct_orcamentos_aprovados;
 
 -- G12 — Serviços mais executados no mês e receita de mão de obra de cada um (inclui trocas de óleo)
--- Atende: RF04 (filtrar por tipo de serviço / relatório de trocas de óleo) · KPI "mix de serviços"
+-- Atende: RF13 (filtrar por tipo de serviço / relatório de trocas de óleo) · KPI "mix de serviços"
 SELECT s.nome_servico, COUNT(*) AS vezes, SUM(i.quantidade * i.valor_cobrado) AS receita_mao_de_obra
 FROM item_servico i
 JOIN servico s        ON s.id_servico = i.id_servico
@@ -2131,7 +2152,7 @@ ORDER BY vezes DESC, receita_mao_de_obra DESC;
 -- =====================================================================
 
 -- A01 — Existe OS entregue sem data de saída, sem garantia ou sem nota fiscal?
--- Verifica: RN01 (dados obrigatórios da OS) e RN13 (nota fiscal na entrega)
+-- Verifica: RN01 (dados obrigatórios da OS) e RN13 (nota fiscal na entrega) — também garantidos pelo CHECK ck_os_entregue
 SELECT numero_os, status, data_saida, garantia_ate, numero_nota_fiscal
 FROM ordem_servico
 WHERE status = 'entregue' AND (data_saida IS NULL OR garantia_ate IS NULL OR numero_nota_fiscal IS NULL);
@@ -2156,18 +2177,19 @@ WHERE o.status = 'aprovado' AND os.status IN ('pronta','entregue') AND o.valor_t
 SELECT numero_os, total_os, total_pago FROM vw_total_os WHERE total_pago > total_os;
 
 -- A05 — Peça do cliente lançada com valor, ou garantia diferente de 3 meses da saída?
+-- (a garantia também é garantida pelo CHECK ck_os_garantia)
 -- Verifica: RN04 (garantia de 3 meses na mão de obra; peça do cliente sem cobrança e sem garantia)
 SELECT os.numero_os, 'peça do cliente com valor' AS problema
 FROM item_peca ip JOIN ordem_servico os ON os.id_os = ip.id_os
 WHERE ip.origem = 'cliente' AND ip.valor_unitario > 0
 UNION ALL
-SELECT numero_os, 'garantia fora de 90 dias'
+SELECT numero_os, 'garantia diferente de 3 meses'
 FROM ordem_servico
-WHERE status = 'entregue' AND DATEDIFF(garantia_ate, DATE(data_saida)) <> 90;
+WHERE status = 'entregue' AND garantia_ate <> DATE(data_saida) + INTERVAL 3 MONTH;
 
--- A06 — Retrabalho de garantia lançado sem observação na OS ou fora do prazo de garantia?
--- Verifica: RN05 (retrabalho na mesma OS, com observação, dentro da garantia)
-SELECT os.numero_os, os.garantia_ate, os.observacoes
+-- A06 — Retrabalho de garantia lançado sem observação na OS, ou em OS que não foi entregue?
+-- Verifica: RN05 (retrabalho na mesma OS, já entregue e com garantia, registrado em observação)
+SELECT os.numero_os, os.status, os.garantia_ate, os.observacoes
 FROM item_servico i
 JOIN ordem_servico os ON os.id_os = i.id_os
 WHERE i.retrabalho_garantia = 1 AND (os.observacoes IS NULL OR os.garantia_ate IS NULL);
@@ -2199,7 +2221,6 @@ WHERE f.funcao <> 'socio';
 -- A10 — Clientes sem consentimento LGPD registrado (dados pessoais sem base registrada)
 -- Verifica: RN14 (LGPD: consentimento registrado para guardar dados pessoais)
 SELECT c.id_cliente, c.nome, c.data_cadastro,
-       (SELECT COUNT(*) FROM veiculo v JOIN ordem_servico os ON os.id_veiculo = v.id_veiculo
-         WHERE v.id_cliente = c.id_cliente) AS qtd_os
+       (SELECT COUNT(*) FROM ordem_servico os WHERE os.id_cliente = c.id_cliente) AS qtd_os
 FROM cliente c
 WHERE c.consentimento_lgpd = 0;

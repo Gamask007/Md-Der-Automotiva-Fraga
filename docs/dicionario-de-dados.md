@@ -5,7 +5,7 @@
 | Item | Valor |
 | :--- | :--- |
 | Banco | `fraga_oficina` |
-| Versão do dicionário | 2.1 (Entrega 2) — 2026-11-04 |
+| Versão do dicionário | 2.2 (Entrega 2) — 2026-11-04 |
 | Fonte da verdade | [`docs/script.sql`](script.sql) — se o dicionário e o script divergirem, vale o script |
 | Tabelas | 14 tabelas + 2 views (`vw_saldo_estoque`, `vw_total_os`) + 1 trigger (`tg_mov_saldo_nao_negativo`) |
 
@@ -35,6 +35,7 @@
 | Entidade | Relaciona-se com | Cardinalidade | Explicação |
 | :--- | :--- | :--- | :--- |
 | CLIENTE | VEICULO | 1 : 0..N | Um cliente pode ter vários veículos (ou nenhum, se o carro foi vendido); cada veículo tem um único dono atual. Na troca de dono, muda o `id_cliente` do veículo (RN07). |
+| CLIENTE | ORDEM_SERVICO | 1 : 0..N | Cliente que trouxe o carro naquela OS. Fica gravado na OS, então o histórico não muda de nome quando o veículo é vendido (RN07). |
 | VEICULO | ORDEM_SERVICO | 1 : 0..N | Cada OS é de um veículo; o veículo acumula o histórico de OS. |
 | FUNCIONARIO (atendente) | ORDEM_SERVICO | 1 : 0..N | Toda OS é aberta por um funcionário autorizado (RN06). |
 | FUNCIONARIO (mecânico) | ORDEM_SERVICO | 0..1 : 0..N | O mecânico só é definido quando o serviço começa; um mecânico atende várias OS. |
@@ -54,13 +55,13 @@
 
 ## 2. Fluxo de dados
 
-1. **Atendimento.** O cliente chega ao balcão. A recepção busca pela placa (`veiculo.placa`). Se não houver cadastro, cria `cliente` (com `consentimento_lgpd`) e `veiculo`. Depois abre a `ordem_servico` com `km_entrada`, `problema_relatado` e `data_entrada`. Status: `aberta`.
+1. **Atendimento.** O cliente chega ao balcão. A recepção busca pela placa (`veiculo.placa`). Se não houver cadastro, cria `cliente` (com `consentimento_lgpd`) e `veiculo`. Depois abre a `ordem_servico` com o veículo, o cliente que trouxe o carro (`id_cliente`), `km_entrada`, `problema_relatado` e `data_entrada`. Status: `aberta`.
 2. **Avaliação e orçamento.** Um sócio avalia o carro e registra o `orcamento` com `valor_total`. Status: `aguardando_aprovacao`.
 3. **Aprovação.** O cliente aprova (`orcamento.status = aprovado`, `data_decisao`) e a OS vai para `em_execucao`, com `id_mecanico`. Se o cliente recusar, a OS fica `cancelada`.
 4. **Execução.** São lançados `item_servico` e `item_peca`. Cada peça da oficina gera uma `movimentacao_estoque` do tipo saída. O trigger bloqueia a saída se não houver saldo (RN10). Peça trazida pelo cliente não mexe no estoque.
-5. **Liberação.** A OS fica `pronta`, a recepção avisa o cliente (`cliente_avisado = 1`) e o cliente paga (`pagamento`, uma ou várias linhas). Na retirada, a OS fica `entregue`, com `data_saida`, `garantia_ate` (+3 meses) e `numero_nota_fiscal`.
+5. **Liberação.** O serviço termina e a OS fica `pronta`, com a data e hora da liberação (`data_pronta`). A recepção avisa o cliente (`cliente_avisado = 1`) e o cliente paga (`pagamento`, uma ou várias linhas). Na retirada, a OS fica `entregue`, com `data_saida`, `garantia_ate` (+3 meses) e `numero_nota_fiscal`.
 6. **Garantia.** Se o cliente volta dentro da garantia, a mesma OS recebe um `item_servico` com `retrabalho_garantia = 1` e valor 0, e uma observação (RN05).
-7. **Compras.** Quando a peça fica abaixo do `estoque_minimo` (consulta G01), registra-se a `compra` e seus `item_compra`. No recebimento, a compra é conferida (`conferida = 1`) e cada item gera uma `movimentacao_estoque` do tipo entrada.
+7. **Compras.** Quando a peça fica abaixo do `estoque_minimo` (consulta G01), a recepção pede às autopeças e registra a `compra` e seus `item_compra`. No recebimento, a recepção confere a compra (`conferida = 1`) e cada item gera uma `movimentacao_estoque` do tipo entrada.
 8. **Gestão.** As consultas G01–G12 e as views leem esses dados para os relatórios. As consultas A01–A10 conferem as regras.
 
 ## 3. Convenções
@@ -144,28 +145,30 @@ Em cada tabela: **definição**, **expressão formal**, **leitura** e, por colun
 
 ### 4.4 `ordem_servico`
 
-- **Expressão formal:** `ORDEM_SERVICO = @id_os + numero_os + id_veiculo + id_atendente + (id_mecanico) + km_entrada + problema_relatado + data_entrada + (data_previsao) + (data_saida) + status + cliente_avisado + (garantia_ate) + (numero_nota_fiscal) + (observacoes)`
-- **Leitura:** uma OS registra o atendimento de um veículo, da entrada até a entrega, com quem atendeu, quem executou, as datas, o status, a garantia e a nota fiscal.
+- **Expressão formal:** `ORDEM_SERVICO = @id_os + numero_os + id_veiculo + id_cliente + id_atendente + (id_mecanico) + km_entrada + problema_relatado + data_entrada + (data_previsao) + (data_pronta) + (data_saida) + status + cliente_avisado + (garantia_ate) + (numero_nota_fiscal) + (observacoes)`
+- **Leitura:** uma OS registra o atendimento de um veículo para um cliente, da entrada até a entrega, com quem atendeu, quem executou, as datas, o status, a garantia e a nota fiscal.
 
 | Coluna | Tipo físico | Obrigatório | Único | Chave | Valores permitidos (CHECK) | Padrão (DEFAULT) | Descrição |
 | :--- | :--- | :---: | :---: | :--- | :--- | :--- | :--- |
 | id_os | INT UNSIGNED | sim | sim | PK | — | AUTO_INCREMENT | Identificador interno |
 | numero_os | INT UNSIGNED | sim | sim | — | — | — | Número impresso para o cliente (RN01) |
 | id_veiculo | INT UNSIGNED | sim | não | FK → veiculo (ON DELETE RESTRICT) | — | — | Veículo atendido |
+| id_cliente | INT UNSIGNED | sim | não | FK → cliente (ON DELETE RESTRICT) | — | — | Cliente que trouxe o carro nesta OS; não muda se o veículo for vendido depois (RN07) |
 | id_atendente | INT UNSIGNED | sim | não | FK → funcionario (ON DELETE RESTRICT) | — | — | Quem abriu a OS (RN06) |
 | id_mecanico | INT UNSIGNED | não | não | FK → funcionario (ON DELETE RESTRICT) | — | — | Mecânico responsável (definido na execução) |
 | km_entrada | INT UNSIGNED | sim | não | — | — | — | Km informada na entrada |
 | problema_relatado | VARCHAR(255) | sim | não | — | — | — | Queixa do cliente |
 | data_entrada | DATETIME | sim | não | — | — | — | Entrada; não muda em retrabalho (RN05) |
 | data_previsao | DATE | não | não | — | — | — | Previsão de liberação informada ao cliente |
-| data_saida | DATETIME | não | não | — | CHECK ≥ data_entrada; obrigatória se entregue | — | Retirada do veículo |
-| status | ENUM('aberta','aguardando_aprovacao','em_execucao','pronta','entregue','cancelada') | sim | não | — | valores do ENUM | 'aberta' | Etapa da OS (substitui o antigo `pronto`) |
+| data_pronta | DATETIME | condicional | não | — | CHECK ≥ data_entrada e ≤ data_saida; obrigatória se pronta ou entregue | — | Liberação: quando o serviço terminou (KPI de tempo de serviço, G10) |
+| data_saida | DATETIME | condicional | não | — | CHECK ≥ data_entrada; obrigatória se entregue | — | Retirada do veículo pelo cliente |
+| status | ENUM('aberta','aguardando_aprovacao','em_execucao','pronta','entregue','cancelada') | sim | não | — | valores do ENUM; pronta/entregue exigem `data_pronta` | 'aberta' | Etapa da OS (substitui o antigo `pronto`) |
 | cliente_avisado | TINYINT(1) | sim | não | — | CHECK 0/1 | 0 | 1 = cliente avisado de que está pronto |
-| garantia_ate | DATE | não | não | — | — | — | data_saida + 3 meses de garantia da mão de obra (RN04) |
-| numero_nota_fiscal | VARCHAR(20) | não | não | — | — | — | NFS-e emitida em toda entrega (RN13) |
+| garantia_ate | DATE | condicional | não | — | CHECK = DATE(data_saida) + 3 meses; obrigatória se entregue | — | Fim da garantia de 3 meses da mão de obra (RN04) |
+| numero_nota_fiscal | VARCHAR(20) | condicional | não | — | obrigatório se entregue (CHECK) | — | NFS-e emitida em toda entrega (RN13) |
 | observacoes | TEXT | não | não | — | — | — | Anotações, incluindo retorno em garantia (RN05) |
 
-**Índices:** PK (id_os) · UNIQUE (numero_os) · `ix_os_data_entrada` (data_entrada) · `ix_os_status` (status) · índices automáticos das FKs: `id_veiculo`, `id_atendente`, `id_mecanico`.
+**Índices:** PK (id_os) · UNIQUE (numero_os) · `ix_os_data_entrada` (data_entrada) · `ix_os_status` (status) · índices automáticos das FKs: `id_veiculo`, `id_cliente`, `id_atendente`, `id_mecanico`.
 
 ### 4.5 `orcamento`
 
@@ -275,7 +278,7 @@ Em cada tabela: **definição**, **expressão formal**, **leitura** e, por colun
 | :--- | :--- | :---: | :---: | :--- | :--- | :--- | :--- |
 | id_compra | INT UNSIGNED | sim | sim | PK | — | AUTO_INCREMENT | Identificador |
 | id_fornecedor | INT UNSIGNED | sim | não | FK → fornecedor (ON DELETE RESTRICT) | — | — | Fornecedor (RN11) |
-| id_funcionario | INT UNSIGNED | sim | não | FK → funcionario (ON DELETE RESTRICT) | — | — | Quem comprou |
+| id_funcionario | INT UNSIGNED | sim | não | FK → funcionario (ON DELETE RESTRICT) | — | — | Quem fez o pedido e registrou a compra (a recepção) |
 | data_compra | DATE | sim | não | — | — | — | Data do pedido |
 | numero_nota_fiscal | VARCHAR(20) | não | não | — | — | — | NF do fornecedor |
 | data_recebimento | DATE | não | não | — | CHECK ≥ data_compra | — | Quando chegou |
@@ -357,6 +360,7 @@ Para registrar também as **consultas** e as **alterações** de dados pessoais,
 | 1.0 | 2026-09-24 | Dicionário preliminar no README (Entrega 1) | Grupo |
 | 2.0 | 2026-10-28 | Dicionário físico completo, separado do README (Entrega 2) | Grupo 1, com apoio de IA (ver README, seção 6) |
 | 2.1 | 2026-11-04 | Seções reordenadas (modelo conceitual, fluxo, convenções, entidades); lista de entidades; colunas separadas de unicidade, CHECK e DEFAULT; índices por tabela | Grupo 1, com apoio de IA (ver README, seção 6) |
+| 2.2 | 2026-11-04 | OS passa a guardar o cliente (`id_cliente`) e a data de liberação (`data_pronta`); garantia e nota fiscal viram CHECK; compras pela recepção | Grupo 1, com apoio de IA (ver README, seção 6) |
 
 ## 6. Acesso por operação e LGPD
 
@@ -367,7 +371,7 @@ Para registrar também as **consultas** e as **alterações** de dados pessoais,
 | orcamento | R | C R U | C R U | R |
 | item_servico, item_peca | R | C R U | C R U | C R |
 | pagamento | C R | C R U | R | — |
-| fornecedor, compra, item_compra | R | C R U | C R U | — |
+| fornecedor, compra, item_compra | C R U | C R U | R | — |
 | movimentacao_estoque | C R | C R U | C R | C R (saída para OS) |
 | servico, peca | R | C R U | R | R |
 | funcionario | — | C R U | R | — |

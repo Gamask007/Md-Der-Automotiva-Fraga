@@ -65,6 +65,9 @@ function erroAmigavel(e) {
     ck_veiculo_ano: 'Ano do carro inválido.',
     ck_pagamento_parcelas: 'Parcelamento só no cartão de crédito (até 12x).',
     ck_pagamento_valor: 'O valor do pagamento precisa ser maior que zero.',
+    ck_os_entregue: 'Para entregar o carro, informe o número da nota fiscal.',
+    ck_os_garantia: 'A garantia da mão de obra precisa ser de 3 meses a partir da saída.',
+    ck_os_pronta: 'Marque o serviço como pronto antes de entregar o carro.',
   };
   for (const [k, v] of Object.entries(regras)) if (m.includes(k)) return v;
   if (e.code === 'ER_ROW_IS_REFERENCED_2') return 'Não dá para apagar: existe histórico ligado a este cadastro.';
@@ -94,7 +97,7 @@ app.get('/', rota(async (req, res) => {
   const [abertas] = await db.query(`
     SELECT os.id_os, os.numero_os, os.status, os.data_entrada, os.data_previsao, os.cliente_avisado,
            v.placa, CONCAT(v.marca,' ',v.modelo) AS carro, c.nome, c.telefone
-    FROM ordem_servico os JOIN veiculo v ON v.id_veiculo = os.id_veiculo JOIN cliente c ON c.id_cliente = v.id_cliente
+    FROM ordem_servico os JOIN veiculo v ON v.id_veiculo = os.id_veiculo JOIN cliente c ON c.id_cliente = os.id_cliente
     WHERE os.status NOT IN ('entregue','cancelada') ORDER BY FIELD(os.status,'pronta','em_execucao','aguardando_aprovacao','aberta'), os.data_entrada`);
   const linhas = abertas.map((o) => `<tr onclick="location='/os/${o.id_os}'">
     <td><b>${o.numero_os}</b></td><td>${selo(o.status)}${o.status === 'pronta' && !o.cliente_avisado ? ' <span class="selo vermelho">avisar cliente</span>' : ''}</td>
@@ -133,7 +136,8 @@ app.get('/buscar', rota(async (req, res) => {
 app.get('/veiculo/:id', rota(async (req, res) => {
   const [[v]] = await db.query(`SELECT v.*, c.nome, c.telefone, c.id_cliente FROM veiculo v JOIN cliente c USING (id_cliente) WHERE v.id_veiculo = ?`, [req.params.id]);
   if (!v) return res.redirect('/');
-  const [oss] = await db.query(`SELECT os.*, t.total_os FROM ordem_servico os JOIN vw_total_os t USING (id_os) WHERE id_veiculo = ? ORDER BY data_entrada DESC`, [v.id_veiculo]);
+  const [oss] = await db.query(`SELECT os.*, t.total_os, c.nome AS cliente_os FROM ordem_servico os JOIN vw_total_os t USING (id_os)
+    JOIN cliente c ON c.id_cliente = os.id_cliente WHERE os.id_veiculo = ? ORDER BY os.data_entrada DESC`, [v.id_veiculo]);
   const emAberto = oss.find((o) => !['entregue', 'cancelada'].includes(o.status));
   res.send(pagina(v.placa, `
     <h1>${h(v.placa)} — ${h(v.marca)} ${h(v.modelo)} ${h(v.motor || '')} ${v.ano}</h1>
@@ -141,8 +145,8 @@ app.get('/veiculo/:id', rota(async (req, res) => {
     <div class="acoes">${emAberto ? `<a class="botao grande" href="/os/${emAberto.id_os}">Ver a OS em aberto (nº ${emAberto.numero_os})</a>`
       : `<a class="botao grande" href="/os/nova?veiculo=${v.id_veiculo}">Abrir ordem de serviço</a>`}</div>
     <h2>Histórico deste carro</h2>
-    ${oss.length ? `<table class="clicavel"><tr><th>OS</th><th>Entrada</th><th>Km</th><th>Problema</th><th>Situação</th><th>Total</th></tr>
-      ${oss.map((o) => `<tr onclick="location='/os/${o.id_os}'"><td>${o.numero_os}</td><td>${dataBR(o.data_entrada)}</td><td>${Number(o.km_entrada).toLocaleString('pt-BR')}</td>
+    ${oss.length ? `<table class="clicavel"><tr><th>OS</th><th>Entrada</th><th>Cliente</th><th>Km</th><th>Problema</th><th>Situação</th><th>Total</th></tr>
+      ${oss.map((o) => `<tr onclick="location='/os/${o.id_os}'"><td>${o.numero_os}</td><td>${dataBR(o.data_entrada)}</td><td>${h(o.cliente_os)}</td><td>${Number(o.km_entrada).toLocaleString('pt-BR')}</td>
         <td>${h(o.problema_relatado)}</td><td>${selo(o.status)}</td><td>${reais(o.total_os)}</td></tr>`).join('')}</table>`
       : '<p>Este carro ainda não teve nenhuma OS.</p>'}`, avisoDe(req)));
 }));
@@ -256,8 +260,10 @@ app.get('/os/nova', rota(async (req, res) => {
 app.post('/os', rota(async (req, res) => {
   const b = req.body;
   const [[{ prox }]] = await db.query('SELECT COALESCE(MAX(numero_os), 25000) + 1 AS prox FROM ordem_servico');
-  const [r] = await db.query(`INSERT INTO ordem_servico (numero_os, id_veiculo, id_atendente, km_entrada, problema_relatado, data_entrada, data_previsao, status)
-    VALUES (?,?,?,?,?,NOW(),?,'aberta')`, [prox, b.id_veiculo, b.atendente, b.km, b.problema.trim(), b.previsao || null]);
+  // a OS guarda o cliente que trouxe o carro (o dono atual); se o carro for vendido depois, a OS continua no nome dele (RN07)
+  const [r] = await db.query(`INSERT INTO ordem_servico (numero_os, id_veiculo, id_cliente, id_atendente, km_entrada, problema_relatado, data_entrada, data_previsao, status)
+    SELECT ?, id_veiculo, id_cliente, ?, ?, ?, NOW(), ?, 'aberta' FROM veiculo WHERE id_veiculo = ?`,
+    [prox, b.atendente, b.km, b.problema.trim(), b.previsao || null, b.id_veiculo]);
   await db.query('UPDATE veiculo SET km_atual = GREATEST(km_atual, ?) WHERE id_veiculo = ?', [b.km, b.id_veiculo]);
   voltar(res, '/os/' + r.insertId, `OS nº ${prox} aberta. Agora adicione os serviços e peças do orçamento.`);
 }));
@@ -267,7 +273,7 @@ app.get('/os/:id', rota(async (req, res) => {
   const [[os]] = await db.query(`
     SELECT os.*, v.placa, v.marca, v.modelo, v.id_veiculo, c.nome, c.telefone, c.id_cliente,
            a.nome AS atendente, m.nome AS mecanico, o.status AS orc_status, o.valor_total AS orc_valor, s.nome AS orcou
-    FROM ordem_servico os JOIN veiculo v USING (id_veiculo) JOIN cliente c USING (id_cliente)
+    FROM ordem_servico os JOIN veiculo v ON v.id_veiculo = os.id_veiculo JOIN cliente c ON c.id_cliente = os.id_cliente
     JOIN funcionario a ON a.id_funcionario = os.id_atendente LEFT JOIN funcionario m ON m.id_funcionario = os.id_mecanico
     LEFT JOIN orcamento o ON o.id_os = os.id_os LEFT JOIN funcionario s ON s.id_funcionario = o.id_funcionario
     WHERE os.id_os = ?`, [id]);
@@ -320,7 +326,7 @@ app.get('/os/:id', rota(async (req, res) => {
       ${os.cliente_avisado ? '<div class="caixa"><h3>✔ Cliente já foi avisado</h3></div>'
         : `<form method="post" action="/os/${id}/avisado" class="caixa destaque"><h3>Avise o cliente</h3><p>Ligue ou mande WhatsApp para <b>${h(os.telefone)}</b>.</p><button class="botao grande">Já avisei</button></form>`}
       <form method="post" action="/os/${id}/entregar" class="caixa"><h3>Cliente veio buscar?</h3>
-        <label>Número da nota fiscal<input name="nf" value="NFSe-${os.numero_os}"></label>
+        <label>Número da nota fiscal*<input name="nf" required value="NFSe-${os.numero_os}"></label>
         ${t.saldo_devedor > 0 ? `<p class="alerta">Ainda falta receber ${reais(t.saldo_devedor)}. Se entregar assim, fica como "a receber".</p>` : ''}
         <button class="botao grande">Entregar o carro</button></form></div>`;
   }
@@ -426,7 +432,7 @@ app.post('/os/:id/recusar', rota(async (req, res) => {
 }));
 
 app.post('/os/:id/pronta', rota(async (req, res) => {
-  await db.query(`UPDATE ordem_servico SET status = 'pronta' WHERE id_os = ? AND status = 'em_execucao'`, [req.params.id]);
+  await db.query(`UPDATE ordem_servico SET status = 'pronta', data_pronta = NOW() WHERE id_os = ? AND status = 'em_execucao'`, [req.params.id]);
   voltar(res, '/os/' + req.params.id, 'Serviço pronto! Agora avise o cliente.');
 }));
 
@@ -437,7 +443,7 @@ app.post('/os/:id/avisado', rota(async (req, res) => {
 
 app.post('/os/:id/entregar', rota(async (req, res) => {
   await db.query(`UPDATE ordem_servico SET status = 'entregue', cliente_avisado = 1, data_saida = NOW(),
-    garantia_ate = CURDATE() + INTERVAL 90 DAY, numero_nota_fiscal = ? WHERE id_os = ? AND status = 'pronta'`, [req.body.nf?.trim() || null, req.params.id]);
+    garantia_ate = CURDATE() + INTERVAL 3 MONTH, numero_nota_fiscal = ? WHERE id_os = ? AND status = 'pronta'`, [req.body.nf?.trim() || null, req.params.id]);
   voltar(res, '/os/' + req.params.id, 'Carro entregue. A garantia da mão de obra vale por 3 meses.');
 }));
 

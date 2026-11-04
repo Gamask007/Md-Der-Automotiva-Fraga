@@ -69,19 +69,19 @@ Este README é o **Relatório Técnico Final** da Entrega 2. Os demais artefatos
 | Processo | Como acontece (dados envolvidos) |
 | :--- | :--- |
 | Cadastro de cliente e veículo | A recepção busca pela placa. Se não houver cadastro, registra o cliente (nome, CPF/CNPJ, telefone, e-mail, endereço, consentimento LGPD) e o veículo (placa, marca, modelo, ano, motor, km). |
-| Abertura da OS | A recepção abre a OS com número, veículo, km de entrada, problema relatado, data/hora de entrada e previsão. Status `aberta`. |
+| Abertura da OS | A recepção abre a OS com número, veículo, cliente que trouxe o carro, km de entrada, problema relatado, data/hora de entrada e previsão. Status `aberta`. |
 | Avaliação e orçamento | Um sócio avalia e registra o orçamento (data, valor total, observações). Status `aguardando_aprovacao`. |
 | Aprovação do orçamento | O cliente aprova ou recusa. Fica registrada a data da decisão. Aprovado: a OS vai para `em_execucao`, com o mecânico definido. Recusado: `cancelada`. O cliente aprova pelo WhatsApp (onde recebe o orçamento) ou pessoalmente no balcão. |
 | Execução | O mecânico executa os serviços do catálogo (quantidade e valor cobrado) e usa peças, da oficina (com valor; dá baixa no estoque) ou do cliente (só a descrição). |
-| Liberação e aviso | A OS fica `pronta` e a recepção avisa o cliente (`cliente_avisado`). |
+| Liberação e aviso | Quando o serviço termina, a OS fica `pronta` e registra a data e hora da liberação (`data_pronta`). A recepção avisa o cliente (`cliente_avisado`). |
 | Recebimento | Um ou mais pagamentos por OS, com data, forma (dinheiro, Pix, débito, crédito), parcelas e valor. O saldo é calculado. |
 | Entrega e garantia | Na retirada, ficam registrados a data de saída, a garantia até (+3 meses) e o número da nota fiscal. Status `entregue`. |
 | Retrabalho em garantia | Volta na mesma OS: novo item de serviço marcado como retrabalho, valor 0, mais uma observação; a data de entrada não muda. |
-| Compra de peças | A oficina pede as peças a autopeças fixas da região, por telefone ou WhatsApp. Registra-se a compra (fornecedor, data, itens com quantidade e custo). |
+| Compra de peças | A recepção (Nicolas) pede as peças às autopeças fixas da região, por telefone ou WhatsApp, e registra a compra (fornecedor, data, itens com quantidade e custo). |
 | Recebimento de peças | Na chegada, a recepção (Nicolas) confere a nota e as peças. A compra recebe NF, data de recebimento e conferência, e cada item gera uma entrada no estoque. |
 | Controle de estoque | O saldo de cada peça é a soma das entradas e saídas. A consulta G01 mostra o que está abaixo do mínimo. |
 | Cadastro de fornecedores | A oficina mantém as autopeças fixas da região cadastradas (razão social, CNPJ, telefone, e-mail, ativo). Só se compra de fornecedor cadastrado (RN11). |
-| Responsáveis por etapa | Cada etapa registra quem fez: o atendente abre a OS, um sócio faz o orçamento, o mecânico executa, e a recepção registra compras e lança o estoque. Só a recepção e o sócio autorizado cadastram e alteram dados (RN06). |
+| Responsáveis por etapa | Cada etapa registra quem fez: o atendente abre a OS, um sócio faz o orçamento, o mecânico executa, e a recepção faz o pedido, registra as compras e lança o estoque. Só a recepção e o sócio autorizado cadastram e alteram dados (RN06). |
 
 **Fluxograma** (atendimento integrado a compras e estoque):
 
@@ -111,6 +111,7 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 | RF10 | Controlar o estoque por entradas e saídas, mostrando o saldo e as peças abaixo do estoque mínimo. |
 | RF11 | Registrar na entrega a data de saída, a garantia e o número da nota fiscal. |
 | RF12 | Emitir o extrato da OS (serviços e peças com valores) para enviar ao cliente. |
+| RF13 | Filtrar os serviços executados por tipo (ex.: só trocas de óleo) e gerar o relatório do mês com quantidade e receita de cada serviço. |
 
 **Não funcionais**
 
@@ -128,19 +129,19 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 
 | Código | Regra | Onde é garantida |
 | :--- | :--- | :--- |
-| RN01 | Toda OS tem número único, veículo, atendente, km, problema relatado, data de entrada e status; OS entregue tem data de saída. | NOT NULL, `uq_os_numero`, `ck_os_entregue` · A01 |
+| RN01 | Toda OS tem número único, veículo, cliente, atendente, km, problema relatado, data de entrada e status; OS pronta tem data de liberação; OS entregue tem data de saída, garantia e nota fiscal. | NOT NULL, `uq_os_numero`, `ck_os_pronta`, `ck_os_entregue` · A01 |
 | RN02 | O serviço só é executado depois que o cliente aprova o orçamento, e o valor aprovado é o valor cobrado. | `orcamento.status` · A02, A03 |
 | RN03 | Aceita dinheiro, Pix, débito e crédito; parcelamento só no crédito (até 12x); uma OS pode ter vários pagamentos, que somam no máximo o total. | `ck_pagamento_parcelas` · A04 |
-| RN04 | A mão de obra tem 3 meses de garantia a partir da saída; peça trazida pelo cliente não é cobrada e não tem garantia. | `ck_item_peca_origem` · A05 |
+| RN04 | A mão de obra tem 3 meses de garantia a partir da saída; peça trazida pelo cliente não é cobrada e não tem garantia. | `ck_os_garantia` (garantia = saída + 3 meses), `ck_item_peca_origem` · A05 |
 | RN05 | Retrabalho em garantia usa a mesma OS, sem custo, com observação, e não altera a data de entrada. | `ck_item_servico_retrabalho` · A06 |
 | RN06 | Só a recepção e o sócio autorizado cadastram e alteram dados. | `funcionario.pode_editar_cadastro`, papéis · A09 |
-| RN07 | Na troca de dono, o veículo passa para o novo cliente e o histórico de OS continua com o veículo. | FK `veiculo.id_cliente` (UPDATE) |
+| RN07 | Na troca de dono, o veículo passa para o novo cliente, mas cada OS antiga continua no nome de quem era o cliente na época. | FK `veiculo.id_cliente` (dono atual) e FK `ordem_servico.id_cliente` (cliente da OS) · G05 |
 | RN08 | Placa e CPF/CNPJ não se repetem; a placa segue o padrão antigo ou Mercosul. | `uq_veiculo_placa`, `uq_cliente_cpf_cnpj`, `ck_veiculo_placa` |
 | RN09 | Todo serviço do catálogo tem preço de referência maior que zero. | `ck_servico_valor` |
 | RN10 | Só sai do estoque o que há em saldo. | trigger `tg_mov_saldo_nao_negativo` · A07 |
 | RN11 | Compra só de fornecedor cadastrado (autopeças fixas); a peça entra no estoque depois que a recepção confere nota e peças. | FK `compra.id_fornecedor`, `ck_compra_conferida` · A08 |
 | RN12 | Peça abaixo do estoque mínimo deve ser comprada. Hoje o mínimo é controlado "de cabeça"; os valores de `estoque_minimo` são proposta do grupo, a validar com os sócios. | `peca.estoque_minimo` · G01 |
-| RN13 | A nota fiscal de serviço é emitida em toda entrega de veículo. | `ordem_servico.numero_nota_fiscal` · A01 |
+| RN13 | A nota fiscal de serviço é emitida em toda entrega de veículo. | `ck_os_entregue` (OS entregue sem nota é recusada) · A01 |
 | RN14 | LGPD: dados pessoais só com consentimento registrado e com acesso restrito. | `cliente.consentimento_lgpd` · A10 |
 | RN15 | Orçamento só é feito por sócio. | A09 |
 | RN16 | O mecânico responsável é um funcionário cadastrado. | FK `id_mecanico` |
@@ -186,7 +187,7 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 
 - **Entidades → tabelas.** Cada entidade virou uma tabela com o mesmo nome em minúsculas (`cliente`, `ordem_servico`…). As entidades ITEM_PECA e MOVIMENTACAO_ESTOQUE viraram tabelas com PK própria.
 - **Atributos → colunas.** Os atributos simples viraram colunas tipadas (dicionário, seção 4). O atributo composto `endereco` foi decomposto em `logradouro`, `numero`, `bairro`, `cidade`, `uf` e `cep`. Os atributos derivados (saldo do estoque, total e saldo da OS) não viraram colunas: estão nas views.
-- **Relacionamentos 1:N.** A FK fica no lado N: `veiculo.id_cliente`, `ordem_servico.id_veiculo`, `pagamento.id_os`, `compra.id_fornecedor`, `movimentacao_estoque.id_peca`. Quando o lado 1 é opcional (0,1), a FK aceita nulo: `ordem_servico.id_mecanico`, `item_peca.id_peca`, `movimentacao_estoque.id_compra` e `.id_os`.
+- **Relacionamentos 1:N.** A FK fica no lado N: `veiculo.id_cliente`, `ordem_servico.id_veiculo`, `ordem_servico.id_cliente`, `pagamento.id_os`, `compra.id_fornecedor`, `movimentacao_estoque.id_peca`. Quando o lado 1 é opcional (0,1), a FK aceita nulo: `ordem_servico.id_mecanico`, `item_peca.id_peca`, `movimentacao_estoque.id_compra` e `.id_os`.
 - **Relacionamento 1:1 (OS — Orçamento, 1 : 0..1).** A FK fica no lado opcional (`orcamento.id_os`), com `UNIQUE` para garantir no máximo um orçamento por OS. Ficar em `ordem_servico` deixaria a coluna nula em toda OS sem orçamento.
 - **Relacionamentos N:N.** OS × SERVICO virou `item_servico`, com PK própria (`id_item_servico`), porque o mesmo serviço pode voltar na mesma OS como retrabalho. COMPRA × PECA virou `item_compra`, com **PK composta** (`id_compra`, `id_peca`), porque a mesma peça não se repete numa compra.
 - **Dois papéis com a mesma entidade.** FUNCIONARIO atende e executa a OS. Viraram duas FKs com nomes de papel: `id_atendente` e `id_mecanico`.
@@ -199,7 +200,7 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 | cliente | id_cliente | — |
 | veiculo | id_veiculo | id_cliente → cliente |
 | funcionario | id_funcionario | — |
-| ordem_servico | id_os | id_veiculo → veiculo · id_atendente → funcionario · id_mecanico → funcionario |
+| ordem_servico | id_os | id_veiculo → veiculo · id_cliente → cliente · id_atendente → funcionario · id_mecanico → funcionario |
 | orcamento | id_orcamento | id_os → ordem_servico (UNIQUE) · id_funcionario → funcionario |
 | servico | id_servico | — |
 | item_servico | id_item_servico | id_os → ordem_servico · id_servico → servico |
@@ -225,7 +226,7 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 **3FN — sem dependência transitiva.**
 - `pagamento.saldo` (Entrega 1) dependia do total da OS e dos pagamentos, não da chave do pagamento. Foi removido e passou a ser calculado em `vw_total_os.saldo_devedor`.
 - A quantidade em estoque guardada em `peca` dependeria das movimentações. Foi trocada pela soma das entradas e saídas (`vw_saldo_estoque`).
-- Os dados do cliente (nome, telefone) não se repetem na OS: a OS aponta para o veículo, e o veículo para o cliente.
+- Os dados do cliente (nome, telefone) não se repetem na OS: ficam só em `cliente`. A OS guarda apenas `id_cliente`, que **não** é dependência transitiva de `id_veiculo`: o cliente da OS é um fato daquele atendimento (quem trouxe o carro e paga), e pode ser diferente do dono atual do veículo depois de uma venda (RN07).
 - A `origem` da peça (cliente/oficina) não dependia de `id_peca`, mas de cada uso. Saiu de `peca` e foi para `item_peca`.
 
 **Justificativa.** No caso da oficina, cada forma normal resolve um problema declarado. A 1FN permite listar as peças de cada OS (P1, P2). A 2FN evita reescrever o nome e o preço da peça em cada compra. A 3FN garante que saldo de estoque e saldo devedor nunca fiquem desatualizados (P1, P4): eles são calculados, nunca digitados.
@@ -246,7 +247,8 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 | Restrição | Implementa |
 | :--- | :--- |
 | `uq_veiculo_placa`, `ck_veiculo_placa`, `uq_cliente_cpf_cnpj`, `ck_cliente_doc` | RN08 — sem placa ou documento repetido ou mal digitado (P3) |
-| `uq_os_numero`, NOT NULL na OS, `ck_os_entregue`, `ck_os_datas` | RN01 |
+| `uq_os_numero`, NOT NULL na OS, `ck_os_datas`, `ck_os_pronta`, `ck_os_pronta_datas`, `ck_os_entregue` | RN01 e RN13 — OS pronta com data de liberação; entregue com saída, garantia e nota fiscal |
+| `ck_os_garantia` | RN04 — garantia exatamente 3 meses após a saída |
 | `uq_orcamento_os`, `ck_orcamento_decisao` | RN02 — um orçamento por OS, com data da decisão |
 | `ck_pagamento_parcelas`, `ck_pagamento_valor` | RN03 |
 | `ck_item_peca_origem` | RN04 — peça do cliente sem valor e fora do catálogo/estoque (P2) |
@@ -273,9 +275,9 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 | Faturamento recebido | soma de `pagamento.valor_pago` no mês | R$ 67.102,40 | ≥ R$ 70 mil/mês |
 | Ticket médio por OS | média de `vw_total_os.total_os` das OS entregues | R$ 559,48 (124 OS) | ≥ R$ 550 |
 | Peças abaixo do mínimo | contagem em `vw_saldo_estoque` com saldo < mínimo | 4 peças | 0 |
-| Valor a receber | soma de `saldo_devedor` das OS prontas/entregues | 15 OS entregues com saldo | ≤ 5% do faturamento |
+| Valor a receber | soma de `saldo_devedor` das OS prontas/entregues | R$ 6.221,05 em 20 OS | ≤ 5% do faturamento |
 | % de itens de peça trazidos pelo cliente | itens origem cliente ÷ total de itens | 9,7% (G04) | acompanhar |
-| Tempo médio de permanência | média de horas entre `data_entrada` e `data_saida` | por mecânico, ver G10 | ≤ 48 h |
+| Tempo médio de serviço | média de horas entre `data_entrada` e `data_pronta` (liberação), no mês | 30,9 h (126 OS; por mecânico na G10) | ≤ 48 h |
 | Taxa de retrabalho em garantia | OS com retrabalho ÷ OS entregues | 4,8% | < 3% |
 | Taxa de aprovação de orçamentos | aprovados ÷ decididos | 97,8% | acompanhar |
 | Mix de serviços | quantidade e receita por serviço | troca de óleo lidera (G12) | — |
@@ -301,7 +303,7 @@ O fluxograma da Entrega 1 está em [historico-entrega-1/fluxograma-entrega-1.jpg
 | Peças abaixo do mínimo | PECA, MOVIMENTACAO_ESTOQUE | G01 |
 | Valor a receber | vw_total_os, ORDEM_SERVICO | G07 |
 | % de peças trazidas pelo cliente | ITEM_PECA | G04 |
-| Tempo médio de permanência | ORDEM_SERVICO, FUNCIONARIO | G10 |
+| Tempo médio de serviço | ORDEM_SERVICO, FUNCIONARIO | G10 |
 | Taxa de retrabalho e de aprovação | ITEM_SERVICO, ORDEM_SERVICO, ORCAMENTO | G11 |
 | Mix de serviços / trocas de óleo | ITEM_SERVICO, SERVICO | G12 |
 
@@ -424,6 +426,7 @@ Os commits são feitos por cada integrante com a própria conta do GitHub.
   - a primeira versão das views de estoque falhava no MySQL (negativo em coluna `UNSIGNED`) e foi corrigida com `CAST`;
   - a massa repetia o óleo quando "Revisão completa" e "Troca de óleo" caíam na mesma OS; a combinação foi bloqueada e as peças repetidas foram somadas;
   - a primeira massa tinha só 1 OS cancelada (taxa de aprovação de 100%) e foi ajustada.
+  - na revisão do grupo, foram corrigidos: garantia calculada em 90 dias (passou a 3 meses de calendário, também em CHECK); OS sem o cliente da época, o que fazia as OS antigas mudarem de dono na troca de veículo (entrou `ordem_servico.id_cliente`); tempo médio medido até a retirada (entrou `data_pronta`); consultas "do mês" sem filtro de data (G03, G04, G11); G12 citando o requisito errado; nota fiscal e garantia só em auditoria (viraram CHECK);
   - na revisão, o grupo trocou as suposições da IA pelos fatos levantados: responsável e entrevistado (Nicolas), participantes e data da visita, compras com autopeças fixas e conferência pela recepção, nota fiscal em toda entrega, ausência de agendamento, aprovação do orçamento pelo WhatsApp ou no balcão e controle de estoque "de cabeça".
 - **Justificativa da escolha final:** o grupo manteve a estrutura, o script e as consultas porque foram testados e batem com o que foi levantado; mudou só o que dependia de fatos da oficina.
 - **Diagramas no brModelo Web (03/11/2026):** com a conta do grupo, o Claude montou o DER no editor do brModelo Web. Ele gerou o conteúdo a partir do modelo do script e salvou pela própria página. Depois usou o conversor do site para o modelo lógico, respondendo às perguntas do assistente de conversão: FK na tabela do lado "muitos", como no script. Por fim, corrigiu o que o conversor deixou diferente do script: nomes de FK, tipos `INT` genéricos, atributos da associativa e as cardinalidades (0, 1) perdidas. Um erro do próprio Claude (FKs opcionais marcadas como PK) foi achado na conferência e corrigido antes da exportação.
