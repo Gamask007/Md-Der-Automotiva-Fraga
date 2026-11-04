@@ -1,0 +1,7526 @@
+{
+ "cells": [
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 227.6,
+    "height": 460
+   },
+   "attrs": {
+    "headerText": {
+     "text": "cliente"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_cliente",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 40,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "nome",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 70,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "VARCHAR(100)",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "tipo_pessoa",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 100,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "ENUM('F','J')",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "cpf_cnpj",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 130,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "VARCHAR(18)",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "telefone",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 160,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "VARCHAR(15)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "email",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 190,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "VARCHAR(100)",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "logradouro",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 220,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "VARCHAR(100)",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-7": {
+     "x1": 0,
+     "y1": 250,
+     "x2": "calc(w)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-name": {
+     "text": "numero",
+     "x": 5,
+     "y": 265,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-7-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 250,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-type": {
+     "text": "VARCHAR(10)",
+     "x": "calc(w - 5)",
+     "y": 265,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-8": {
+     "x1": 0,
+     "y1": 280,
+     "x2": "calc(w)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-8-name": {
+     "text": "bairro",
+     "x": 5,
+     "y": 295,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-8-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 280,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 310,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-8-type": {
+     "text": "VARCHAR(60)",
+     "x": "calc(w - 5)",
+     "y": 295,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-9": {
+     "x1": 0,
+     "y1": 310,
+     "x2": "calc(w)",
+     "y2": 310,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-9-name": {
+     "text": "cidade",
+     "x": 5,
+     "y": 325,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-9-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 310,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 340,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-9-type": {
+     "text": "VARCHAR(60)",
+     "x": "calc(w - 5)",
+     "y": 325,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-10": {
+     "x1": 0,
+     "y1": 340,
+     "x2": "calc(w)",
+     "y2": 340,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-10-name": {
+     "text": "uf",
+     "x": 5,
+     "y": 355,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-10-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 340,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 370,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-10-type": {
+     "text": "CHAR(2)",
+     "x": "calc(w - 5)",
+     "y": 355,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-11": {
+     "x1": 0,
+     "y1": 370,
+     "x2": "calc(w)",
+     "y2": 370,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-11-name": {
+     "text": "cep",
+     "x": 5,
+     "y": 385,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-11-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 370,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 400,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-11-type": {
+     "text": "CHAR(9)",
+     "x": "calc(w - 5)",
+     "y": 385,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-12": {
+     "x1": 0,
+     "y1": 400,
+     "x2": "calc(w)",
+     "y2": 400,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-12-name": {
+     "text": "data_cadastro",
+     "x": 5,
+     "y": 415,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-12-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 400,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 430,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-12-type": {
+     "text": "DATE",
+     "x": "calc(w - 5)",
+     "y": 415,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-13": {
+     "x1": 0,
+     "y1": 430,
+     "x2": "calc(w)",
+     "y2": 430,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-13-name": {
+     "text": "consentimento_lgpd",
+     "x": 5,
+     "y": 445,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-13-v1": {
+     "x1": "calc(w*0.6133567662565905)",
+     "y1": 430,
+     "x2": "calc(w*0.6133567662565905)",
+     "y2": 460,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-13-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 445,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "cliente",
+   "rows": [
+    {
+     "name": "id_cliente",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "nome",
+     "type": "VARCHAR(100)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "tipo_pessoa",
+     "type": "ENUM('F','J')",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "cpf_cnpj",
+     "type": "VARCHAR(18)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": true,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": true,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "telefone",
+     "type": "VARCHAR(15)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "email",
+     "type": "VARCHAR(100)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "logradouro",
+     "type": "VARCHAR(100)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "numero",
+     "type": "VARCHAR(10)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "bairro",
+     "type": "VARCHAR(60)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "cidade",
+     "type": "VARCHAR(60)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "uf",
+     "type": "CHAR(2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "cep",
+     "type": "CHAR(9)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_cadastro",
+     "type": "DATE",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "consentimento_lgpd",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.6133567662565905,
+    "metadata": 0.3866432337434095
+   },
+   "position": {
+    "x": 40,
+    "y": 40
+   },
+   "angle": 0,
+   "id": "49ca0862-1310-4958-bb1f-452846dbc200",
+   "z": 1
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 158,
+    "height": 280
+   },
+   "attrs": {
+    "headerText": {
+     "text": "veiculo"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_veiculo",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 40,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_cliente",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 70,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "placa",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 100,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "CHAR(7)",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "marca",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 130,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "VARCHAR(30)",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "modelo",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 160,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "VARCHAR(40)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "ano",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 190,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "SMALLINT",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "motor",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 220,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "VARCHAR(10)",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-7": {
+     "x1": 0,
+     "y1": 250,
+     "x2": "calc(w)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-name": {
+     "text": "km_atual",
+     "x": 5,
+     "y": 265,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-7-v1": {
+     "x1": "calc(w*0.5189873417721519)",
+     "y1": 250,
+     "x2": "calc(w*0.5189873417721519)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 265,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "veiculo",
+   "rows": [
+    {
+     "name": "id_veiculo",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "id_cliente",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "49ca0862-1310-4958-bb1f-452846dbc200",
+      "idLink": "cc7ddb21-e44f-48b5-b093-4d91f9135f49",
+      "idName": "cliente"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "placa",
+     "type": "CHAR(7)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": true,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": true,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "marca",
+     "type": "VARCHAR(30)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "modelo",
+     "type": "VARCHAR(40)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "ano",
+     "type": "SMALLINT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "motor",
+     "type": "VARCHAR(10)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "km_atual",
+     "type": "INT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.5189873417721519,
+    "metadata": 0.4810126582278481
+   },
+   "position": {
+    "x": 340,
+    "y": 40
+   },
+   "angle": 0,
+   "id": "40d1269e-8f92-4efd-938d-1ba481d2a6f1",
+   "z": 2
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 221.6,
+    "height": 490
+   },
+   "attrs": {
+    "headerText": {
+     "text": "ordem_servico"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_os",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 40,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "numero_os",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 70,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "id_veiculo",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 100,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-2-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-2-type",
+     "refDx": -2
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "id_atendente",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 130,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-3-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-3-type",
+     "refDx": -2
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "id_mecanico",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 160,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-4-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-4-type",
+     "refDx": -2
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "km_entrada",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 190,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "problema_relatado",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 220,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "VARCHAR(255)",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-7": {
+     "x1": 0,
+     "y1": 250,
+     "x2": "calc(w)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-name": {
+     "text": "data_entrada",
+     "x": 5,
+     "y": 265,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-7-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 250,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-type": {
+     "text": "DATETIME",
+     "x": "calc(w - 5)",
+     "y": 265,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-8": {
+     "x1": 0,
+     "y1": 280,
+     "x2": "calc(w)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-8-name": {
+     "text": "data_previsao",
+     "x": 5,
+     "y": 295,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-8-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 280,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 310,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-8-type": {
+     "text": "DATE",
+     "x": "calc(w - 5)",
+     "y": 295,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-9": {
+     "x1": 0,
+     "y1": 310,
+     "x2": "calc(w)",
+     "y2": 310,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-9-name": {
+     "text": "data_saida",
+     "x": 5,
+     "y": 325,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-9-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 310,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 340,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-9-type": {
+     "text": "DATETIME",
+     "x": "calc(w - 5)",
+     "y": 325,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-10": {
+     "x1": 0,
+     "y1": 340,
+     "x2": "calc(w)",
+     "y2": 340,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-10-name": {
+     "text": "status",
+     "x": 5,
+     "y": 355,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-10-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 340,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 370,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-10-type": {
+     "text": "ENUM",
+     "x": "calc(w - 5)",
+     "y": 355,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-11": {
+     "x1": 0,
+     "y1": 370,
+     "x2": "calc(w)",
+     "y2": 370,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-11-name": {
+     "text": "cliente_avisado",
+     "x": 5,
+     "y": 385,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-11-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 370,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 400,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-11-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 385,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-12": {
+     "x1": 0,
+     "y1": 400,
+     "x2": "calc(w)",
+     "y2": 400,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-12-name": {
+     "text": "garantia_ate",
+     "x": 5,
+     "y": 415,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-12-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 400,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 430,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-12-type": {
+     "text": "DATE",
+     "x": "calc(w - 5)",
+     "y": 415,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-13": {
+     "x1": 0,
+     "y1": 430,
+     "x2": "calc(w)",
+     "y2": 430,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-13-name": {
+     "text": "numero_nota_fiscal",
+     "x": 5,
+     "y": 445,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-13-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 430,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 460,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-13-type": {
+     "text": "VARCHAR(20)",
+     "x": "calc(w - 5)",
+     "y": 445,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-14": {
+     "x1": 0,
+     "y1": 460,
+     "x2": "calc(w)",
+     "y2": 460,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-14-name": {
+     "text": "observacoes",
+     "x": 5,
+     "y": 475,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-14-v1": {
+     "x1": "calc(w*0.6299638989169675)",
+     "y1": 460,
+     "x2": "calc(w*0.6299638989169675)",
+     "y2": 490,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-14-type": {
+     "text": "TEXT",
+     "x": "calc(w - 5)",
+     "y": 475,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "ordem_servico",
+   "rows": [
+    {
+     "name": "id_os",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "numero_os",
+     "type": "INT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": true,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": true,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_veiculo",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "40d1269e-8f92-4efd-938d-1ba481d2a6f1",
+      "idLink": "6b0cd04e-3811-4b04-b9e2-83939e94851b",
+      "idName": "veiculo"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_atendente",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d",
+      "idLink": "aea31ee2-0f5b-4d33-876f-d7b42f4746b3",
+      "idName": "funcionario"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_mecanico",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d",
+      "idLink": "de8181ac-eba9-4960-baf4-df5002dd75a6",
+      "idName": "funcionario"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "km_entrada",
+     "type": "INT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "problema_relatado",
+     "type": "VARCHAR(255)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_entrada",
+     "type": "DATETIME",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_previsao",
+     "type": "DATE",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_saida",
+     "type": "DATETIME",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "status",
+     "type": "ENUM",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "cliente_avisado",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "garantia_ate",
+     "type": "DATE",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "numero_nota_fiscal",
+     "type": "VARCHAR(20)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "observacoes",
+     "type": "TEXT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.6299638989169675,
+    "metadata": 0.37003610108303253
+   },
+   "position": {
+    "x": 660,
+    "y": 40
+   },
+   "angle": 0,
+   "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8",
+   "z": 3
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 198.8,
+    "height": 280
+   },
+   "attrs": {
+    "headerText": {
+     "text": "orcamento"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_orcamento",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 40,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_os",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 70,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "id_funcionario",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 100,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-2-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-2-type",
+     "refDx": -2
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "data_orcamento",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 130,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "DATETIME",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "valor_total",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 160,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "DECIMAL(10,2)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "status",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 190,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "ENUM",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "data_decisao",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 220,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "DATETIME",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-7": {
+     "x1": 0,
+     "y1": 250,
+     "x2": "calc(w)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-name": {
+     "text": "observacoes",
+     "x": 5,
+     "y": 265,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-7-v1": {
+     "x1": "calc(w*0.5573440643863179)",
+     "y1": 250,
+     "x2": "calc(w*0.5573440643863179)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-type": {
+     "text": "VARCHAR(255)",
+     "x": "calc(w - 5)",
+     "y": 265,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "orcamento",
+   "rows": [
+    {
+     "name": "id_orcamento",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "id_os",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": true,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8",
+      "idLink": "60d2771b-0da8-427f-963e-e06fefb003dc",
+      "idName": "ordem_servico"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": true,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_funcionario",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d",
+      "idLink": "0e9b36c7-e71d-495e-84a0-9321d4854eec",
+      "idName": "funcionario"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_orcamento",
+     "type": "DATETIME",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "valor_total",
+     "type": "DECIMAL(10,2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "status",
+     "type": "ENUM",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_decisao",
+     "type": "DATETIME",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "observacoes",
+     "type": "VARCHAR(255)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.5573440643863179,
+    "metadata": 0.4426559356136821
+   },
+   "position": {
+    "x": 1000,
+    "y": 40
+   },
+   "angle": 0,
+   "id": "f91a104a-43f3-4d77-8f63-2ce5837b7e3e",
+   "z": 4
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 230,
+    "height": 220
+   },
+   "attrs": {
+    "headerText": {
+     "text": "funcionario"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_funcionario",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.6695652173913044)",
+     "y1": 40,
+     "x2": "calc(w*0.6695652173913044)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "nome",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.6695652173913044)",
+     "y1": 70,
+     "x2": "calc(w*0.6695652173913044)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "VARCHAR(80)",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "funcao",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.6695652173913044)",
+     "y1": 100,
+     "x2": "calc(w*0.6695652173913044)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "ENUM",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "telefone",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.6695652173913044)",
+     "y1": 130,
+     "x2": "calc(w*0.6695652173913044)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "VARCHAR(15)",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "pode_editar_cadastro",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.6695652173913044)",
+     "y1": 160,
+     "x2": "calc(w*0.6695652173913044)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "ativo",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.6695652173913044)",
+     "y1": 190,
+     "x2": "calc(w*0.6695652173913044)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "funcionario",
+   "rows": [
+    {
+     "name": "id_funcionario",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "nome",
+     "type": "VARCHAR(80)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "funcao",
+     "type": "ENUM",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "telefone",
+     "type": "VARCHAR(15)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "pode_editar_cadastro",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "ativo",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.6695652173913044,
+    "metadata": 0.33043478260869563
+   },
+   "position": {
+    "x": 1000,
+    "y": 400
+   },
+   "angle": 0,
+   "id": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d",
+   "z": 5
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 206,
+    "height": 220
+   },
+   "attrs": {
+    "headerText": {
+     "text": "pagamento"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_pagamento",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.5728155339805825)",
+     "y1": 40,
+     "x2": "calc(w*0.5728155339805825)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_os",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.5728155339805825)",
+     "y1": 70,
+     "x2": "calc(w*0.5728155339805825)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "data_pagamento",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.5728155339805825)",
+     "y1": 100,
+     "x2": "calc(w*0.5728155339805825)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "DATETIME",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "forma_pagamento",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.5728155339805825)",
+     "y1": 130,
+     "x2": "calc(w*0.5728155339805825)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "ENUM",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "parcelas",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.5728155339805825)",
+     "y1": 160,
+     "x2": "calc(w*0.5728155339805825)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "TINYINT",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "valor_pago",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.5728155339805825)",
+     "y1": 190,
+     "x2": "calc(w*0.5728155339805825)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "DECIMAL(10,2)",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "pagamento",
+   "rows": [
+    {
+     "name": "id_pagamento",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "id_os",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8",
+      "idLink": "9814378f-574c-42f0-abb5-db5d7e952ab8",
+      "idName": "ordem_servico"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_pagamento",
+     "type": "DATETIME",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "forma_pagamento",
+     "type": "ENUM",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "parcelas",
+     "type": "TINYINT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "valor_pago",
+     "type": "DECIMAL(10,2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.5728155339805825,
+    "metadata": 0.4271844660194175
+   },
+   "position": {
+    "x": 340,
+    "y": 400
+   },
+   "angle": 0,
+   "id": "931e3a3f-21a7-4666-b889-5c61a0dd9a45",
+   "z": 6
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 184.39999999999998,
+    "height": 190
+   },
+   "attrs": {
+    "headerText": {
+     "text": "servico"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_servico",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.5227765726681128)",
+     "y1": 40,
+     "x2": "calc(w*0.5227765726681128)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "nome_servico",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.5227765726681128)",
+     "y1": 70,
+     "x2": "calc(w*0.5227765726681128)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "VARCHAR(80)",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "descricao",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.5227765726681128)",
+     "y1": 100,
+     "x2": "calc(w*0.5227765726681128)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "VARCHAR(255)",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "valor_base",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.5227765726681128)",
+     "y1": 130,
+     "x2": "calc(w*0.5227765726681128)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "DECIMAL(10,2)",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "ativo",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.5227765726681128)",
+     "y1": 160,
+     "x2": "calc(w*0.5227765726681128)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "servico",
+   "rows": [
+    {
+     "name": "id_servico",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "nome_servico",
+     "type": "VARCHAR(80)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": true,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": true,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "descricao",
+     "type": "VARCHAR(255)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "valor_base",
+     "type": "DECIMAL(10,2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "ativo",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.5227765726681128,
+    "metadata": 0.47722342733188716
+   },
+   "position": {
+    "x": 40,
+    "y": 600
+   },
+   "angle": 0,
+   "id": "e661de7b-4c49-4be5-87cb-44daeb7d638e",
+   "z": 7
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 256.4,
+    "height": 250
+   },
+   "attrs": {
+    "headerText": {
+     "text": "item_peca"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_item_peca",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.6567862714508581)",
+     "y1": 40,
+     "x2": "calc(w*0.6567862714508581)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_os",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.6567862714508581)",
+     "y1": 70,
+     "x2": "calc(w*0.6567862714508581)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "id_peca",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.6567862714508581)",
+     "y1": 100,
+     "x2": "calc(w*0.6567862714508581)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-2-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-2-type",
+     "refDx": -2
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "origem",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.6567862714508581)",
+     "y1": 130,
+     "x2": "calc(w*0.6567862714508581)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "ENUM",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "descricao_peca_cliente",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.6567862714508581)",
+     "y1": 160,
+     "x2": "calc(w*0.6567862714508581)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "VARCHAR(100)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "quantidade",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.6567862714508581)",
+     "y1": 190,
+     "x2": "calc(w*0.6567862714508581)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "valor_unitario",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.6567862714508581)",
+     "y1": 220,
+     "x2": "calc(w*0.6567862714508581)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "DECIMAL(10,2)",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "item_peca",
+   "rows": [
+    {
+     "name": "id_item_peca",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "id_os",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8",
+      "idLink": "5b4ba397-fbc2-45a7-a42e-11d7879f5b14",
+      "idName": "ordem_servico"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_peca",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eced4f38-7c79-446e-8619-554f84d786f7",
+      "idLink": "537592a8-af5d-43f2-9fbd-43fd96d3ec64",
+      "idName": "peca"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "origem",
+     "type": "ENUM",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "descricao_peca_cliente",
+     "type": "VARCHAR(100)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "quantidade",
+     "type": "INT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "valor_unitario",
+     "type": "DECIMAL(10,2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.6567862714508581,
+    "metadata": 0.3432137285491419
+   },
+   "position": {
+    "x": 660,
+    "y": 620
+   },
+   "angle": 0,
+   "id": "11708cfd-9abd-4954-ac79-84f976ef0d61",
+   "z": 8
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 220.39999999999998,
+    "height": 250
+   },
+   "attrs": {
+    "headerText": {
+     "text": "peca"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_peca",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.6007259528130671)",
+     "y1": 40,
+     "x2": "calc(w*0.6007259528130671)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "nome_peca",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.6007259528130671)",
+     "y1": 70,
+     "x2": "calc(w*0.6007259528130671)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "VARCHAR(80)",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "codigo_fabricante",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.6007259528130671)",
+     "y1": 100,
+     "x2": "calc(w*0.6007259528130671)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "VARCHAR(30)",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "unidade",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.6007259528130671)",
+     "y1": 130,
+     "x2": "calc(w*0.6007259528130671)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "ENUM",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "valor_venda",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.6007259528130671)",
+     "y1": 160,
+     "x2": "calc(w*0.6007259528130671)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "DECIMAL(10,2)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "estoque_minimo",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.6007259528130671)",
+     "y1": 190,
+     "x2": "calc(w*0.6007259528130671)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "ativo",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.6007259528130671)",
+     "y1": 220,
+     "x2": "calc(w*0.6007259528130671)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "peca",
+   "rows": [
+    {
+     "name": "id_peca",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "nome_peca",
+     "type": "VARCHAR(80)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "codigo_fabricante",
+     "type": "VARCHAR(30)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": true,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": true,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "unidade",
+     "type": "ENUM",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "valor_venda",
+     "type": "DECIMAL(10,2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "estoque_minimo",
+     "type": "INT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "ativo",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.6007259528130671,
+    "metadata": 0.39927404718693293
+   },
+   "position": {
+    "x": 660,
+    "y": 955
+   },
+   "angle": 0,
+   "id": "eced4f38-7c79-446e-8619-554f84d786f7",
+   "z": 9
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 215.6,
+    "height": 250
+   },
+   "attrs": {
+    "headerText": {
+     "text": "compra"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_compra",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.647495361781076)",
+     "y1": 40,
+     "x2": "calc(w*0.647495361781076)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_fornecedor",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.647495361781076)",
+     "y1": 70,
+     "x2": "calc(w*0.647495361781076)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "id_funcionario",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.647495361781076)",
+     "y1": 100,
+     "x2": "calc(w*0.647495361781076)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-2-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-2-type",
+     "refDx": -2
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "data_compra",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.647495361781076)",
+     "y1": 130,
+     "x2": "calc(w*0.647495361781076)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "DATE",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "numero_nota_fiscal",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.647495361781076)",
+     "y1": 160,
+     "x2": "calc(w*0.647495361781076)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "VARCHAR(20)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "data_recebimento",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.647495361781076)",
+     "y1": 190,
+     "x2": "calc(w*0.647495361781076)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "DATE",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "conferida",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.647495361781076)",
+     "y1": 220,
+     "x2": "calc(w*0.647495361781076)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "compra",
+   "rows": [
+    {
+     "name": "id_compra",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "id_fornecedor",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "9fbe66c7-2f56-4d5f-9f54-7a1f567649e5",
+      "idLink": "8f411c44-a8e5-4a87-93cc-5942322293d2",
+      "idName": "fornecedor"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_funcionario",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d",
+      "idLink": "ca8c9a33-388d-4083-b670-9889b10b273f",
+      "idName": "funcionario"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_compra",
+     "type": "DATE",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "numero_nota_fiscal",
+     "type": "VARCHAR(20)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_recebimento",
+     "type": "DATE",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "conferida",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.647495361781076,
+    "metadata": 0.35250463821892397
+   },
+   "position": {
+    "x": 1330,
+    "y": 820
+   },
+   "angle": 0,
+   "id": "c85c43e5-6a13-4363-9f76-09da2bbae208",
+   "z": 10
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 186,
+    "height": 220
+   },
+   "attrs": {
+    "headerText": {
+     "text": "fornecedor"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_fornecedor",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.5591397849462365)",
+     "y1": 40,
+     "x2": "calc(w*0.5591397849462365)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "razao_social",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.5591397849462365)",
+     "y1": 70,
+     "x2": "calc(w*0.5591397849462365)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "VARCHAR(100)",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "cnpj",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.5591397849462365)",
+     "y1": 100,
+     "x2": "calc(w*0.5591397849462365)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "CHAR(18)",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "telefone",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.5591397849462365)",
+     "y1": 130,
+     "x2": "calc(w*0.5591397849462365)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "VARCHAR(15)",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "email",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.5591397849462365)",
+     "y1": 160,
+     "x2": "calc(w*0.5591397849462365)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "VARCHAR(100)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "ativo",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.5591397849462365)",
+     "y1": 190,
+     "x2": "calc(w*0.5591397849462365)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "fornecedor",
+   "rows": [
+    {
+     "name": "id_fornecedor",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "razao_social",
+     "type": "VARCHAR(100)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "cnpj",
+     "type": "CHAR(18)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": true,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": true,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "telefone",
+     "type": "VARCHAR(15)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "email",
+     "type": "VARCHAR(100)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "ativo",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.5591397849462365,
+    "metadata": 0.4408602150537635
+   },
+   "position": {
+    "x": 1330,
+    "y": 1160
+   },
+   "angle": 0,
+   "id": "9fbe66c7-2f56-4d5f-9f54-7a1f567649e5",
+   "z": 11
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 270,
+    "height": 310
+   },
+   "attrs": {
+    "headerText": {
+     "text": "movimentacao_estoque"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_movimentacao",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 40,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_peca",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 70,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "tipo",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 100,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "ENUM",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "quantidade",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 130,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "data_movimentacao",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 160,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "DATETIME",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "id_compra",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 190,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-5-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-5-type",
+     "refDx": -2
+    },
+    "rowSeparator-6": {
+     "x1": 0,
+     "y1": 220,
+     "x2": "calc(w)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-name": {
+     "text": "id_os",
+     "x": 5,
+     "y": 235,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-6-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 220,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-6-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-6-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 235,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-6-type",
+     "refDx": -2
+    },
+    "rowSeparator-7": {
+     "x1": 0,
+     "y1": 250,
+     "x2": "calc(w)",
+     "y2": 250,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-name": {
+     "text": "id_funcionario",
+     "x": 5,
+     "y": 265,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-7-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 250,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-7-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 265,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-7-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 265,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-7-type",
+     "refDx": -2
+    },
+    "rowSeparator-8": {
+     "x1": 0,
+     "y1": 280,
+     "x2": "calc(w)",
+     "y2": 280,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-8-name": {
+     "text": "motivo",
+     "x": 5,
+     "y": 295,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-8-v1": {
+     "x1": "calc(w*0.6962962962962963)",
+     "y1": 280,
+     "x2": "calc(w*0.6962962962962963)",
+     "y2": 310,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-8-type": {
+     "text": "VARCHAR(100)",
+     "x": "calc(w - 5)",
+     "y": 295,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "movimentacao_estoque",
+   "rows": [
+    {
+     "name": "id_movimentacao",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "id_peca",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eced4f38-7c79-446e-8619-554f84d786f7",
+      "idLink": "a877cca0-7a1b-4a9e-8fc5-7b7d8cbd496c",
+      "idName": "peca"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "tipo",
+     "type": "ENUM",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "quantidade",
+     "type": "INT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "data_movimentacao",
+     "type": "DATETIME",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_compra",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "c85c43e5-6a13-4363-9f76-09da2bbae208",
+      "idLink": "d33c7071-649c-4d6c-a70d-3ce1767ae336",
+      "idName": "compra"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_os",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8",
+      "idLink": "6da07f07-20f9-44ab-a1e7-888aaab03e9d",
+      "idName": "ordem_servico"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_funcionario",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d",
+      "idLink": "42d44747-79c9-413c-b388-108d36139df2",
+      "idName": "funcionario"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "motivo",
+     "type": "VARCHAR(100)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": false,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": false,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.6962962962962963,
+    "metadata": 0.3037037037037037
+   },
+   "position": {
+    "x": 1330,
+    "y": 400
+   },
+   "angle": 0,
+   "id": "dbed97db-4446-4b23-88a1-1d4c300a63de",
+   "z": 12
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "49ca0862-1310-4958-bb1f-452846dbc200"
+   },
+   "target": {
+    "id": "40d1269e-8f92-4efd-938d-1ba481d2a6f1"
+   },
+   "id": "cc7ddb21-e44f-48b5-b093-4d91f9135f49",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 13
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "40d1269e-8f92-4efd-938d-1ba481d2a6f1"
+   },
+   "target": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "id": "6b0cd04e-3811-4b04-b9e2-83939e94851b",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 14
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "target": {
+    "id": "f91a104a-43f3-4d77-8f63-2ce5837b7e3e"
+   },
+   "id": "60d2771b-0da8-427f-963e-e06fefb003dc",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 15
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d"
+   },
+   "target": {
+    "id": "f91a104a-43f3-4d77-8f63-2ce5837b7e3e"
+   },
+   "id": "0e9b36c7-e71d-495e-84a0-9321d4854eec",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 16
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d"
+   },
+   "target": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "id": "aea31ee2-0f5b-4d33-876f-d7b42f4746b3",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 17
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d"
+   },
+   "target": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "id": "de8181ac-eba9-4960-baf4-df5002dd75a6",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(0, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 18
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "target": {
+    "id": "931e3a3f-21a7-4666-b889-5c61a0dd9a45"
+   },
+   "id": "9814378f-574c-42f0-abb5-db5d7e952ab8",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 19
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 234.79999999999998,
+    "height": 220
+   },
+   "attrs": {
+    "headerText": {
+     "text": "item_servico"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_item_servico",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.625212947189097)",
+     "y1": 40,
+     "x2": "calc(w*0.625212947189097)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_os",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.625212947189097)",
+     "y1": 70,
+     "x2": "calc(w*0.625212947189097)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "id_servico",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.625212947189097)",
+     "y1": 100,
+     "x2": "calc(w*0.625212947189097)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-2-constraints": {
+     "text": "FK  ",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-2-type",
+     "refDx": -2
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "quantidade",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.625212947189097)",
+     "y1": 130,
+     "x2": "calc(w*0.625212947189097)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "TINYINT",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-4": {
+     "x1": 0,
+     "y1": 160,
+     "x2": "calc(w)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-name": {
+     "text": "valor_cobrado",
+     "x": 5,
+     "y": 175,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-4-v1": {
+     "x1": "calc(w*0.625212947189097)",
+     "y1": 160,
+     "x2": "calc(w*0.625212947189097)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-4-type": {
+     "text": "DECIMAL(10,2)",
+     "x": "calc(w - 5)",
+     "y": 175,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-5": {
+     "x1": 0,
+     "y1": 190,
+     "x2": "calc(w)",
+     "y2": 190,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-name": {
+     "text": "retrabalho_garantia",
+     "x": 5,
+     "y": 205,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-5-v1": {
+     "x1": "calc(w*0.625212947189097)",
+     "y1": 190,
+     "x2": "calc(w*0.625212947189097)",
+     "y2": 220,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-5-type": {
+     "text": "TINYINT(1)",
+     "x": "calc(w - 5)",
+     "y": 205,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "item_servico",
+   "rows": [
+    {
+     "name": "id_item_servico",
+     "type": "INT",
+     "PK": true,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": true,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": true
+    },
+    {
+     "name": "id_os",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8",
+      "idLink": "85a88314-b6a1-4714-8877-7add1deec7d5",
+      "idName": "ordem_servico"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_servico",
+     "type": "INT",
+     "PK": false,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "e661de7b-4c49-4be5-87cb-44daeb7d638e",
+      "idLink": "fe4c3852-135f-41ec-89c2-9dd3914c433e",
+      "idName": "servico"
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "quantidade",
+     "type": "TINYINT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "valor_cobrado",
+     "type": "DECIMAL(10,2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "retrabalho_garantia",
+     "type": "TINYINT(1)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.625212947189097,
+    "metadata": 0.37478705281090297
+   },
+   "position": {
+    "x": 325.6,
+    "y": 710
+   },
+   "angle": 0,
+   "id": "f38d48ef-d059-40f9-9247-119e9989a75e",
+   "z": 20
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "target": {
+    "id": "f38d48ef-d059-40f9-9247-119e9989a75e"
+   },
+   "id": "85a88314-b6a1-4714-8877-7add1deec7d5",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 21
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "e661de7b-4c49-4be5-87cb-44daeb7d638e"
+   },
+   "target": {
+    "id": "f38d48ef-d059-40f9-9247-119e9989a75e"
+   },
+   "id": "fe4c3852-135f-41ec-89c2-9dd3914c433e",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 22
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "target": {
+    "id": "11708cfd-9abd-4954-ac79-84f976ef0d61"
+   },
+   "id": "5b4ba397-fbc2-45a7-a42e-11d7879f5b14",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 23
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eced4f38-7c79-446e-8619-554f84d786f7"
+   },
+   "target": {
+    "id": "11708cfd-9abd-4954-ac79-84f976ef0d61"
+   },
+   "id": "537592a8-af5d-43f2-9fbd-43fd96d3ec64",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(0, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 24
+  },
+  {
+   "type": "logic.Table",
+   "size": {
+    "width": 200.39999999999998,
+    "height": 160
+   },
+   "attrs": {
+    "headerText": {
+     "text": "item_compra"
+    },
+    "rowSeparator-0": {
+     "x1": 0,
+     "y1": 40,
+     "x2": "calc(w)",
+     "y2": 40,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-name": {
+     "text": "id_compra",
+     "x": 5,
+     "y": 55,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-0-v1": {
+     "x1": "calc(w*0.5608782435129741)",
+     "y1": 40,
+     "x2": "calc(w*0.5608782435129741)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-0-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-0-constraints": {
+     "text": "PK, FK  ",
+     "x": "calc(w - 5)",
+     "y": 55,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-0-type",
+     "refDx": -2
+    },
+    "rowSeparator-1": {
+     "x1": 0,
+     "y1": 70,
+     "x2": "calc(w)",
+     "y2": 70,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-name": {
+     "text": "id_peca",
+     "x": 5,
+     "y": 85,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-1-v1": {
+     "x1": "calc(w*0.5608782435129741)",
+     "y1": 70,
+     "x2": "calc(w*0.5608782435129741)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-1-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "row-1-constraints": {
+     "text": "PK, FK  ",
+     "x": "calc(w - 5)",
+     "y": 85,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "var(--brand-primary-30)",
+     "fontWeight": "bold",
+     "refX": "row-1-type",
+     "refDx": -2
+    },
+    "rowSeparator-2": {
+     "x1": 0,
+     "y1": 100,
+     "x2": "calc(w)",
+     "y2": 100,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-name": {
+     "text": "quantidade",
+     "x": 5,
+     "y": 115,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-2-v1": {
+     "x1": "calc(w*0.5608782435129741)",
+     "y1": 100,
+     "x2": "calc(w*0.5608782435129741)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-2-type": {
+     "text": "INT",
+     "x": "calc(w - 5)",
+     "y": 115,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    },
+    "rowSeparator-3": {
+     "x1": 0,
+     "y1": 130,
+     "x2": "calc(w)",
+     "y2": 130,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-name": {
+     "text": "custo_unitario",
+     "x": 5,
+     "y": 145,
+     "textAnchor": "start",
+     "textVerticalAnchor": "middle",
+     "fontSize": 12,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#333"
+    },
+    "rowSeparator-3-v1": {
+     "x1": "calc(w*0.5608782435129741)",
+     "y1": 130,
+     "x2": "calc(w*0.5608782435129741)",
+     "y2": 160,
+     "stroke": "#eeeeee",
+     "strokeWidth": 1
+    },
+    "row-3-type": {
+     "text": "DECIMAL(10,2)",
+     "x": "calc(w - 5)",
+     "y": 145,
+     "textAnchor": "end",
+     "textVerticalAnchor": "middle",
+     "fontSize": 10,
+     "fontFamily": "BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif",
+     "fill": "#666"
+    }
+   },
+   "name": "item_compra",
+   "rows": [
+    {
+     "name": "id_compra",
+     "type": "INT",
+     "PK": true,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "c85c43e5-6a13-4363-9f76-09da2bbae208",
+      "idLink": "2b7cea5d-63d6-4fe1-b3be-80a2f7633e79",
+      "idName": "compra"
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "id_peca",
+     "type": "INT",
+     "PK": true,
+     "FK": true,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "eced4f38-7c79-446e-8619-554f84d786f7",
+      "idLink": "3a66ec08-b10e-4e6f-b655-c1b99f8686be",
+      "idName": "peca"
+     },
+     "isPrimaryKey": true,
+     "isForeignKey": true,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "quantidade",
+     "type": "INT",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    },
+    {
+     "name": "custo_unitario",
+     "type": "DECIMAL(10,2)",
+     "PK": false,
+     "FK": false,
+     "NOT_NULL": true,
+     "UNIQUE": false,
+     "AUTO_INCREMENT": false,
+     "defaultValue": "",
+     "tableOrigin": {
+      "idOrigin": "",
+      "idLink": "",
+      "idName": ""
+     },
+     "isPrimaryKey": false,
+     "isForeignKey": false,
+     "isNotNull": true,
+     "isUnique": false,
+     "isAutoIncrement": false
+    }
+   ],
+   "rowHeight": 30,
+   "headerHeight": 40,
+   "minBodyHeight": 60,
+   "columnWidths": {
+    "name": 0.5608782435129741,
+    "metadata": 0.4391217564870259
+   },
+   "position": {
+    "x": 1000,
+    "y": 1000
+   },
+   "angle": 0,
+   "id": "a72d353d-b50c-4461-82c2-12e2284ba32f",
+   "z": 25
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "c85c43e5-6a13-4363-9f76-09da2bbae208"
+   },
+   "target": {
+    "id": "a72d353d-b50c-4461-82c2-12e2284ba32f"
+   },
+   "id": "2b7cea5d-63d6-4fe1-b3be-80a2f7633e79",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(1, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 26
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eced4f38-7c79-446e-8619-554f84d786f7"
+   },
+   "target": {
+    "id": "a72d353d-b50c-4461-82c2-12e2284ba32f"
+   },
+   "id": "3a66ec08-b10e-4e6f-b655-c1b99f8686be",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 27
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "9fbe66c7-2f56-4d5f-9f54-7a1f567649e5"
+   },
+   "target": {
+    "id": "c85c43e5-6a13-4363-9f76-09da2bbae208"
+   },
+   "id": "8f411c44-a8e5-4a87-93cc-5942322293d2",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 28
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d"
+   },
+   "target": {
+    "id": "c85c43e5-6a13-4363-9f76-09da2bbae208"
+   },
+   "id": "ca8c9a33-388d-4083-b670-9889b10b273f",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 29
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "edc8d344-b3a6-4990-b5e4-fbd7bcfcf05d"
+   },
+   "target": {
+    "id": "dbed97db-4446-4b23-88a1-1d4c300a63de"
+   },
+   "id": "42d44747-79c9-413c-b388-108d36139df2",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 30
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eced4f38-7c79-446e-8619-554f84d786f7"
+   },
+   "target": {
+    "id": "dbed97db-4446-4b23-88a1-1d4c300a63de"
+   },
+   "id": "a877cca0-7a1b-4a9e-8fc5-7b7d8cbd496c",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(1, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 31
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "c85c43e5-6a13-4363-9f76-09da2bbae208"
+   },
+   "target": {
+    "id": "dbed97db-4446-4b23-88a1-1d4c300a63de"
+   },
+   "id": "d33c7071-649c-4d6c-a70d-3ce1767ae336",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(0, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 32
+  },
+  {
+   "type": "link",
+   "attrs": {},
+   "source": {
+    "id": "eee02e29-ba85-443a-b0aa-f65e6f1ffda8"
+   },
+   "target": {
+    "id": "dbed97db-4446-4b23-88a1-1d4c300a63de"
+   },
+   "id": "6da07f07-20f9-44ab-a1e7-888aaab03e9d",
+   "labels": [
+    {
+     "position": 0.2,
+     "attrs": {
+      "text": {
+       "text": "(0, 1)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    },
+    {
+     "position": 0.8,
+     "attrs": {
+      "text": {
+       "text": "(0, n)",
+       "font-weight": "normal",
+       "font-size": 12
+      }
+     }
+    }
+   ],
+   "z": 33,
+   "vertices": [
+    {
+     "x": 1290,
+     "y": 365
+    }
+   ]
+  }
+ ]
+}
